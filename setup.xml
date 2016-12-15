@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="mbs/setup2html.xsl"?>
+
+<muhkuh_buildsystem project="hboot_image_compiler">
+	<project_version>0.0.1</project_version>
+
+	<scons>
+		<group>org.scons</group>
+		<name>scons-local</name>
+		<package>scons-local</package>
+		<version>2.5.0_1</version>
+		<typ>tar.bz2</typ>
+	</scons>
+
+	<tools>
+		<tool>
+			<group>nz.co.methods</group>
+			<name>asciidoc</name>
+			<package>asciidoc</package>
+			<version>8.6.8_3</version>
+			<typ>tar.bz2</typ>
+		</tool>
+	</tools>
+</muhkuh_buildsystem>
