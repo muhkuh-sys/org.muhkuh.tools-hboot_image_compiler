@@ -27,24 +27,39 @@ import os.path
 # Set up the Muhkuh Build System.
 #
 SConscript('mbs/SConscript')
+Import('atEnv')
 
 
-atInstallFiles = {
-    'hboot_image_compiler/elf_support.py': 'mbs/site_scons/elf_support.py',
-    'hboot_image_compiler/hboot_image.py': 'mbs/site_scons/hboot_image_compiler/hboot_image.py',
-    'hboot_image_compiler/__init__.py': 'mbs/site_scons/hboot_image_compiler/__init__.py',
-    'hboot_image_compiler/__main__.py': 'mbs/site_scons/hboot_image_compiler/__main__.py',
-    'hboot_image_compiler/netx90_app_iflash_image.py': 'mbs/site_scons/hboot_image_compiler/netx90_app_iflash_image.py',
-    'hboot_image_compiler/option_compiler.py': 'mbs/site_scons/hboot_image_compiler/option_compiler.py',
-    'hboot_image_compiler/patch_definitions.py': 'mbs/site_scons/hboot_image_compiler/patch_definitions.py',
-    'hboot_image_compiler/snippet_library.py': 'mbs/site_scons/hboot_image_compiler/snippet_library.py',
+strGroup = 'org.muhkuh.tools'
+strModule = 'hboot_image_compiler'
 
-    'hboot_netx4000_relaxed_patch_table.xml': 'mbs/site_scons/hboot_netx4000_relaxed_patch_table.xml',
-    'hboot_netx56_patch_table.xml': 'mbs/site_scons/hboot_netx56_patch_table.xml',
-    'hboot_netx90_mpw_app_patch_table.xml': 'mbs/site_scons/hboot_netx90_mpw_app_patch_table.xml',
-    'hboot_netx90_mpw_patch_table.xml': 'mbs/site_scons/hboot_netx90_mpw_patch_table.xml'
-}
+# Split the group by dots.
+aGroup = strGroup.split('.')
+# Build the path for all artifacts.
+strModulePath = 'targets/repository/%s/%s/%s' % ('/'.join(aGroup), strModule, PROJECT_VERSION)
 
-for strDst, strSrc in atInstallFiles.iteritems():
-    strDstFull = os.path.join('targets/hboot_image_compiler', strDst)
-    Command(strDstFull, strSrc, Copy("$TARGET", "$SOURCE"))
+strArtifact = 'hboot_image_compiler'
+
+
+tArcList = atEnv.DEFAULT.ArchiveList('zip')
+
+tArcList.AddFiles('hboot_image_compiler/hboot_image_compiler/',
+    'mbs/site_scons/hboot_image_compiler/__init__.py',
+    'mbs/site_scons/hboot_image_compiler/__main__.py',
+    'mbs/site_scons/elf_support.py',
+    'mbs/site_scons/hboot_image_compiler/hboot_image.py',
+    'mbs/site_scons/hboot_image_compiler/netx90_app_iflash_image.py',
+    'mbs/site_scons/hboot_image_compiler/option_compiler.py',
+    'mbs/site_scons/hboot_image_compiler/patch_definitions.py',
+    'mbs/site_scons/hboot_image_compiler/snippet_library.py')
+
+tArcList.AddFiles('hboot_image_compiler/',
+    'mbs/site_scons/hboot_netx4000_relaxed_patch_table.xml',
+    'mbs/site_scons/hboot_netx56_patch_table.xml',
+    'mbs/site_scons/hboot_netx90_mpw_app_patch_table.xml',
+    'mbs/site_scons/hboot_netx90_mpw_patch_table.xml')
+
+
+strBasePath = os.path.join(strModulePath, '%s-%s' % (strArtifact, PROJECT_VERSION))
+tArtifactZip = atEnv.DEFAULT.Archive('%s.zip' % strBasePath, None, ARCHIVE_CONTENTS = tArcList)
+tArtifactPom = atEnv.DEFAULT.ArtifactVersion('%s.pom' % strBasePath, 'pom.xml')
