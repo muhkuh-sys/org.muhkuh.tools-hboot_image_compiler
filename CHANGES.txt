@@ -1,0 +1,9 @@
+v0.0.2
+
+  * Add a "segments" attribute to use only the selected segments from an ELF file.
+  * Fix the command line interpreter to accept the "NETX90_MPW_APP" for "--netx-type".
+
+
+v0.0.1 (15.12.2016)
+
+  Initial release.
