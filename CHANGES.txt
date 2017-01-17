@@ -1,5 +1,7 @@
 v0.0.2
 
+  * Add a "overwrite_address" attribute for data chunks from ELF sections.
+    It allows to overwrite the load address of the data.
   * Add a "segments" attribute to use only the selected segments from an ELF file.
   * Fix the command line interpreter to accept the "NETX90_MPW_APP" for "--netx-type".
 
