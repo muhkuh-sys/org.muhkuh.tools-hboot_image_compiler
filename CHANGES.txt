@@ -2,8 +2,18 @@ v0.0.2
 
   * Add a "overwrite_address" attribute for data chunks from ELF sections.
     It allows to overwrite the load address of the data.
-  * Add a "segments" attribute to use only the selected segments from an ELF file.
-  * Fix the command line interpreter to accept the "NETX90_MPW_APP" for "--netx-type".
+
+  * Add a "segments" attribute to use only the selected segments from an ELF
+    file.
+
+  * Fix the command line interpreter to accept the "NETX90_MPW_APP" for
+    "--netx-type".
+
+  * Change the extraction method of the start address from an ELF file.
+    The old way extracted all symbols with the "readelf" tool and searched for
+    a global symbol with the name "start".
+    The new way reads the file header - again with the "readelf" tool - and
+    extracts the line with the "Entry point address".
 
 
 v0.0.1 (15.12.2016)
