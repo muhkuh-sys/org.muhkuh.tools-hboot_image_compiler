@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" has_header="False" has_end="True">
+        <Chunks>
+                <Text>ABCD</Text>
+        </Chunks>
+</HBootImage>
