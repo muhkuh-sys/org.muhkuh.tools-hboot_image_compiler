@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<Skip relative="512" fill="0xbd">
+			<File name="tests/skip/fill_data.bin"/>
+		</Skip>
+	</Chunks>
+</HBootImage>
