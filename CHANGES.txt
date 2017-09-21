@@ -1,3 +1,14 @@
+v0.0.3
+
+  * Support the SQIROM0 and SQIROM1 areas on the netX4000.
+
+  * Add "fill" and "file" attributes to the "Skip" tag.
+
+  * Create "Text" chunks.
+
+  * Add the attributes "has_header" and "has_end" to control the output of the header and end marker.
+
+
 v0.0.2
 
   * Add a "overwrite_address" attribute for data chunks from ELF sections.
