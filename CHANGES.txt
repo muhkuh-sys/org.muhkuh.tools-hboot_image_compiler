@@ -1,3 +1,9 @@
+v0.0.4
+
+  * Add a new option "-S" / "--sniplib" to specify a sniplib location.
+    The option can be used multiple times to specify more than one sniplib.
+
+
 v0.0.3
 
   * Support the SQIROM0 and SQIROM1 areas on the netX4000.
