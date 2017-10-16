@@ -2,7 +2,7 @@
 <HBootImage type="REGULAR">
 	<Chunks>
 		<Skip absolute="0x1000">
-			<File name="tests/skip/fill_data.bin"/>
+			<File name="fill_data.bin"/>
 		</Skip>
 	</Chunks>
 </HBootImage>
