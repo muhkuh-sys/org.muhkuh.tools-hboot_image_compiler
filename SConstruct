@@ -29,6 +29,11 @@ import os.path
 SConscript('mbs/SConscript')
 Import('atEnv')
 
+import tests
+import unpack
+tests.ApplyToEnv(atEnv.DEFAULT)
+unpack.ApplyToEnv(atEnv.DEFAULT)
+
 
 strGroup = 'org.muhkuh.tools'
 strModule = 'hboot_image_compiler'
@@ -64,3 +69,14 @@ tArcList.AddFiles('hboot_image_compiler/',
 strBasePath = os.path.join(strModulePath, '%s-%s' % (strArtifact, PROJECT_VERSION))
 tArtifactZip = atEnv.DEFAULT.Archive('%s.zip' % strBasePath, None, ARCHIVE_CONTENTS = tArcList)
 tArtifactPom = atEnv.DEFAULT.ArtifactVersion('%s.pom' % strBasePath, 'templates/pom.xml')
+
+
+#----------------------------------------------------------------------------
+#
+# Run tests.
+#
+
+strHbootDepackPath = 'targets/tests/bin'
+tUnpackStamp = atEnv.DEFAULT.Unpack('targets/tests/.unpack_stamp', tArtifactZip, UNPACK_FOLDER=strHbootDepackPath)
+tTestStamp = atEnv.DEFAULT.Tests('targets/tests/.test_stamp', 'tests/tests.py')
+atEnv.DEFAULT.Depends(tTestStamp, tUnpackStamp)
