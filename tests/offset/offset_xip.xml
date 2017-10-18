@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" has_header="False" has_end="True" device="INTFLASH" offset="0x2000">
+	<Chunks>
+		<!-- Create a fake XIP chunk at offset 0x2008 in the INTFLASH. -->
+		<XIP>
+			<Hex address="0x00102008">
+				41424344
+			</Hex>
+		</XIP>
+	</Chunks>
+</HBootImage>

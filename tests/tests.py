@@ -90,6 +90,15 @@ class TestExpectedBinaries(unittest.TestCase):
 
         self.assertEqual(strBinReference, strBinOutput)
 
+    def test_offset_decimal(self):
+        self.__test_with_reference_bin('offset/offset_decimal.xml', 'offset/offset_decimal.bin', None, None)
+
+    def test_offset_hexadecimal(self):
+        self.__test_with_reference_bin('offset/offset_hexadecimal.xml', 'offset/offset_hexadecimal.bin', None, None)
+
+    def test_offset_xip(self):
+        self.__test_with_reference_bin('offset/offset_xip.xml', 'offset/offset_xip.bin', None, None)
+
     def test_partial_images_full(self):
         self.__test_with_reference_bin('partial_images/full.xml', 'partial_images/full.bin', None, None)
 
