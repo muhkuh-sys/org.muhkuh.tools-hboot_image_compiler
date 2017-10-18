@@ -117,6 +117,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_skip_absolute_file(self):
         self.__test_with_reference_bin('skip/absolute_file.xml', 'skip/absolute_file.bin', None, ['skip/fill_data.bin'])
 
+    def test_skip_absolute_with_offset(self):
+        self.__test_with_reference_bin('skip/absolute_with_offset.xml', 'skip/absolute_with_offset.bin', None, None)
+
     def test_skip_file(self):
         self.__test_with_reference_bin('skip/file.xml', 'skip/file.bin', None, ['skip/file.bin'])
 
