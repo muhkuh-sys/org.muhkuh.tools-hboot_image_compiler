@@ -1,6 +1,7 @@
 import unittest
 
 import os
+import shutil
 import subprocess
 import sys
 
@@ -15,7 +16,7 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strObjdump = 'objdump'
         self.strReadelf = 'readelf'
 
-    def __run_hboot_image_compiler(self, strCwd, strXml, strOutput, strNetx):
+    def __run_hboot_image_compiler(self, strCwd, strXml, strOutput, strNetx, atExtraArguments):
         # Save the current working directory for later.
         strOldPath = os.getcwd()
 
@@ -23,21 +24,28 @@ class TestExpectedBinaries(unittest.TestCase):
         os.chdir(strCwd)
 
         # Run the HBOOT image compiler.
-        subprocess.check_call([
+        astrCmd = [
             sys.executable,
             self.strHBootImageCompiler,
             '--netx-type', strNetx,
             '--objcopy', self.strObjcopy,
             '--objdump', self.strObjdump,
-            '--readelf', self.strReadelf,
+            '--readelf', self.strReadelf
+        ]
+        if atExtraArguments is not None:
+            astrCmd.extend(atExtraArguments)
+        astrCmd.extend([
             strXml,
             strOutput
         ])
 
+        subprocess.check_call(astrCmd)
+
         # Restore the old working directory.
         os.chdir(strOldPath)
 
-    def __test_with_reference_bin(self, strInput, strReference):
+    def __test_with_reference_bin(self, strInput, strReference, atExtraArguments, atCopyFiles):
+        strInputBase = os.path.basename(strInput)
         strInputPathFull = os.path.join(self.strTestsBaseDir, strInput)
         strInputDirectoryFull = os.path.dirname(strInputPathFull)
 
@@ -49,10 +57,26 @@ class TestExpectedBinaries(unittest.TestCase):
             os.makedirs(strOutputDirectoryFull)
         strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
 
-        # The working folder is the test path.
-        strCwd = strInputDirectoryFull
+        # Copy files.
+        if atCopyFiles is not None:
+            for strFile in atCopyFiles:
+                strSrcAbs = os.path.join(self.strTestsBaseDir, strFile)
+                strSrcDirAbs = os.path.dirname(strSrcAbs)
+                strDstAbs = os.path.join(self.strOutputBaseDir, strFile)
+                strDstDirAbs = os.path.dirname(strDstAbs)
+                if os.path.exists(strSrcDirAbs) == False:
+                    os.makedirs(strSrcDirAbs)
+                if os.path.exists(strDstDirAbs) == False:
+                    os.makedirs(strDstDirAbs)
+                shutil.copy(strSrcAbs, strDstAbs)
 
-        self.__run_hboot_image_compiler(strCwd, strInputPathFull, strOutputPathFull, 'NETX90_MPW')
+        # Copy the input file to the working folder.
+        shutil.copy(strInputPathFull, strOutputDirectoryFull)
+
+        # The working folder is the test path.
+        strCwd = strOutputDirectoryFull
+
+        self.__run_hboot_image_compiler(strCwd, strInputPathFull, strOutputPathFull, 'NETX90_MPW', atExtraArguments)
 
         # Read the reference binary.
         tFile = open(os.path.join(self.strTestsBaseDir, strReference), 'rb')
@@ -67,34 +91,43 @@ class TestExpectedBinaries(unittest.TestCase):
         self.assertEqual(strBinReference, strBinOutput)
 
     def test_partial_images_full(self):
-        self.__test_with_reference_bin('partial_images/full.xml', 'partial_images/full.bin')
+        self.__test_with_reference_bin('partial_images/full.xml', 'partial_images/full.bin', None, None)
 
     def test_partial_images_no_header_no_end(self):
-        self.__test_with_reference_bin('partial_images/no_header_no_end.xml', 'partial_images/no_header_no_end.bin')
+        self.__test_with_reference_bin('partial_images/no_header_no_end.xml', 'partial_images/no_header_no_end.bin', None, None)
 
     def test_partial_images_no_header_with_end(self):
-        self.__test_with_reference_bin('partial_images/no_header_with_end.xml', 'partial_images/no_header_with_end.bin')
+        self.__test_with_reference_bin('partial_images/no_header_with_end.xml', 'partial_images/no_header_with_end.bin', None, None)
 
     def test_partial_images_with_header_no_end(self):
-        self.__test_with_reference_bin('partial_images/with_header_no_end.xml', 'partial_images/with_header_no_end.bin')
+        self.__test_with_reference_bin('partial_images/with_header_no_end.xml', 'partial_images/with_header_no_end.bin', None, None)
 
     def test_skip_absolute(self):
-        self.__test_with_reference_bin('skip/absolute.xml', 'skip/absolute.bin')
+        self.__test_with_reference_bin('skip/absolute.xml', 'skip/absolute.bin', None, None)
 
     def test_skip_absolute_file(self):
-        self.__test_with_reference_bin('skip/absolute_file.xml', 'skip/absolute_file.bin')
+        self.__test_with_reference_bin('skip/absolute_file.xml', 'skip/absolute_file.bin', None, ['skip/fill_data.bin'])
 
     def test_skip_file(self):
-        self.__test_with_reference_bin('skip/file.xml', 'skip/file.bin')
+        self.__test_with_reference_bin('skip/file.xml', 'skip/file.bin', None, ['skip/file.bin'])
 
     def test_skip_file_with_fill(self):
-        self.__test_with_reference_bin('skip/file_with_fill.xml', 'skip/file_with_fill.bin')
+        self.__test_with_reference_bin('skip/file_with_fill.xml', 'skip/file_with_fill.bin', None, ['skip/fill_data.bin'])
 
     def test_skip_relative(self):
-        self.__test_with_reference_bin('skip/relative.xml', 'skip/relative.bin')
+        self.__test_with_reference_bin('skip/relative.xml', 'skip/relative.bin', None, None)
 
     def test_skip_relative_file(self):
-        self.__test_with_reference_bin('skip/relative_file.xml', 'skip/relative_file.bin')
+        self.__test_with_reference_bin('skip/relative_file.xml', 'skip/relative_file.bin', None, ['skip/fill_data.bin'])
+
+    def test_snippets_custom_location(self):
+        self.__test_with_reference_bin('snippets/custom_location.xml', 'snippets/custom_location.bin', ['--sniplib', 'custom_sniplib'], ['snippets/custom_sniplib/custom-1.0.0.xml'])
+
+    def test_snippets_default_location(self):
+        self.__test_with_reference_bin('snippets/default_location.xml', 'snippets/default_location.bin', None, ['snippets/sniplib/default-1.0.0.xml'])
+
+    def test_snippets_precedence(self):
+        self.__test_with_reference_bin('snippets/precedence.xml', 'snippets/precedence.bin', ['--sniplib', 'custom_sniplib', '--sniplib', 'sniplib'], ['snippets/sniplib/precedence-1.0.0.xml', 'snippets/custom_sniplib/precedence-1.0.0.xml'])
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<!-- Include the "precedence" snippet. -->
+		<Snip artifact="precedence" group="test" version="1.0.0"/>
+	</Chunks>
+</HBootImage>

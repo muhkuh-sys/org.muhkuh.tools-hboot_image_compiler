@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HBootSnippet>
+	<Info artifact="custom" group="test" version="1.0.0">
+		<License name="GPL-2.0"/>
+		<Author name="Muhkuh team" url="https://github.com/muhkuh-sys"/>
+		<VCS id="none" url="none"/>
+		<Description>Part of the HBOOT image compiler test suite.</Description>
+		<Category>internal test</Category>
+	</Info>
+	<Snippet>&lt;Text&gt;custom&lt;/Text&gt;
+</Snippet>
+</HBootSnippet>
