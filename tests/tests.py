@@ -111,6 +111,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_partial_images_with_header_no_end(self):
         self.__test_with_reference_bin('partial_images/with_header_no_end.xml', 'partial_images/with_header_no_end.bin', None, None)
 
+    def test_secure_root_cert_file(self):
+        self.__test_with_reference_bin('secure/root_cert_file.hex', 'secure/root_cert_file.bin', None, ['secure/fake_root_cert.bin'])
+
     def test_skip_absolute(self):
         self.__test_with_reference_bin('skip/absolute.xml', 'skip/absolute.bin', None, None)
 

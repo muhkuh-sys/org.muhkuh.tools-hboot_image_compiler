@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<RootCert>
+			<File name="fake_root_cert.bin"/>
+		</RootCert>
+	</Chunks>
+</HBootImage>
