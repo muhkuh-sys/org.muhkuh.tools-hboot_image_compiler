@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<!-- Include the "default" snippet. -->
+		<Snip artifact="cdata" group="test" version="1.0.0"/>
+	</Chunks>
+</HBootImage>

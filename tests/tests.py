@@ -144,6 +144,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_skip_relative_file(self):
         self.__test_with_reference_bin('skip/relative_file.xml', 'skip/relative_file.bin', None, ['skip/fill_data.bin'])
 
+    def test_snippets_cdata(self):
+        self.__test_with_reference_bin('snippets/cdata.xml', 'snippets/cdata.bin', None, ['snippets/sniplib/cdata-1.0.0.xml'])
+
     def test_snippets_custom_location(self):
         self.__test_with_reference_bin('snippets/custom_location.xml', 'snippets/custom_location.bin', ['--sniplib', 'custom_sniplib'], ['snippets/custom_sniplib/custom-1.0.0.xml'])
 
