@@ -111,6 +111,12 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_partial_images_with_header_no_end(self):
         self.__test_with_reference_bin('partial_images/with_header_no_end.xml', 'partial_images/with_header_no_end.bin', None, None)
 
+    def test_secure_ca9sw_file(self):
+        self.__test_with_reference_bin('secure/ca9sw_file.hex', 'secure/ca9sw_file.bin', None, ['secure/fake_ca9sw.bin'])
+
+    def test_secure_cr7sw_file(self):
+        self.__test_with_reference_bin('secure/cr7sw_file.hex', 'secure/cr7sw_file.bin', None, ['secure/fake_cr7sw.bin'])
+
     def test_secure_license_cert_file(self):
         self.__test_with_reference_bin('secure/license_cert_file.hex', 'secure/license_cert_file.bin', None, ['secure/fake_license_cert.bin'])
 

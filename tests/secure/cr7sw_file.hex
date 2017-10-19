@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<CR7Software>
+			<File name="fake_cr7sw.bin"/>
+		</CR7Software>
+	</Chunks>
+</HBootImage>
