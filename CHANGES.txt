@@ -3,6 +3,13 @@ v0.0.4
   * Add a new option "-S" / "--sniplib" to specify a sniplib location.
     The option can be used multiple times to specify more than one sniplib.
 
+  * Accept hexadecimal values for the "offset" attribute.
+
+  * Fix the "Skip" and "XIP" chunks for non zero offsets.
+
+  * Read the RootCert, LicenseCert, CA9Software and CR7Software chunks from a
+    file, if a "File" child node is present.
+
 
 v0.0.3
 
