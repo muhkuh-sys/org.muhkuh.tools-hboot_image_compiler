@@ -112,16 +112,16 @@ class TestExpectedBinaries(unittest.TestCase):
         self.__test_with_reference_bin('partial_images/with_header_no_end.xml', 'partial_images/with_header_no_end.bin', None, None)
 
     def test_secure_ca9sw_file(self):
-        self.__test_with_reference_bin('secure/ca9sw_file.hex', 'secure/ca9sw_file.bin', None, ['secure/fake_ca9sw.bin'])
+        self.__test_with_reference_bin('secure/ca9sw_file.xml', 'secure/ca9sw_file.bin', None, ['secure/fake_ca9sw.bin'])
 
     def test_secure_cr7sw_file(self):
-        self.__test_with_reference_bin('secure/cr7sw_file.hex', 'secure/cr7sw_file.bin', None, ['secure/fake_cr7sw.bin'])
+        self.__test_with_reference_bin('secure/cr7sw_file.xml', 'secure/cr7sw_file.bin', None, ['secure/fake_cr7sw.bin'])
 
     def test_secure_license_cert_file(self):
-        self.__test_with_reference_bin('secure/license_cert_file.hex', 'secure/license_cert_file.bin', None, ['secure/fake_license_cert.bin'])
+        self.__test_with_reference_bin('secure/license_cert_file.xml', 'secure/license_cert_file.bin', None, ['secure/fake_license_cert.bin'])
 
     def test_secure_root_cert_file(self):
-        self.__test_with_reference_bin('secure/root_cert_file.hex', 'secure/root_cert_file.bin', None, ['secure/fake_root_cert.bin'])
+        self.__test_with_reference_bin('secure/root_cert_file.xml', 'secure/root_cert_file.bin', None, ['secure/fake_root_cert.bin'])
 
     def test_skip_absolute(self):
         self.__test_with_reference_bin('skip/absolute.xml', 'skip/absolute.bin', None, None)
