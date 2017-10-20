@@ -99,6 +99,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_offset_xip(self):
         self.__test_with_reference_bin('offset/offset_xip.xml', 'offset/offset_xip.bin', None, None)
 
+    def test_option_chunks_netx90_mpw_disable_iflash_redundancy(self):
+        self.__test_with_reference_bin('option_chunks/netx90_mpw_disable_iflash_redundancy.xml', 'option_chunks/netx90_mpw_disable_iflash_redundancy.bin', None, None)
+
     def test_partial_images_full(self):
         self.__test_with_reference_bin('partial_images/full.xml', 'partial_images/full.bin', None, None)
 

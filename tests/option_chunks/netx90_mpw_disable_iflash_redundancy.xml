@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<Options>
+			<!-- Disable redundancy pages of intflash 0, 1 and 2. --> 
+			<Option id="iflash0_redundancy">
+				<U08>0x01</U08>
+				<U08>0x01</U08>
+			</Option>
+			<Option id="iflash1_redundancy">
+				<U08>0x01</U08>
+				<U08>0x01</U08>
+			</Option>
+			<Option id="iflash2_redundancy">
+				<U08>0x01</U08>
+				<U08>0x01</U08>
+			</Option>
+		</Options>
+	</Chunks>
+</HBootImage>
+
