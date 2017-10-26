@@ -141,6 +141,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_secure_root_cert_file(self):
         self.__test_with_reference_bin('secure/root_cert_file.xml', 'secure/root_cert_file.bin', None, ['secure/fake_root_cert.bin'])
 
+#    def test_secure_root_cert(self):
+#        self.__test_with_reference_bin('secure/root_cert.xml', 'secure/root_cert.bin', ['--keyrom', 'keyrom.xml', '--openssl-options=-rand', '--openssl-options=random.bin'], ['secure/demo_key_public.der', 'secure/keyrom.xml', 'secure/random.bin'])
+
     def test_skip_absolute(self):
         self.__test_with_reference_bin('skip/absolute.xml', 'skip/absolute.bin', None, None)
 
