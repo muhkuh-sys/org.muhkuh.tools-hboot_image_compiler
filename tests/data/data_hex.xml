@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<Data>
+			<Hex address="0x00020000">
+				0123456789abcdef
+			</Hex>
+		</Data>
+	</Chunks>
+</HBootImage>

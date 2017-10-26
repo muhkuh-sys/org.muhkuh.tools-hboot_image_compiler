@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<Data>
+			<UInt16 address="0x00020000">
+				0x2301
+				0x6745
+				0xab89
+				0xefcd
+			</UInt16>
+		</Data>
+	</Chunks>
+</HBootImage>

@@ -90,6 +90,21 @@ class TestExpectedBinaries(unittest.TestCase):
 
         self.assertEqual(strBinReference, strBinOutput)
 
+    def test_data_concat(self):
+        self.__test_with_reference_bin('data/data_concat.xml', 'data/data_concat.bin', None, None)
+
+    def test_data_hex(self):
+        self.__test_with_reference_bin('data/data_hex.xml', 'data/data_hex.bin', None, None)
+
+    def test_data_uint08(self):
+        self.__test_with_reference_bin('data/data_uint8.xml', 'data/data_uint8.bin', None, None)
+
+    def test_data_uint16(self):
+        self.__test_with_reference_bin('data/data_uint16.xml', 'data/data_uint16.bin', None, None)
+
+    def test_data_uint32(self):
+        self.__test_with_reference_bin('data/data_uint32.xml', 'data/data_uint32.bin', None, None)
+
     def test_offset_decimal(self):
         self.__test_with_reference_bin('offset/offset_decimal.xml', 'offset/offset_decimal.bin', None, None)
 
