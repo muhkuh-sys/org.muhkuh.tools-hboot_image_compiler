@@ -1,3 +1,19 @@
+v0.0.5
+
+  * Support option chunks for the netX90 MPW.
+
+  * Add the possibility to read the keys for the trust paths, license, CR7
+    software and CA9 software chunks from a file.
+
+  * Pass the keyrom location from the command line to the generator.
+
+  * Use a public key for the trust paths.
+
+  * Add support for netX4000 and netX4100.
+
+  * Add UInt32, UInt16, UInt8 and Concat nodes to specify data blocks.
+
+
 v0.0.4
 
   * Add a new option "-S" / "--sniplib" to specify a sniplib location.
