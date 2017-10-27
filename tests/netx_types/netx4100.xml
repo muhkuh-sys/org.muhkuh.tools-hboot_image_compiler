@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<Options>
+			<!-- The option "prevent_switch_to_alternative_image" only exists on the netX4000 and netX4100. --> 
+			<Option id="prevent_switch_to_alternative_image">
+				<U08>0x01</U08>
+			</Option>
+		</Options>
+	</Chunks>
+</HBootImage>
