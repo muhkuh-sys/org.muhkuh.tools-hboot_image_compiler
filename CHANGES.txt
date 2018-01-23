@@ -1,3 +1,12 @@
+v0.0.6
+
+  * Add "SkipIncomplete" tag.
+
+  * Search the start symbol in the symbol table first and use the file header as a fallback.
+
+  * Ignore structure declarations from the ELF debug information.
+
+
 v0.0.5
 
   * Support option chunks for the netX90 MPW.
