@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" has_end="False">
+	<Chunks>
+		<SkipIncomplete relative="16" />
+	</Chunks>
+</HBootImage>

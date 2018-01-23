@@ -171,6 +171,27 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_skip_relative_file(self):
         self.__test_with_reference_bin('skip/relative_file.xml', 'skip/relative_file.bin', 'NETX90_MPW', None, ['skip/fill_data.bin'])
 
+    def test_skip_incomplete_absolute(self):
+        self.__test_with_reference_bin('skip_incomplete/absolute.xml', 'skip_incomplete/absolute.bin', 'NETX90_MPW', None, None)
+
+    def test_skip_incomplete_absolute_file(self):
+        self.__test_with_reference_bin('skip_incomplete/absolute_file.xml', 'skip_incomplete/absolute_file.bin', 'NETX90_MPW', None, ['skip_incomplete/fill_data.bin'])
+
+    def test_skip_incomplete_absolute_with_offset(self):
+        self.__test_with_reference_bin('skip_incomplete/absolute_with_offset.xml', 'skip_incomplete/absolute_with_offset.bin', 'NETX90_MPW', None, None)
+
+    def test_skip_incomplete_file(self):
+        self.__test_with_reference_bin('skip_incomplete/file.xml', 'skip_incomplete/file.bin', 'NETX90_MPW', None, ['skip_incomplete/file.bin'])
+
+    def test_skip_incomplete_file_with_fill(self):
+        self.__test_with_reference_bin('skip_incomplete/file_with_fill.xml', 'skip_incomplete/file_with_fill.bin', 'NETX90_MPW', None, ['skip_incomplete/fill_data.bin'])
+
+    def test_skip_incomplete_relative(self):
+        self.__test_with_reference_bin('skip_incomplete/relative.xml', 'skip_incomplete/relative.bin', 'NETX90_MPW', None, None)
+
+    def test_skip_incomplete_relative_file(self):
+        self.__test_with_reference_bin('skip_incomplete/relative_file.xml', 'skip_incomplete/relative_file.bin', 'NETX90_MPW', None, ['skip_incomplete/fill_data.bin'])
+
     def test_snippets_cdata(self):
         self.__test_with_reference_bin('snippets/cdata.xml', 'snippets/cdata.bin', 'NETX90_MPW', None, ['snippets/sniplib/cdata-1.0.0.xml'])
 

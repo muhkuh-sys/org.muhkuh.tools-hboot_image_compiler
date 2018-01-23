@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" offset="0x100" has_end="False">
+	<Chunks>
+		<!-- Skip until the absolute offset 0x1000. -->
+		<SkipIncomplete absolute="0x1000"/>
+	</Chunks>
+</HBootImage>

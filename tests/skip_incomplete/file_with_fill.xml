@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" has_end="False">
+	<Chunks>
+		<SkipIncomplete absolute="0x200" fill="0xbd">
+			<File name="fill_data.bin"/>
+		</SkipIncomplete>
+	</Chunks>
+</HBootImage>
