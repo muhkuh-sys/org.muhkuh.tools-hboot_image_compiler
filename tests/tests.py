@@ -162,6 +162,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_skip_file(self):
         self.__test_with_reference_bin('skip/file.xml', 'skip/file.bin', 'NETX90_MPW', None, ['skip/file.bin'])
 
+    def test_skip_file_alias(self):
+        self.__test_with_reference_bin('skip/file_alias.xml', 'skip/file_alias.bin', 'NETX90_MPW', ['--alias', 'FillData=fill_data.bin'], ['skip/file.bin'])
+
     def test_skip_file_with_fill(self):
         self.__test_with_reference_bin('skip/file_with_fill.xml', 'skip/file_with_fill.bin', 'NETX90_MPW', None, ['skip/fill_data.bin'])
 
