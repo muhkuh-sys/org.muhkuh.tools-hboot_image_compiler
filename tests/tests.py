@@ -207,5 +207,29 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_snippets_precedence(self):
         self.__test_with_reference_bin('snippets/precedence.xml', 'snippets/precedence.bin', 'NETX90_MPW', ['--sniplib', 'custom_sniplib', '--sniplib', 'sniplib'], ['snippets/sniplib/precedence-1.0.0.xml', 'snippets/custom_sniplib/precedence-1.0.0.xml'])
 
+    def test_xip_hex_NETX4000_RELAXED_SQIROM0(self):
+        self.__test_with_reference_bin('xip/xip_hex_NETX4000_RELAXED_SQIROM0.xml', 'xip/xip_hex_NETX4000_RELAXED_SQIROM0.bin', 'NETX4000_RELAXED', None, None)
+
+    def test_xip_hex_NETX4000_RELAXED_SQIROM1(self):
+        self.__test_with_reference_bin('xip/xip_hex_NETX4000_RELAXED_SQIROM1.xml', 'xip/xip_hex_NETX4000_RELAXED_SQIROM1.bin', 'NETX4000_RELAXED', None, None)
+
+    def test_xip_hex_NETX4000_SQIROM0(self):
+        self.__test_with_reference_bin('xip/xip_hex_NETX4000_SQIROM0.xml', 'xip/xip_hex_NETX4000_SQIROM0.bin', 'NETX4000', None, None)
+
+    def test_xip_hex_NETX4000_SQIROM1(self):
+        self.__test_with_reference_bin('xip/xip_hex_NETX4000_SQIROM1.xml', 'xip/xip_hex_NETX4000_SQIROM1.bin', 'NETX4000', None, None)
+
+    def test_xip_hex_NETX4100_SQIROM0(self):
+        self.__test_with_reference_bin('xip/xip_hex_NETX4100_SQIROM0.xml', 'xip/xip_hex_NETX4100_SQIROM0.bin', 'NETX4100', None, None)
+
+    def test_xip_hex_NETX4100_SQIROM1(self):
+        self.__test_with_reference_bin('xip/xip_hex_NETX4100_SQIROM1.xml', 'xip/xip_hex_NETX4100_SQIROM1.bin', 'NETX4100', None, None)
+
+    def test_xip_hex_NETX90_MPW_INTFLASH(self):
+        self.__test_with_reference_bin('xip/xip_hex_NETX90_MPW_INTFLASH.xml', 'xip/xip_hex_NETX90_MPW_INTFLASH.bin', 'NETX90_MPW', None, None)
+
+    def test_xip_hex_NETX90_MPW_SQIROM(self):
+        self.__test_with_reference_bin('xip/xip_hex_NETX90_MPW_SQIROM.xml', 'xip/xip_hex_NETX90_MPW_SQIROM.bin', 'NETX90_MPW', None, None)
+
 if __name__ == '__main__':
     unittest.main()

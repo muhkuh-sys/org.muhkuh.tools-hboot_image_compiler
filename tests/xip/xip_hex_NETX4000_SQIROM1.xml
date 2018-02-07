@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" device="SQIROM1">
+	<Chunks>
+		<XIP>
+			<Hex address="0x14000048">
+				0123456789abcdef
+			</Hex>
+		</XIP>
+	</Chunks>
+</HBootImage>

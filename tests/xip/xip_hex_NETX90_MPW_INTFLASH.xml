@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" device="INTFLASH">
+	<Chunks>
+		<XIP>
+			<Hex address="0x00100048">
+				0123456789abcdef
+			</Hex>
+		</XIP>
+	</Chunks>
+</HBootImage>
