@@ -136,16 +136,16 @@ class TestExpectedBinaries(unittest.TestCase):
         self.__test_with_reference_bin('partial_images/with_header_no_end.xml', 'partial_images/with_header_no_end.bin', 'NETX90_MPW', None, None)
 
     def test_secure_ca9sw_file(self):
-        self.__test_with_reference_bin('secure/ca9sw_file.xml', 'secure/ca9sw_file.bin', 'NETX90_MPW', None, ['secure/fake_ca9sw.bin'])
+        self.__test_with_reference_bin('secure/ca9sw_file.xml', 'secure/ca9sw_file.bin', 'NETX4000', None, ['secure/fake_ca9sw.bin'])
 
     def test_secure_cr7sw_file(self):
-        self.__test_with_reference_bin('secure/cr7sw_file.xml', 'secure/cr7sw_file.bin', 'NETX90_MPW', None, ['secure/fake_cr7sw.bin'])
+        self.__test_with_reference_bin('secure/cr7sw_file.xml', 'secure/cr7sw_file.bin', 'NETX4000', None, ['secure/fake_cr7sw.bin'])
 
     def test_secure_license_cert_file(self):
-        self.__test_with_reference_bin('secure/license_cert_file.xml', 'secure/license_cert_file.bin', 'NETX90_MPW', None, ['secure/fake_license_cert.bin'])
+        self.__test_with_reference_bin('secure/license_cert_file.xml', 'secure/license_cert_file.bin', 'NETX4000', None, ['secure/fake_license_cert.bin'])
 
     def test_secure_root_cert_file(self):
-        self.__test_with_reference_bin('secure/root_cert_file.xml', 'secure/root_cert_file.bin', 'NETX90_MPW', None, ['secure/fake_root_cert.bin'])
+        self.__test_with_reference_bin('secure/root_cert_file.xml', 'secure/root_cert_file.bin', 'NETX4000', None, ['secure/fake_root_cert.bin'])
 
 #    def test_secure_root_cert(self):
 #        self.__test_with_reference_bin('secure/root_cert.xml', 'secure/root_cert.bin', 'NETX90_MPW', ['--keyrom', 'keyrom.xml', '--openssl-options=-rand', '--openssl-options=random.bin'], ['secure/demo_key_public.der', 'secure/keyrom.xml', 'secure/random.bin'])
