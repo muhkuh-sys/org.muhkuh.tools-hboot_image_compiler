@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<Skip>
+			<File name="@FillData0"/>
+		</Skip>
+
+		<Skip>
+			<File name="@FillData1"/>
+		</Skip>
+	</Chunks>
+</HBootImage>
