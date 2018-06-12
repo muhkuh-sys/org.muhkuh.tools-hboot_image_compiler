@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<HBootImage type="ALTERNATIVE">
+	<Chunks>
+		<Options>
+			<!-- The option "alternative_image" only exists on the netX90. --> 
+			<Option id="alternative_image">
+				<U08>0</U08>
+				<U08>0</U08>
+				<U08>1</U08>
+			</Option>
+		</Options>
+	</Chunks>
+</HBootImage>

@@ -108,8 +108,17 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_netx_types_netx4000(self):
         self.__test_with_reference_bin('netx_types/netx4000.xml', 'netx_types/netx4000.bin', 'NETX4000', None, None)
 
+    def test_netx_types_netx4000_alternative(self):
+        self.__test_with_reference_bin('netx_types/netx4000_alternative.xml', 'netx_types/netx4000_alternative.bin', 'NETX4000', None, None)
+
     def test_netx_types_netx4100(self):
         self.__test_with_reference_bin('netx_types/netx4100.xml', 'netx_types/netx4100.bin', 'NETX4100', None, None)
+
+    def test_netx_types_netx4100_alternative(self):
+        self.__test_with_reference_bin('netx_types/netx4100_alternative.xml', 'netx_types/netx4100_alternative.bin', 'NETX4100', None, None)
+
+    def test_netx_types_netx90_alternative(self):
+        self.__test_with_reference_bin('netx_types/netx90_alternative.xml', 'netx_types/netx90_alternative.bin', 'NETX90_FULL', None, None)
 
     def test_offset_decimal(self):
         self.__test_with_reference_bin('offset/offset_decimal.xml', 'offset/offset_decimal.bin', 'NETX90_MPW', None, None)
