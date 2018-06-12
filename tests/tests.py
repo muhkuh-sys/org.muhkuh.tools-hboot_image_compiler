@@ -111,11 +111,20 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_netx_types_netx4000_alternative(self):
         self.__test_with_reference_bin('netx_types/netx4000_alternative.xml', 'netx_types/netx4000_alternative.bin', 'NETX4000', None, None)
 
+    def test_netx_types_netx4000_apply_port_control(self):
+        self.__test_with_reference_bin('netx_types/netx4000_apply_port_control.xml', 'netx_types/netx4000_apply_port_control.bin', 'NETX4000', None, None)
+
+    def test_netx_types_netx4000_relaxed_apply_port_control(self):
+        self.__test_with_reference_bin('netx_types/netx4000_relaxed_apply_port_control.xml', 'netx_types/netx4000_relaxed_apply_port_control.bin', 'NETX4000_RELAXED', None, None)
+
     def test_netx_types_netx4100(self):
         self.__test_with_reference_bin('netx_types/netx4100.xml', 'netx_types/netx4100.bin', 'NETX4100', None, None)
 
     def test_netx_types_netx4100_alternative(self):
         self.__test_with_reference_bin('netx_types/netx4100_alternative.xml', 'netx_types/netx4100_alternative.bin', 'NETX4100', None, None)
+
+    def test_netx_types_netx4100_apply_port_control(self):
+        self.__test_with_reference_bin('netx_types/netx4100_apply_port_control.xml', 'netx_types/netx4100_apply_port_control.bin', 'NETX4100', None, None)
 
     def test_netx_types_netx90_alternative(self):
         self.__test_with_reference_bin('netx_types/netx90_alternative.xml', 'netx_types/netx90_alternative.bin', 'NETX90_FULL', None, None)
