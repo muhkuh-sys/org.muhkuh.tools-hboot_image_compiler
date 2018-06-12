@@ -60,6 +60,15 @@ tElf_netx4000_skip = tEnv_netx4000_skip.Elf('targets/netx4000_skip/netx4000_skip
 tTxt_netx4000_skip = tEnv_netx4000_skip.ObjDump('targets/netx4000_skip/netx4000_skip.txt', tElf_netx4000_skip, OBJDUMP_FLAGS=['--disassemble', '--source', '--all-headers', '--wide'])
 
 
+# Demo contents for netX4000 skip section tests.
+tEnv_netx4000_skipsect = atEnv.NETX4000.Clone()
+tEnv_netx4000_skipsect.Append(CPPPATH = ['src/netx4000_skipsect'])
+tEnv_netx4000_skipsect.Replace(LDFILE = 'src/netx4000_skipsect/netx4000_cr7_intram.ld')
+tSrc_netx4000_skipsect = tEnv_netx4000_skipsect.SetBuildPath('targets/netx4000_skipsect', 'src/netx4000_skipsect', ['src/netx4000_skipsect/init.S'])
+tElf_netx4000_skipsect = tEnv_netx4000_skipsect.Elf('targets/netx4000_skipsect/netx4000_skipsect.elf', tSrc_netx4000_skipsect)
+tTxt_netx4000_skipsect = tEnv_netx4000_skipsect.ObjDump('targets/netx4000_skipsect/netx4000_skipsect.txt', tElf_netx4000_skipsect, OBJDUMP_FLAGS=['--disassemble', '--source', '--all-headers', '--wide'])
+
+
 # ----------------------------------------------------------------------------
 #
 # Build the artifact.
@@ -116,7 +125,8 @@ atEnvVars = {
     'NETX90_OBJDUMP': atEnv.NETX90_FULL['OBJDUMP'],
     'NETX90_READELF': atEnv.NETX90_FULL['READELF'],
 
-    'ELF_NETX4000_SKIP': tElf_netx4000_skip[0].get_abspath()
+    'ELF_NETX4000_SKIP': tElf_netx4000_skip[0].get_abspath(),
+    'ELF_NETX4000_SKIPSECT': tElf_netx4000_skipsect[0].get_abspath()
 }
 
 strHbootDepackPath = 'targets/tests/bin'

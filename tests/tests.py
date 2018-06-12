@@ -184,6 +184,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_skip_absolute_file_elf(self):
         self.__test_with_reference_bin('skip/absolute_file_elf.xml', 'skip/absolute_file_elf.bin', 'NETX90_MPW', ['--objcopy', '%%NETX90_OBJCOPY%%', '--objdump', '%%NETX90_OBJDUMP%%', '--readelf', '%%NETX90_READELF%%', '--alias', 'FillData=%%ELF_NETX4000_SKIP%%'], None)
 
+    def test_skip_absolute_file_elf_sect(self):
+        self.__test_with_reference_bin('skip/absolute_file_elf_sect.xml', 'skip/absolute_file_elf_sect.bin', 'NETX90_MPW', ['--objcopy', '%%NETX90_OBJCOPY%%', '--objdump', '%%NETX90_OBJDUMP%%', '--readelf', '%%NETX90_READELF%%', '--alias', 'FillData=%%ELF_NETX4000_SKIPSECT%%'], None)
+
     def test_skip_absolute_with_offset(self):
         self.__test_with_reference_bin('skip/absolute_with_offset.xml', 'skip/absolute_with_offset.bin', 'NETX90_MPW', None, None)
 
