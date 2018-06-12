@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<!-- Skip until an absolute offset. -->
+		<Skip absolute="%%skipUntil%%"/>
+	</Chunks>
+</HBootImage>

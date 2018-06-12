@@ -162,6 +162,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_skip_absolute(self):
         self.__test_with_reference_bin('skip/absolute.xml', 'skip/absolute.bin', 'NETX90_MPW', None, None)
 
+    def test_skip_absolute_parameter(self):
+        self.__test_with_reference_bin('skip/absolute_parameter.xml', 'skip/absolute_parameter.bin', 'NETX90_FULL', ['--define', 'skipUntil=0x1000'], None)
+
     def test_skip_absolute_file(self):
         self.__test_with_reference_bin('skip/absolute_file.xml', 'skip/absolute_file.bin', 'NETX90_MPW', None, ['skip/fill_data.bin'])
 
