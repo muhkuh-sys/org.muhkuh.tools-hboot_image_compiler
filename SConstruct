@@ -62,7 +62,7 @@ tArcList.AddFiles('hboot_image_compiler/',
     'mbs/site_scons/hboot_netx4000_relaxed_patch_table.xml',
     'mbs/site_scons/hboot_netx4000_patch_table.xml',
     'mbs/site_scons/hboot_netx56_patch_table.xml',
-    'mbs/site_scons/hboot_netx90_mpw_app_patch_table.xml',
+    'mbs/site_scons/hboot_netx90_full_patch_table.xml',
     'mbs/site_scons/hboot_netx90_mpw_patch_table.xml',
     'CHANGES.txt')
 
