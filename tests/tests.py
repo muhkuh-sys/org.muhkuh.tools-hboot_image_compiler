@@ -1,6 +1,7 @@
 import unittest
 
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -12,9 +13,12 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strTestsBaseDir = os.path.realpath(os.path.dirname(__file__))
         self.strOutputBaseDir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'output'))
         self.strHBootImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler'))
-        self.strObjcopy = 'objcopy'
-        self.strObjdump = 'objdump'
-        self.strReadelf = 'readelf'
+
+    def __get_env_var(self, tMatch):
+        strEnvKey = tMatch.group(1)
+        if strEnvKey not in os.environ:
+            raise Exception('Referened non-existing environment variable "%s".' % strEnvKey)
+        return os.environ[strEnvKey]
 
     def __run_hboot_image_compiler(self, strCwd, strXml, strOutput, strNetx, atExtraArguments):
         # Save the current working directory for later.
@@ -27,13 +31,13 @@ class TestExpectedBinaries(unittest.TestCase):
         astrCmd = [
             sys.executable,
             self.strHBootImageCompiler,
-            '--netx-type', strNetx,
-            '--objcopy', self.strObjcopy,
-            '--objdump', self.strObjdump,
-            '--readelf', self.strReadelf
+            '--netx-type', strNetx
         ]
         if atExtraArguments is not None:
-            astrCmd.extend(atExtraArguments)
+            tRe = re.compile('%%([\w]+)%%')
+            # Replace all ENV vars in the extra arguments.
+            for strArg in atExtraArguments:
+                astrCmd.append(tRe.sub(self.__get_env_var, strArg))
         astrCmd.extend([
             strXml,
             strOutput
@@ -176,6 +180,9 @@ class TestExpectedBinaries(unittest.TestCase):
 
     def test_skip_absolute_file_bin(self):
         self.__test_with_reference_bin('skip/absolute_file_bin.xml', 'skip/absolute_file_bin.bin', 'NETX90_MPW', None, ['skip/fill_data.bin'])
+
+    def test_skip_absolute_file_elf(self):
+        self.__test_with_reference_bin('skip/absolute_file_elf.xml', 'skip/absolute_file_elf.bin', 'NETX90_MPW', ['--objcopy', '%%NETX90_OBJCOPY%%', '--objdump', '%%NETX90_OBJDUMP%%', '--readelf', '%%NETX90_READELF%%', '--alias', 'FillData=%%ELF_NETX4000_SKIP%%'], None)
 
     def test_skip_absolute_with_offset(self):
         self.__test_with_reference_bin('skip/absolute_with_offset.xml', 'skip/absolute_with_offset.bin', 'NETX90_MPW', None, None)

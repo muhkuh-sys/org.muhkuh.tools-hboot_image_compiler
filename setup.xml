@@ -20,5 +20,12 @@
 			<version>8.6.8_3</version>
 			<typ>tar.bz2</typ>
 		</tool>
+		<tool>
+			<group>org.gnu.gcc</group>
+			<name>gcc-arm-none-eabi</name>
+			<package>gcc-arm-none-eabi_${platform}_${machine}</package>
+			<version>4.9.3_3</version>
+			<typ>tar.bz2</typ>
+		</tool>
 	</tools>
 </muhkuh_buildsystem>

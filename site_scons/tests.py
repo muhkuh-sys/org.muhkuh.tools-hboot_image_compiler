@@ -23,18 +23,27 @@
 import subprocess
 import sys
 
-import SCons.Script
+import SCons
 
 
 def tests_action(target, source, env):
     strSourcePath = source[0].get_path()
     strTargetPath = target[0].get_path()
 
-    subprocess.check_call([
+    atEnvVars = env['ENVVARS']
+
+    astrArgs = [
         sys.executable,
         strSourcePath,
         '-v'
-    ])
+    ]
+    tProc = subprocess.Popen(
+        astrArgs,
+        env=atEnvVars,
+    )
+    tProc.wait()
+    if tProc.returncode!=0:
+        raise Exception('Failed to execute the process!')
 
     # Create a test stamp.
     tFile = open(strTargetPath, 'wt')
