@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<!-- Include a file. -->
+		<Include name="@Data"/>
+	</Chunks>
+</HBootImage>

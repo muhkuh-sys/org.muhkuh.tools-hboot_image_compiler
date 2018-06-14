@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" device="SQIROM0">
+	<Chunks>
+		<XIP>
+			<File name="@FillData" load_address="0x10000048"/>
+		</XIP>
+	</Chunks>
+</HBootImage>

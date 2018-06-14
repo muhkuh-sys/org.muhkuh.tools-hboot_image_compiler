@@ -97,6 +97,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_data_concat(self):
         self.__test_with_reference_bin('data/data_concat.xml', 'data/data_concat.bin', 'NETX90_MPW', None, None)
 
+    def test_data_file_alias(self):
+        self.__test_with_reference_bin('data/data_file_alias.xml', 'data/data_file_alias.bin', 'NETX90_FULL', ['--alias', 'FillData=fill_data.bin'], ['data/fill_data.bin'])
+
     def test_data_hex(self):
         self.__test_with_reference_bin('data/data_hex.xml', 'data/data_hex.bin', 'NETX90_MPW', None, None)
 
@@ -108,6 +111,12 @@ class TestExpectedBinaries(unittest.TestCase):
 
     def test_data_uint32(self):
         self.__test_with_reference_bin('data/data_uint32.xml', 'data/data_uint32.bin', 'NETX90_MPW', None, None)
+
+    def test_execute_file_elf(self):
+        self.__test_with_reference_bin('execute/execute_file_elf.xml', 'execute/execute_file_elf.bin', 'NETX4000', ['--objcopy', '%%NETX4000_OBJCOPY%%', '--objdump', '%%NETX4000_OBJDUMP%%', '--readelf', '%%NETX4000_READELF%%', '--alias', 'Program=%%ELF_NETX4000_SKIP%%'], None)
+
+    def test_include_file_alias(self):
+        self.__test_with_reference_bin('include/include_file_alias.xml', 'include/include_file_alias.bin', 'NETX4000', ['--alias', 'Data=data.xml'], ['include/data.xml'])
 
     def test_netx_types_netx4000(self):
         self.__test_with_reference_bin('netx_types/netx4000.xml', 'netx_types/netx4000.bin', 'NETX4000', None, None)
@@ -240,6 +249,9 @@ class TestExpectedBinaries(unittest.TestCase):
 
     def test_snippets_precedence(self):
         self.__test_with_reference_bin('snippets/precedence.xml', 'snippets/precedence.bin', 'NETX90_MPW', ['--sniplib', 'custom_sniplib', '--sniplib', 'sniplib'], ['snippets/sniplib/precedence-1.0.0.xml', 'snippets/custom_sniplib/precedence-1.0.0.xml'])
+
+    def test_xip_file_alias_NETX4000_SQIROM0(self):
+        self.__test_with_reference_bin('xip/xip_file_alias_NETX4000_SQIROM0.xml', 'xip/xip_file_alias_NETX4000_SQIROM0.bin', 'NETX4000', ['--alias', 'FillData=fill_data.bin'], ['xip/fill_data.bin'])
 
     def test_xip_hex_NETX4000_RELAXED_SQIROM0(self):
         self.__test_with_reference_bin('xip/xip_hex_NETX4000_RELAXED_SQIROM0.xml', 'xip/xip_hex_NETX4000_RELAXED_SQIROM0.bin', 'NETX4000_RELAXED', None, None)
