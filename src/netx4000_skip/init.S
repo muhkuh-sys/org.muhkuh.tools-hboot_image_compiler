@@ -1,5 +1,7 @@
 	.section .init_code, "ax"
 
+	.global start
+
 @--------------------------------------
 
 	.arm
