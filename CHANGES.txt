@@ -1,3 +1,20 @@
+v0.0.7
+
+  * Support file aliases in "skip" chunks.
+
+  * Add all chunks for the netX90 FULL.
+
+  * Separate data items with comma.
+
+  * Remove the obsolete netx90 MPW APP support.
+
+  * Add an image type for alternative images on netX90, netX4000 and netX4100.
+
+  * Add the address of the netX4000 "portcontrol_init" as "apply_port_control".
+
+  * Read contents for a "Skip" chunk from an ELF file.
+
+
 v0.0.6
 
   * Add "SkipIncomplete" tag.
