@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+    <Chunks>
+        <Register>
+            <nop />
+            <set address="0xff401000" value="0x01" /> 
+            <copy source="0xff401004" dest="0xff401000" unlock="true" />
+            <delay time_ms="200" />
+            <!-- mask defaults to 0xffffffff; timeout is in ms -->
+            <poll  address="0xff401540" mask="0x40000000" cmp="0x40000000" timeout_ms="200" />
+        </Register>
+    </Chunks>
+</HBootImage>
+
