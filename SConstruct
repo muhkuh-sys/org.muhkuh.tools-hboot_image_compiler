@@ -21,6 +21,7 @@
 
 
 import os.path
+import os
 
 #----------------------------------------------------------------------------
 #
@@ -128,6 +129,16 @@ atEnvVars = {
     'ELF_NETX4000_SKIP': tElf_netx4000_skip[0].get_abspath(),
     'ELF_NETX4000_SKIPSECT': tElf_netx4000_skipsect[0].get_abspath()
 }
+
+# These environment variables are required by urandom() on Windoofs, which is required by tempfile.mkstemp()
+astrWinRequiredEnv = [
+    'TMP', 
+    'SystemRoot'
+]
+
+for k in astrWinRequiredEnv:
+    if k in os.environ:
+        atEnvVars[k] = os.environ[k]
 
 strHbootDepackPath = 'targets/tests/bin'
 tUnpackStamp = atEnv.DEFAULT.Unpack('targets/tests/.unpack_stamp', tArtifactZip, UNPACK_FOLDER=strHbootDepackPath)
