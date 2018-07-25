@@ -154,6 +154,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_option_chunks_netx90_mpw_disable_iflash_redundancy(self):
         self.__test_with_reference_bin('option_chunks/netx90_mpw_disable_iflash_redundancy.xml', 'option_chunks/netx90_mpw_disable_iflash_redundancy.bin', 'NETX90_MPW', None, None)
 
+    def test_option_chunks_netx90_options(self):
+        self.__test_with_reference_bin('option_chunks/netx90_options.xml', 'option_chunks/netx90_options.bin', 'NETX90_FULL', None, None)
+
     def test_regi_chunk(self):
         self.__test_with_reference_bin('regi/regi.xml', 'regi/regi.bin', 'NETX90_FULL', None, None)
         

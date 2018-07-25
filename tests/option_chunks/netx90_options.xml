@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<Options>
+			<!-- Option id="padcontrol_mled" value="68">
+				<Element id="/tPadCtrlDefaults/aucValues" size="4" type="2"/>
+			</Option -->
+			<Option id="padcontrol_mled">
+				<U08>
+					0x01, <!-- pad: MLED0 reg: register/pad_ctrl/pad_ctrl_mled0 -->
+					0x01, <!-- pad: MLED1 reg: register/pad_ctrl/pad_ctrl_mled1 -->
+					0x01, <!-- pad: MLED2 reg: register/pad_ctrl/pad_ctrl_mled2 -->
+					0x01  <!-- pad: MLED3 reg: register/pad_ctrl/pad_ctrl_mled3 -->
+				</U08>
+			</Option>
+            
+			<!-- Option id="netx_hif_sdram" value="58">
+				<Element id="/tNetxHifSdram/ul_general_ctrl"           size="4" type="0"/>
+				<Element id="/tNetxHifSdram/ul_timing_ctrl"            size="4" type="0"/>
+				<Element id="/tNetxHifSdram/ul_mr"                     size="4" type="0"/>
+				<Element id="/tNetxHifSdram/us_sdram_setup_timeout_ms" size="2" type="0"/>
+			</Option -->
+			<Option id="netx_hif_sdram">
+				<U32> 0x030D0011 </U32> <!-- /tNetxHifSdram/ul_general_ctrl -->
+				<U32> 0x02A22251 </U32> <!-- /tNetxHifSdram/ul_timing_ctrl -->
+				<U32> 0x00000033 </U32> <!-- /tNetxHifSdram/ul_mr -->
+				<U16> 200        </U16> <!-- /tNetxHifSdram/us_sdram_setup_timeout_ms -->
+			</Option>
+		</Options>
+	</Chunks>
+</HBootImage>
+
+<!--
+00000000: 00 af be f3 00 00 00 00 00 00 00 00 00 00 00 00  ................
+00000010: 0a 00 00 00 00 00 00 00 4d 4f 4f 48 00 00 00 00  ........MOOH....
+00000020: b1 fa 8b e8 5f 98 3b 82 8c cf f1 7b 2f 0f 58 ef  ...._.;....{/.X.
+00000030: 11 21 c9 c1 ec b0 20 e7 fe ae f8 4e e3 0e fe f5  .!.... ....N....
+00000040: 4f 50 54 53 07 00 00 00 44 04 00 01 01 01 01 3a  OPTS....D......:
+00000050: 11 00 0d 03 51 22 a2 02 33 00 00 00 c8 00 00 00  ....Q"..3.......
+00000060: 21 f6 21 8a 00 00 00 00                          !.!.....
+
+4f 50 54 53 OPTS
+07 00 00 00 7 dwords
+44          option ID padcontrol_mled
+04 00 size
+01 01 01 01 data
+3a          option ID netx_hif_sdram
+11 00 0d 03 ul_general_ctrl
+51 22 a2 02 ul_timing_ctrl
+33 00 00 00 ul_mr
+c8 00       us_sdram_setup_timeout_ms
+00 00       padding
+21 f6 21 8a checksum
+00 00 00 00 end
+
+-->
