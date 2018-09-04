@@ -1,3 +1,5 @@
+  * Corrected binary format of REGI chunks.
+
 v0.0.8
 
   * Support REGI chunk for netx 90 Full.
