@@ -98,7 +98,7 @@ class TestExpectedBinaries(unittest.TestCase):
         self.__test_with_reference_bin('data/data_concat.xml', 'data/data_concat.bin', 'NETX90_MPW', None, None)
 
     def test_data_file_alias(self):
-        self.__test_with_reference_bin('data/data_file_alias.xml', 'data/data_file_alias.bin', 'NETX90_FULL', ['--alias', 'FillData=fill_data.bin'], ['data/fill_data.bin'])
+        self.__test_with_reference_bin('data/data_file_alias.xml', 'data/data_file_alias.bin', 'NETX90', ['--alias', 'FillData=fill_data.bin'], ['data/fill_data.bin'])
 
     def test_data_hex(self):
         self.__test_with_reference_bin('data/data_hex.xml', 'data/data_hex.bin', 'NETX90_MPW', None, None)
@@ -140,7 +140,7 @@ class TestExpectedBinaries(unittest.TestCase):
         self.__test_with_reference_bin('netx_types/netx4100_apply_port_control.xml', 'netx_types/netx4100_apply_port_control.bin', 'NETX4100', None, None)
 
     def test_netx_types_netx90_alternative(self):
-        self.__test_with_reference_bin('netx_types/netx90_alternative.xml', 'netx_types/netx90_alternative.bin', 'NETX90_FULL', None, None)
+        self.__test_with_reference_bin('netx_types/netx90_alternative.xml', 'netx_types/netx90_alternative.bin', 'NETX90', None, None)
 
     def test_offset_decimal(self):
         self.__test_with_reference_bin('offset/offset_decimal.xml', 'offset/offset_decimal.bin', 'NETX90_MPW', None, None)
@@ -155,10 +155,10 @@ class TestExpectedBinaries(unittest.TestCase):
         self.__test_with_reference_bin('option_chunks/netx90_mpw_disable_iflash_redundancy.xml', 'option_chunks/netx90_mpw_disable_iflash_redundancy.bin', 'NETX90_MPW', None, None)
 
     def test_option_chunks_netx90_options(self):
-        self.__test_with_reference_bin('option_chunks/netx90_options.xml', 'option_chunks/netx90_options.bin', 'NETX90_FULL', None, None)
+        self.__test_with_reference_bin('option_chunks/netx90_options.xml', 'option_chunks/netx90_options.bin', 'NETX90', None, None)
 
     def test_regi_chunk(self):
-        self.__test_with_reference_bin('regi/regi.xml', 'regi/regi.bin', 'NETX90_FULL', None, None)
+        self.__test_with_reference_bin('regi/regi.xml', 'regi/regi.bin', 'NETX90', None, None)
         
     def test_partial_images_full(self):
         self.__test_with_reference_bin('partial_images/full.xml', 'partial_images/full.bin', 'NETX90_MPW', None, None)
@@ -191,7 +191,7 @@ class TestExpectedBinaries(unittest.TestCase):
         self.__test_with_reference_bin('skip/absolute.xml', 'skip/absolute.bin', 'NETX90_MPW', None, None)
 
     def test_skip_absolute_parameter(self):
-        self.__test_with_reference_bin('skip/absolute_parameter.xml', 'skip/absolute_parameter.bin', 'NETX90_FULL', ['--define', 'skipUntil=0x1000'], None)
+        self.__test_with_reference_bin('skip/absolute_parameter.xml', 'skip/absolute_parameter.bin', 'NETX90', ['--define', 'skipUntil=0x1000'], None)
 
     def test_skip_absolute_file_bin(self):
         self.__test_with_reference_bin('skip/absolute_file_bin.xml', 'skip/absolute_file_bin.bin', 'NETX90_MPW', None, ['skip/fill_data.bin'])
@@ -209,10 +209,10 @@ class TestExpectedBinaries(unittest.TestCase):
         self.__test_with_reference_bin('skip/file.xml', 'skip/file.bin', 'NETX90_MPW', None, ['skip/file.bin'])
 
     def test_skip_file_alias(self):
-        self.__test_with_reference_bin('skip/file_alias.xml', 'skip/file_alias.bin', 'NETX90_FULL', ['--alias', 'FillData=fill_data.bin'], ['skip/fill_data.bin'])
+        self.__test_with_reference_bin('skip/file_alias.xml', 'skip/file_alias.bin', 'NETX90', ['--alias', 'FillData=fill_data.bin'], ['skip/fill_data.bin'])
 
     def test_skip_file_alias_multi(self):
-        self.__test_with_reference_bin('skip/file_alias_multi.xml', 'skip/file_alias_multi.bin', 'NETX90_FULL', ['--alias', 'FillData0=fill_data.bin', '--alias', 'FillData1=fill_data2.bin'], ['skip/fill_data.bin', 'skip/fill_data2.bin'])
+        self.__test_with_reference_bin('skip/file_alias_multi.xml', 'skip/file_alias_multi.bin', 'NETX90', ['--alias', 'FillData0=fill_data.bin', '--alias', 'FillData1=fill_data2.bin'], ['skip/fill_data.bin', 'skip/fill_data2.bin'])
 
     def test_skip_file_with_fill(self):
         self.__test_with_reference_bin('skip/file_with_fill.xml', 'skip/file_with_fill.bin', 'NETX90_MPW', None, ['skip/fill_data.bin'])
