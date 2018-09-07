@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="mbs/setup2html.xsl"?>
 
 <muhkuh_buildsystem project="hboot_image_compiler">
-	<project_version>0.0.9</project_version>
+	<project_version>0.0.8</project_version>
 
 	<scons>
 		<group>org.scons</group>

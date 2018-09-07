@@ -1,10 +1,10 @@
-v0.0.9
-
-  * Corrected binary format of REGI chunks.
-
 v0.0.8
 
   * Support REGI chunk for netx 90 Full.
+
+  * Fix "Exec" chunk for netX90 MPW.
+    The netX90 introduced an additional DWORD in the "Exec" chunk which was erroneously added for the MPW.
+
 
 v0.0.7
 
