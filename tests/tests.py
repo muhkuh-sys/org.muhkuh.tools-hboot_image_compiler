@@ -121,6 +121,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_execute_address_netx90(self):
         self.__test_with_reference_bin('execute/execute_address_netx90.xml', 'execute/execute_address_netx90.bin', 'NETX90', None, None)
 
+    def test_firewall_chunk(self):
+        self.__test_with_reference_bin('firewall/firewall.xml', 'firewall/firewall.bin', 'NETX90', None, None)
+       
     def test_include_file_alias(self):
         self.__test_with_reference_bin('include/include_file_alias.xml', 'include/include_file_alias.bin', 'NETX4000', ['--alias', 'Data=data.xml'], ['include/data.xml'])
 
@@ -163,9 +166,6 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_option_chunks_netx90_options(self):
         self.__test_with_reference_bin('option_chunks/netx90_options.xml', 'option_chunks/netx90_options.bin', 'NETX90', None, None)
 
-    def test_regi_chunk(self):
-        self.__test_with_reference_bin('regi/regi.xml', 'regi/regi.bin', 'NETX90', None, None)
-        
     def test_partial_images_full(self):
         self.__test_with_reference_bin('partial_images/full.xml', 'partial_images/full.bin', 'NETX90_MPW', None, None)
 
@@ -177,6 +177,9 @@ class TestExpectedBinaries(unittest.TestCase):
 
     def test_partial_images_with_header_no_end(self):
         self.__test_with_reference_bin('partial_images/with_header_no_end.xml', 'partial_images/with_header_no_end.bin', 'NETX90_MPW', None, None)
+
+    def test_regi_chunk(self):
+        self.__test_with_reference_bin('regi/regi.xml', 'regi/regi.bin', 'NETX90', None, None)
 
     def test_secure_ca9sw_file(self):
         self.__test_with_reference_bin('secure/ca9sw_file.xml', 'secure/ca9sw_file.bin', 'NETX4000', None, ['secure/fake_ca9sw.bin'])
