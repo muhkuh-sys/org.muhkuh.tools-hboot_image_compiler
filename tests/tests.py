@@ -126,7 +126,22 @@ class TestExpectedBinaries(unittest.TestCase):
        
     def test_include_file_alias(self):
         self.__test_with_reference_bin('include/include_file_alias.xml', 'include/include_file_alias.bin', 'NETX4000', ['--alias', 'Data=data.xml'], ['include/data.xml'])
-
+        
+    def test_include_file_global_define(self):
+        self.__test_with_reference_bin('include/include_file_global_define.xml', 'include/include_file_alias.bin', 'NETX90', ['-D', 'Data=data.xml'], ['include/data.xml'])
+        
+    def test_include_text_chunk_global_define(self):
+        self.__test_with_reference_bin('include/include_text.xml', 'include/include_text.bin', 
+        'NETX90', 
+        ['-D', 'HWC_TYPE=MWC'], 
+        ['include/text_placeholder.xml'])
+        
+    def test_include_text_chunk_parameter(self):
+        self.__test_with_reference_bin('include/include_text_param.xml', 'include/include_text.bin', 
+        'NETX90', 
+        None,
+        ['include/text_placeholder.xml'])
+        
     def test_netx_types_netx4000(self):
         self.__test_with_reference_bin('netx_types/netx4000.xml', 'netx_types/netx4000.bin', 'NETX4000', None, None)
 

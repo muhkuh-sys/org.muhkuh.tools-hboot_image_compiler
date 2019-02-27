@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+<Chunks>
+    <Include name="text_placeholder.xml">
+        <Parameter name="HWC_TYPE">MWC</Parameter>
+    </Include>
+</Chunks>
+</HBootImage>
+
+<!--
+-->

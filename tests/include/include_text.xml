@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+<Chunks>
+    <Include name="text_placeholder.xml" />
+</Chunks>
+</HBootImage>
