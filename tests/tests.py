@@ -43,7 +43,7 @@ class TestExpectedBinaries(unittest.TestCase):
             strOutput
         ])
 
-        subprocess.check_call(astrCmd)
+        subprocess.check_output(astrCmd)
 
         # Restore the old working directory.
         os.chdir(strOldPath)
@@ -114,6 +114,29 @@ class TestExpectedBinaries(unittest.TestCase):
 
     def test_execute_file_elf(self):
         self.__test_with_reference_bin('execute/execute_file_elf.xml', 'execute/execute_file_elf.bin', 'NETX4000', ['--objcopy', '%%NETX4000_OBJCOPY%%', '--objdump', '%%NETX4000_OBJDUMP%%', '--readelf', '%%NETX4000_READELF%%', '--alias', 'Program=%%ELF_NETX4000_SKIP%%'], None)
+        
+    def test_binutils_path(self):
+        fTestPassed = False
+        strOldPath = os.getcwd()
+        try:
+            self.__test_with_reference_bin(
+                'execute/execute_file_elf.xml', 'execute/execute_file_elf.bin', 'NETX4000', 
+                ['--objcopy', '%%NETX4000_OBJCOPY%%_junk', # make the path invalid
+                '--objdump', '%%NETX4000_OBJDUMP%%_junk', 
+                '--readelf', '%%NETX4000_READELF%%_junk', 
+                '--alias', 'Program=%%ELF_NETX4000_SKIP%%'], None)
+        except Exception as e:
+            print("Exception:")
+            print(e)
+            print("Exception output")
+            print(e.output)
+            strExpectedError = "Failed to call external program:"
+            if strExpectedError in e.output:
+                fTestPassed = True
+                print("Found expected error message")
+                
+        os.chdir(strOldPath)
+        assert fTestPassed, "Did not find expected error message"
 
     def test_execute_address_netx90_mpw(self):
         self.__test_with_reference_bin('execute/execute_address_netx90_mpw.xml', 'execute/execute_address_netx90_mpw.bin', 'NETX90_MPW', None, None)
