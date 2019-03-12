@@ -146,7 +146,29 @@ class TestExpectedBinaries(unittest.TestCase):
 
     def test_firewall_chunk(self):
         self.__test_with_reference_bin('firewall/firewall.xml', 'firewall/firewall.bin', 'NETX90', None, None)
-       
+    
+    
+    def test_header_NETX90_INTFLASH_flash_param_true(self):
+        self.__test_with_reference_bin('header/header_NETX90_INTFLASH_flash_param_true.xml', 
+        'header/header_NETX90_INTFLASH_flash_param_true.bin', 'NETX90', None, None)
+        
+    def test_header_NETX90_INTFLASH_flash_param_false(self):
+        self.__test_with_reference_bin('header/header_NETX90_INTFLASH_flash_param_false.xml', 
+        'header/header_NETX90_INTFLASH_flash_param_false.bin', 'NETX90', None, None)
+        
+    def test_header_NETX90_INTFLASH_empty(self):
+        self.__test_with_reference_bin('header/header_NETX90_INTFLASH_empty.xml', 
+        'header/header_NETX90_INTFLASH_empty.bin', 'NETX90', None, None)
+
+    def test_header_NETX90_MPW_SQIROM_flash_param_true(self):
+        self.__test_with_reference_bin('header/header_NETX90_MPW_SQIROM_flash_param_true.xml', 
+        'header/header_NETX90_MPW_SQIROM_flash_param_true.bin', 'NETX90_MPW', None, None)
+    
+    def test_header_NETX4000_SQIROM0_flash_param_true(self):
+        self.__test_with_reference_bin('header/header_NETX4000_SQIROM0_flash_param_true.xml', 
+        'header/header_NETX4000_SQIROM0_flash_param_true.bin', 'NETX4000', None, None)
+    
+    
     def test_include_file_alias(self):
         self.__test_with_reference_bin('include/include_file_alias.xml', 'include/include_file_alias.bin', 'NETX4000', ['--alias', 'Data=data.xml'], ['include/data.xml'])
         
