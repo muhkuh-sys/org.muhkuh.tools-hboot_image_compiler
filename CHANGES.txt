@@ -1,3 +1,6 @@
+v0.0.10
+  * Add data type String to Concat node.
+
 v0.0.9
 
   * Add flash device and offset information to boot header (optional).
