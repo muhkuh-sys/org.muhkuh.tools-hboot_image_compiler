@@ -325,6 +325,20 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_snippets_precedence(self):
         self.__test_with_reference_bin('snippets/precedence.xml', 'snippets/precedence.bin', 'NETX90_MPW', ['--sniplib', 'custom_sniplib', '--sniplib', 'sniplib'], ['snippets/sniplib/precedence-1.0.0.xml', 'snippets/custom_sniplib/precedence-1.0.0.xml'])
 
+    def test_text_NETX90_INTFLASH(self):
+        self.__test_with_reference_bin('text/text_NETX90_INTFLASH.xml', 'text/text.bin', 'NETX90', None, None)
+    def test_text_NETX4000_INTFLASH(self):
+        self.__test_with_reference_bin('text/text_NETX4000_4100_SQIROM0.xml', 'text/text.bin', 'NETX4000', None, None)
+    def test_text_NETX4100_INTFLASH(self):
+        self.__test_with_reference_bin('text/text_NETX4000_4100_SQIROM0.xml', 'text/text.bin', 'NETX4100', None, None)
+        
+    def test_xip_concat_NETX90_INTFLASH(self):
+        self.__test_with_reference_bin('xip/xip_concat_NETX90_INTFLASH.xml',       'xip/xip_concat.bin', 'NETX90', None, None)
+    def test_xip_concat_NETX4000_SQIROM0(self):
+        self.__test_with_reference_bin('xip/xip_concat_NETX4000_4100_SQIROM0.xml', 'xip/xip_concat.bin', 'NETX4000', None, None)
+    def test_xip_concat_NETX4100_SQIROM0(self):
+        self.__test_with_reference_bin('xip/xip_concat_NETX4000_4100_SQIROM0.xml', 'xip/xip_concat.bin', 'NETX4100', None, None)
+        
     def test_xip_file_alias_NETX4000_SQIROM0(self):
         self.__test_with_reference_bin('xip/xip_file_alias_NETX4000_SQIROM0.xml', 'xip/xip_file_alias_NETX4000_SQIROM0.bin', 'NETX4000', ['--alias', 'FillData=fill_data.bin'], ['xip/fill_data.bin'])
 
