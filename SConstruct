@@ -94,6 +94,7 @@ tArcList.AddFiles('hboot_image_compiler/hboot_image_compiler/',
     'mbs/site_scons/elf_support.py',
     'mbs/site_scons/hboot_image_compiler/hboot_image.py',
     'mbs/site_scons/hboot_image_compiler/netx90_app_iflash_image.py',
+    'mbs/site_scons/hboot_image_compiler/netx90_app_image.py',
     'mbs/site_scons/hboot_image_compiler/option_compiler.py',
     'mbs/site_scons/hboot_image_compiler/patch_definitions.py',
     'mbs/site_scons/hboot_image_compiler/snippet_library.py')
