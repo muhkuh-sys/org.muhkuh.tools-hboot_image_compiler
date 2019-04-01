@@ -1,0 +1,11 @@
+<AppImage>
+    <!-- The start part in INTFLASH2. -->
+    <data padding_pre_size="0" headeraddress="0">
+        <File name="@tElf" segments="@segments_intflash"/>
+    </data>
+
+    <!-- Code/data in the external flash. -->
+    <data headeraddress="@headeraddress_extflash">
+        <File name="@tElf" segments="@segments_extflash"/>
+    </data>
+</AppImage>
