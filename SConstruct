@@ -46,6 +46,7 @@ env_cortexM4 = atEnv.DEFAULT.CreateEnvironment(['gcc-arm-none-eabi-4.9', 'asciid
 env_cortexM4.CreateCompilerEnv('NETX90_MPW', ['arch=armv7', 'thumb'], ['arch=armv7e-m', 'thumb'])
 env_cortexM4.CreateCompilerEnv('NETX90_FULL', ['arch=armv7', 'thumb'], ['arch=armv7e-m', 'thumb'])
 
+env_cortexM4.CreateCompilerEnv('NETX90_APP', ['arch=armv7', 'thumb'], ['arch=armv7e-m', 'thumb'])
 
 # ----------------------------------------------------------------------------
 #
@@ -69,7 +70,49 @@ tSrc_netx4000_skipsect = tEnv_netx4000_skipsect.SetBuildPath('targets/netx4000_s
 tElf_netx4000_skipsect = tEnv_netx4000_skipsect.Elf('targets/netx4000_skipsect/netx4000_skipsect.elf', tSrc_netx4000_skipsect)
 tTxt_netx4000_skipsect = tEnv_netx4000_skipsect.ObjDump('targets/netx4000_skipsect/netx4000_skipsect.txt', tElf_netx4000_skipsect, OBJDUMP_FLAGS=['--disassemble', '--source', '--all-headers', '--wide'])
 
+# ----------------------------------------------------------------------------
+# Demo contents for netX90 app image tests.
 
+src_netx90_app_blinki = [
+    'src/netx90_app_blinki/cm4_app_vector_table_iflash.c',
+    'src/netx90_app_blinki/init.S',
+    'src/netx90_app_blinki/app_hboot_header_iflash.c',
+    'src/netx90_app_blinki/main.c',
+    'src/netx90_app_blinki/mmio6.c',
+    'src/netx90_app_blinki/mmio7.c',
+    'src/netx90_app_blinki/rdy_run.c',
+    'src/netx90_app_blinki/systime.c'
+]
+
+def build_blinki(strTargetDir, strTargetName, strLd):
+    strTargetPath = os.path.join('targets', strTargetDir)
+    strTarget = os.path.join('targets', strTargetDir, strTargetName)
+    strElfPath = strTarget + '.elf'
+    strTxtPath = strTarget + '.txt'
+    
+    tEnv = atEnv.NETX90_APP.Clone()
+    tEnv.Append(CPPPATH = ['src/netx90_app_blinki'])
+    tEnv.Replace(LDFILE = strLd)
+    tSrc = tEnv.SetBuildPath(
+        strTargetPath, 
+        'src/netx90_app_blinki', 
+        src_netx90_app_blinki
+        )
+    tElf = tEnv.Elf(strElfPath, tSrc)
+    tTxt = tEnv.ObjDump(strTxtPath, tElf, 
+        OBJDUMP_FLAGS=['--disassemble', '--source', '--all-headers', '--wide'])
+    return tElf
+    
+tElf_netx90_app_blinki_iflash_sdram = build_blinki(
+    'netx90_app_blinki_iflash_sdram', 'netx90_app_blinki_iflash_sdram', 'src/netx90_app_blinki/link/netx90_app_iflash_sdram.ld')
+    
+tElf_netx90_app_blinki_iflash = build_blinki(
+    'netx90_app_blinki_iflash', 'netx90_app_blinki_iflash', 'src/netx90_app_blinki/link/netx90_app_iflash.ld')
+
+tElf_netx90_app_blinki_sdram = build_blinki(
+    'netx90_app_blinki_sdram', 'netx90_app_blinki_sdram', 'src/netx90_app_blinki/link/netx90_app_sdram.ld')
+    
+    
 # ----------------------------------------------------------------------------
 #
 # Build the artifact.
@@ -128,8 +171,13 @@ atEnvVars = {
     'NETX90_READELF': atEnv.NETX90_FULL['READELF'],
 
     'ELF_NETX4000_SKIP': tElf_netx4000_skip[0].get_abspath(),
-    'ELF_NETX4000_SKIPSECT': tElf_netx4000_skipsect[0].get_abspath()
+    'ELF_NETX4000_SKIPSECT': tElf_netx4000_skipsect[0].get_abspath(),
+    
+    'ELF_NETX90_APP_BLINKI_IFLASH_SDRAM': tElf_netx90_app_blinki_iflash_sdram[0].get_abspath(),
+    'ELF_NETX90_APP_BLINKI_IFLASH': tElf_netx90_app_blinki_iflash[0].get_abspath(),
+    'ELF_NETX90_APP_BLINKI_SDRAM': tElf_netx90_app_blinki_sdram[0].get_abspath()    
 }
+
 
 # These environment variables are required by urandom() on Windoofs, which is required by tempfile.mkstemp()
 astrWinRequiredEnv = [
@@ -146,3 +194,7 @@ tUnpackStamp = atEnv.DEFAULT.Unpack('targets/tests/.unpack_stamp', tArtifactZip,
 tTestStamp = atEnv.DEFAULT.Tests('targets/tests/.test_stamp', 'tests/tests.py', ENVVARS=atEnvVars)
 atEnv.DEFAULT.Depends(tTestStamp, tUnpackStamp)
 atEnv.DEFAULT.Depends(tTestStamp, tElf_netx4000_skip)
+atEnv.DEFAULT.Depends(tTestStamp, tElf_netx4000_skipsect)
+atEnv.DEFAULT.Depends(tTestStamp, tElf_netx90_app_blinki_iflash_sdram)
+atEnv.DEFAULT.Depends(tTestStamp, tElf_netx90_app_blinki_iflash)
+atEnv.DEFAULT.Depends(tTestStamp, tElf_netx90_app_blinki_sdram)
