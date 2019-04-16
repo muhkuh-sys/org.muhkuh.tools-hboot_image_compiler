@@ -13,7 +13,8 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strTestsBaseDir = os.path.realpath(os.path.dirname(__file__))
         self.strOutputBaseDir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'output'))
         self.strHBootImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler'))
-
+        self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler', 'netx90_app_image.py'))
+        
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
         if strEnvKey not in os.environ:
@@ -82,8 +83,11 @@ class TestExpectedBinaries(unittest.TestCase):
 
         self.__run_hboot_image_compiler(strCwd, strInputPathFull, strOutputPathFull, strNetx, atExtraArguments)
 
+        
+        strRefPath = os.path.join(self.strTestsBaseDir, strReference)
+        #print("Comparing: Ref: %s <-> Out: %s" % (strRefPath, strOutputPathFull))
         # Read the reference binary.
-        tFile = open(os.path.join(self.strTestsBaseDir, strReference), 'rb')
+        tFile = open(strRefPath, 'rb')
         strBinReference = tFile.read()
         tFile.close()
 
@@ -94,6 +98,227 @@ class TestExpectedBinaries(unittest.TestCase):
 
         self.assertEqual(strBinReference, strBinOutput)
 
+
+# ######################################################################## 
+#                                   
+# echo Build an image for intflash + SDRAM with empty code segments in SDRAM
+# python "%TD%\app_image.py" ^
+# -c %OC% -d %OD% -r %RE% ^                          - atExtraArguments
+# -A tElf="%BD%\netx90_app_iflash_sdram-empty.elf" ^ - atExtraArguments
+# -A headeraddress_extflash=0x64300000 ^             - atExtraArguments
+# -A segments_intflash=".header,.code" ^             - atExtraArguments
+# -A segments_extflash=".code_SDRAM1,.code_SDRAM2" ^ - atExtraArguments
+# "%TD%\Linker\app_images_iflash_extflash.xml"       - strInput
+# "%BD%\netx90_app_iflash_sdram-empty.nai" "%BD%\netx90_app_iflash_sdram-empty.nae"  - strReference
+# 
+# strNetx is currently not needed
+# strReference may be multiple files
+
+    def __run_app_hboot_image_compiler(self, strCwd, strXml, astrOutput, atExtraArguments):
+        # Save the current working directory for later.
+        strOldPath = os.getcwd()
+
+        # Change to the new working directory.
+        os.chdir(strCwd)
+
+        # Run the HBOOT image compiler.
+        astrCmd = [
+            sys.executable,
+            self.strHBootNetx90AppImageCompiler,
+        ]
+        if atExtraArguments is not None:
+            tRe = re.compile('%%([\w]+)%%')
+            # Replace all ENV vars in the extra arguments.
+            for strArg in atExtraArguments:
+                astrCmd.append(tRe.sub(self.__get_env_var, strArg))
+                
+        astrCmd.append(
+            strXml,
+        )
+        astrCmd.extend(astrOutput)
+
+
+        try:
+            strOutput = subprocess.check_output(astrCmd)
+            print(strOutput)
+        except Exception as e:
+            print("Exception:")
+            print(e)
+            print("Exception output")
+            print(e.output)
+
+        # Restore the old working directory.
+        os.chdir(strOldPath)
+
+    def __test_netx90_appimg_with_reference_bin(self, strInput, astrReferences, atExtraArguments, atCopyFiles):
+        strInputBase = os.path.basename(strInput)
+        strInputPathFull = os.path.join(self.strTestsBaseDir, strInput)
+        strInputDirectoryFull = os.path.dirname(strInputPathFull)
+
+        # Create the output folder, based on the parent directory of the first reference file.
+        strReference = astrReferences[0]
+        strOutputDirectory = os.path.dirname(strReference)
+        strOutputDirectoryFull = os.path.join(self.strOutputBaseDir, strOutputDirectory)
+        if os.path.exists(strOutputDirectoryFull) == False:
+            os.makedirs(strOutputDirectoryFull)
+            
+        #strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
+        astrOutputPaths = []
+        for strReference in astrReferences:
+            strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
+            astrOutputPaths.append(strOutputPathFull)
+        # Copy files.
+        if atCopyFiles is not None:
+            for strFile in atCopyFiles:
+                strSrcAbs = os.path.join(self.strTestsBaseDir, strFile)
+                strSrcDirAbs = os.path.dirname(strSrcAbs)
+                strDstAbs = os.path.join(self.strOutputBaseDir, strFile)
+                strDstDirAbs = os.path.dirname(strDstAbs)
+                if os.path.exists(strSrcDirAbs) == False:
+                    os.makedirs(strSrcDirAbs)
+                if os.path.exists(strDstDirAbs) == False:
+                    os.makedirs(strDstDirAbs)
+                print("Copy file: %s -> %s" % (strSrcAbs, strDstAbs))
+                shutil.copy(strSrcAbs, strDstAbs)
+
+        # Copy the input file to the working folder.
+        shutil.copy(strInputPathFull, strOutputDirectoryFull)
+
+        # The working folder is the test path.
+        strCwd = strOutputDirectoryFull
+
+        print("CWD: %s" % strCwd)
+        self.__run_app_hboot_image_compiler(strCwd, strInputPathFull, astrOutputPaths, atExtraArguments)
+
+        for strReference in astrReferences:
+            strRefPath = os.path.join(self.strTestsBaseDir, strReference)
+            strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
+            print("Comparing: Ref: %s <-> Out: %s" % (strRefPath, strOutputPathFull))
+        
+            # Read the reference binary.
+            tFile = open(strRefPath, 'rb')
+            strBinReference = tFile.read()
+            tFile.close()
+    
+            # Read the output.
+            tFile = open(strOutputPathFull, 'rb')
+            strBinOutput = tFile.read()
+            tFile.close()
+    
+            self.assertEqual(strBinReference, strBinOutput)
+            
+# ######################################################################## 
+    strGccPath= 'C:/ProgramData/Hilscher GmbH/netX Studio CDT/BuildTools/arm-none-eabi-gcc/4.9.3/bin'
+    strOCPath=os.path.join(strGccPath, 'arm-none-eabi-objcopy.exe')
+    strODPath=os.path.join(strGccPath, 'arm-none-eabi-objdump.exe')
+    strREPath=os.path.join(strGccPath, 'arm-none-eabi-readelf.exe')
+
+#   def test_app_image_iflash(self):
+#       self.__test_netx90_appimg_with_reference_bin(
+#           # XML file
+#           'netx90_app_image/app_image_iflash.xml',
+#           [   # output files
+#               'netx90_app_image/netx90_app_iflash.nai'
+#           ],
+#           [   # extra args
+#               '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+#               '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+#               '-A', 'segments_intflash=.header,.code',
+#           ],
+#           None
+#       )
+#
+#   def test_app_image_iflash_nosegments(self):
+#       self.__test_netx90_appimg_with_reference_bin(
+#           # XML file
+#           'netx90_app_image/app_image_iflash_nosegments.xml',
+#           [   # output files
+#               'netx90_app_image/netx90_app_iflash_nosegments.nai'
+#           ],
+#           [   # extra args
+#               '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+#               '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+#           ],
+#           None
+#       )
+#           
+#   def test_app_image_iflash_sdram(self):
+#       self.__test_netx90_appimg_with_reference_bin(
+#           # XML file
+#           'netx90_app_image/app_images_iflash_extflash.xml',
+#           [   # output files
+#               'netx90_app_image/netx90_app_iflash_sdram.nai', 
+#               'netx90_app_image/netx90_app_iflash_sdram.nae'
+#           ],
+#           [   # extra args
+#               '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+#               '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
+#               '-A', 'headeraddress_extflash=0x64300000',
+#               '-A', 'segments_intflash=.header,.code',
+#               '-A', 'segments_extflash=.code_SDRAM1,.code_SDRAM2',
+#           ],
+#           None
+#       )
+        
+        
+#    def test_app_image_iflash(self):
+#        self.__test_netx90_appimg_with_reference_bin(
+#            # XML file
+#            'netx90_app_image/app_image_iflash.xml',
+#            [   # output files
+#                'netx90_app_image/netx90_app_iflash.nai'
+#            ],
+#            [   # extra args
+#                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+#                '-A', 'tElf=netx90_app_iflash.elf',
+#                '-A', 'segments_intflash=.header,.code',
+#            ],
+#            [   # Files to copy
+#                #'netx90_app_image/netx90_app_iflash.elf'
+#                '%%ELF_NETX90_APP_BLINKI_IFLASH%%'
+#            ]
+#        )
+#        
+#    def test_app_image_iflash_nosegments(self):
+#        self.__test_netx90_appimg_with_reference_bin(
+#            # XML file
+#            'netx90_app_image/app_image_iflash_nosegments.xml',
+#            [   # output files
+#                'netx90_app_image/netx90_app_iflash_nosegments.nai'
+#            ],
+#            [   # extra args
+#                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+#                '-A', 'tElf=netx90_app_iflash.elf',
+#            ],
+#            [   # Files to copy
+#                #'netx90_app_image/netx90_app_iflash.elf'
+#                '%%ELF_NETX90_APP_BLINKI_IFLASH%%'
+#            ]
+#        )
+#            
+#    def test_app_image_iflash_sdram(self):
+#        self.__test_netx90_appimg_with_reference_bin(
+#            # XML file
+#            'netx90_app_image/app_images_iflash_extflash.xml',
+#            [   # output files
+#                'netx90_app_image/netx90_app_iflash_sdram.nai', 
+#                'netx90_app_image/netx90_app_iflash_sdram.nae'
+#            ],
+#            [   # extra args
+#                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+#                '-A', 'tElf=netx90_app_iflash_sdram.elf',
+#                '-A', 'headeraddress_extflash=0x64300000',
+#                '-A', 'segments_intflash=.header,.code',
+#                '-A', 'segments_extflash=.code_SDRAM1,.code_SDRAM2',
+#            ],
+#            [   # Files to copy
+#                #'netx90_app_image/netx90_app_iflash_sdram.elf'
+#                '%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%'
+#            ]
+#        )
+            
+            
+        
     def test_data_concat(self):
         self.__test_with_reference_bin('data/data_concat.xml', 'data/data_concat.bin', 'NETX90_MPW', None, None)
 
