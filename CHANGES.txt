@@ -1,6 +1,6 @@
 v0.0.10
 
-  * Add the chip type netx 90 Rev.1 (NETX90B)
+  * Add support for the chip type netx 90 Rev.1 (NETX90B)
   
   * Add netx90_app_image.py, allowing to build multi-part boot images for the netx 90 APP CPU.
   
