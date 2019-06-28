@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hwconfig tool_version="3.0.8" peripherals_version="1.1.0.2" chip_type="netx90_rev1">
+    <peripherals>
+        <peripheral id="general">
+            <config id="default">
+                <parameter id="struct_version" value="1"/>
+                <parameter id="file_version" value="0"/>
+                <parameter id="file_string" value="NXHX90-JTAG Rev.4 + SDR split + SQI"/>
+                <parameter id="file_text" value="next_chunk example"/>
+
+                <parameter id="manufacturer_id" value="1"/>
+                <parameter id="device_number" value="7833000"/>
+                <parameter id="hardware_revision" value="4"/>
+
+                <parameter id="app_cpu_enable" value="true"/>
+                <parameter id="idpm_enable" value="true"/>
+
+                <parameter id="firewall_sqi_flash" value="com_only"/>
+                <parameter id="firewall_pad_ctrl" value="app_only"/>
+                <parameter id="firewall_eth_mac" value="app_only"/>
+                <parameter id="firewall_madc" value="app_only"/>
+                <parameter id="firewall_sdram" value="com_and_app"/>
+                <parameter id="firewall_uart" value="com_only"/>
+                <parameter id="firewall_debug_slave" value="no_access"/>
+                <parameter id="firewall_crypt_system" value="com_only"/>
+                <parameter id="firewall_extmem" value="app_only"/>
+            </config>
+        </peripheral>
+        <peripheral id="phy0_phy1">
+            <config id="default">
+                <parameter id="hw_option" value="0x0080"/>
+            </config>
+        </peripheral>
+        <peripheral id="sdram_16_bit">
+            <config id="IS45S16400J-7BLA2-NXHX-SDRSPM_R1">
+                <parameter id="timing_ctrl" value="0x01403251"/>
+                <parameter id="general_ctrl" value="0x000d0011"/>
+                <parameter id="mode_register" value="0x22"/>
+                <parameter id="sdram_size" value="0x08"/>
+                <parameter id="sd_a12" value="disabled"/>
+            </config>
+        </peripheral>
+        <peripheral id="sqi">
+            <config id="W25Q32BV">
+                <parameter id="xip_possible" value="true"/>
+                <parameter id="freq_xip_mhz" value="50"/>
+                <parameter id="freq_fifo_mhz" value="50"/>
+            </config>
+        </peripheral>
+        <peripheral id="uart">
+            <config id="uart_rctsn"/>
+        </peripheral>
+    </peripherals>
+    <io_config>
+        <pin id="COM_IO2" peripheral="uart" function="uart_rtsn"/>
+        <pin id="COM_IO3" peripheral="uart" function="uart_ctsn"/>
+        <pin id="HIF_A0" peripheral="sdram_16_bit" function="sd_a0"/>
+        <pin id="HIF_A1" peripheral="sdram_16_bit" function="sd_a1"/>
+        <pin id="HIF_A10" peripheral="sdram_16_bit" function="sd_a10"/>
+        <pin id="HIF_A11" peripheral="sdram_16_bit" function="sd_a11"/>
+        <pin id="HIF_A13" peripheral="sdram_16_bit" function="sd_ba0"/>
+        <pin id="HIF_A14" peripheral="sdram_16_bit" function="sd_ba1"/>
+        <pin id="HIF_A15" peripheral="sdram_16_bit" function="sd_rasn"/>
+        <pin id="HIF_A16" peripheral="sdram_16_bit" function="sd_casn"/>
+        <pin id="HIF_A17" peripheral="sdram_16_bit" function="sd_dqm0"/>
+        <pin id="HIF_A2" peripheral="sdram_16_bit" function="sd_a2"/>
+        <pin id="HIF_A3" peripheral="sdram_16_bit" function="sd_a3"/>
+        <pin id="HIF_A4" peripheral="sdram_16_bit" function="sd_a4"/>
+        <pin id="HIF_A5" peripheral="sdram_16_bit" function="sd_a5"/>
+        <pin id="HIF_A6" peripheral="sdram_16_bit" function="sd_a6"/>
+        <pin id="HIF_A7" peripheral="sdram_16_bit" function="sd_a7"/>
+        <pin id="HIF_A8" peripheral="sdram_16_bit" function="sd_a8"/>
+        <pin id="HIF_A9" peripheral="sdram_16_bit" function="sd_a9"/>
+        <pin id="HIF_BHEN" peripheral="sdram_16_bit" function="sd_dqm1"/>
+        <pin id="HIF_CSN" peripheral="sdram_16_bit" function="sd_csn"/>
+        <pin id="HIF_D0" peripheral="sdram_16_bit" function="sd_d8"/>
+        <pin id="HIF_D1" peripheral="sdram_16_bit" function="sd_d9"/>
+        <pin id="HIF_D2" peripheral="sdram_16_bit" function="sd_d10"/>
+        <pin id="HIF_D3" peripheral="sdram_16_bit" function="sd_d11"/>
+        <pin id="HIF_D4" peripheral="sdram_16_bit" function="sd_d12"/>
+        <pin id="HIF_D5" peripheral="sdram_16_bit" function="sd_d13"/>
+        <pin id="HIF_D6" peripheral="sdram_16_bit" function="sd_d14"/>
+        <pin id="HIF_D7" peripheral="sdram_16_bit" function="sd_d15"/>
+        <pin id="HIF_RDY" peripheral="sdram_16_bit" function="sd_cke"/>
+        <pin id="HIF_SDCLK" peripheral="sdram_16_bit" function="sd_clk"/>
+        <pin id="HIF_WRN" peripheral="sdram_16_bit" function="sd_wen"/>
+        <pin id="MII0_COL" peripheral="sdram_16_bit" function="sd_d6"/>
+        <pin id="MII0_CRS" peripheral="sdram_16_bit" function="sd_d7"/>
+        <pin id="MII0_TXEN" peripheral="sdram_16_bit" function="sd_d5"/>
+        <pin id="MII1_COL" peripheral="sdram_16_bit" function="sd_d2"/>
+        <pin id="MII1_CRS" peripheral="sdram_16_bit" function="sd_d1"/>
+        <pin id="MII1_RXER" peripheral="sdram_16_bit" function="sd_d0"/>
+        <pin id="MLED0" peripheral="phy0_phy1" function="mled0"/>
+        <pin id="MLED1" peripheral="phy0_phy1" function="mled1"/>
+        <pin id="MLED2" peripheral="phy0_phy1" function="mled2"/>
+        <pin id="MLED3" peripheral="phy0_phy1" function="mled3"/>
+        <pin id="PHY0_LED_LINK_IN" peripheral="sdram_16_bit" function="sd_d3"/>
+        <pin id="PHY0_RXN" peripheral="phy0_phy1" function="phy0_rxn"/>
+        <pin id="PHY0_RXP" peripheral="phy0_phy1" function="phy0_rxp"/>
+        <pin id="PHY0_TXN" peripheral="phy0_phy1" function="phy0_txn"/>
+        <pin id="PHY0_TXP" peripheral="phy0_phy1" function="phy0_txp"/>
+        <pin id="PHY1_LED_LINK_IN" peripheral="sdram_16_bit" function="sd_d4"/>
+        <pin id="PHY1_RXN" peripheral="phy0_phy1" function="phy1_rxn"/>
+        <pin id="PHY1_RXP" peripheral="phy0_phy1" function="phy1_rxp"/>
+        <pin id="PHY1_TXN" peripheral="phy0_phy1" function="phy1_txn"/>
+        <pin id="PHY1_TXP" peripheral="phy0_phy1" function="phy1_txp"/>
+        <pin id="SQI_CLK" peripheral="sqi" function="sqi_clk"/>
+        <pin id="SQI_CS0N" peripheral="sqi" function="sqi_cs0n"/>
+        <pin id="SQI_MISO" peripheral="sqi" function="sqi_miso"/>
+        <pin id="SQI_MOSI" peripheral="sqi" function="sqi_mosi"/>
+        <pin id="SQI_SIO2" peripheral="sqi" function="sqi_sio2"/>
+        <pin id="SQI_SIO3" peripheral="sqi" function="sqi_sio3"/>
+        <pin id="UART_RXD" peripheral="uart" function="uart_rxd"/>
+        <pin id="UART_TXD" peripheral="uart" function="uart_txd"/>
+    </io_config>
+    <mmio_config/>
+    <pad_config>
+        <pin id="COM_IO2" drive_strength="low" pull_enable="true"/>
+        <pin id="COM_IO3" drive_strength="low" pull_enable="true"/>
+        <pin id="HIF_A0" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A1" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A10" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A11" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A13" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A14" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A15" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A16" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A17" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A2" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A3" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A4" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A5" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A6" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A7" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A8" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_A9" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_BHEN" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_CSN" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_D0" drive_strength="high" pull_enable="true"/>
+        <pin id="HIF_D1" drive_strength="high" pull_enable="true"/>
+        <pin id="HIF_D2" drive_strength="high" pull_enable="true"/>
+        <pin id="HIF_D3" drive_strength="high" pull_enable="true"/>
+        <pin id="HIF_D4" drive_strength="high" pull_enable="true"/>
+        <pin id="HIF_D5" drive_strength="high" pull_enable="true"/>
+        <pin id="HIF_D6" drive_strength="high" pull_enable="true"/>
+        <pin id="HIF_D7" drive_strength="high" pull_enable="true"/>
+        <pin id="HIF_RDY" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_SDCLK" drive_strength="high" pull_enable="false"/>
+        <pin id="HIF_WRN" drive_strength="high" pull_enable="false"/>
+        <pin id="MII0_COL" drive_strength="high" pull_enable="true"/>
+        <pin id="MII0_CRS" drive_strength="high" pull_enable="true"/>
+        <pin id="MII0_TXEN" drive_strength="high" pull_enable="true"/>
+        <pin id="MII1_COL" drive_strength="high" pull_enable="true"/>
+        <pin id="MII1_CRS" drive_strength="high" pull_enable="true"/>
+        <pin id="MII1_RXER" drive_strength="high" pull_enable="true"/>
+        <pin id="MLED0" drive_strength="high" pull_enable="false"/>
+        <pin id="MLED1" drive_strength="high" pull_enable="false"/>
+        <pin id="MLED2" drive_strength="high" pull_enable="false"/>
+        <pin id="MLED3" drive_strength="high" pull_enable="false"/>
+        <pin id="PHY0_LED_LINK_IN" drive_strength="high" pull_enable="true"/>
+        <pin id="PHY1_LED_LINK_IN" drive_strength="high" pull_enable="true"/>
+        <pin id="SQI_CLK" drive_strength="high" pull_enable="true"/>
+        <pin id="SQI_CS0N" drive_strength="high" pull_enable="true"/>
+        <pin id="SQI_MISO" drive_strength="high" pull_enable="true"/>
+        <pin id="SQI_MOSI" drive_strength="high" pull_enable="true"/>
+        <pin id="SQI_SIO2" drive_strength="high" pull_enable="true"/>
+        <pin id="SQI_SIO3" drive_strength="high" pull_enable="true"/>
+        <pin id="UART_RXD" pull_enable="true"/>
+        <pin id="UART_TXD" drive_strength="low" pull_enable="true"/>
+    </pad_config>
+</hwconfig>

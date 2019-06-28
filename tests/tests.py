@@ -213,52 +213,62 @@ class TestExpectedBinaries(unittest.TestCase):
     strODPath=os.path.join(strGccPath, 'arm-none-eabi-objdump.exe')
     strREPath=os.path.join(strGccPath, 'arm-none-eabi-readelf.exe')
 
-#   def test_app_image_iflash(self):
-#       self.__test_netx90_appimg_with_reference_bin(
-#           # XML file
-#           'netx90_app_image/app_image_iflash.xml',
-#           [   # output files
-#               'netx90_app_image/netx90_app_iflash.nai'
-#           ],
-#           [   # extra args
-#               '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
-#               '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
-#               '-A', 'segments_intflash=.header,.code',
-#           ],
-#           None
-#       )
-#
-#   def test_app_image_iflash_nosegments(self):
-#       self.__test_netx90_appimg_with_reference_bin(
-#           # XML file
-#           'netx90_app_image/app_image_iflash_nosegments.xml',
-#           [   # output files
-#               'netx90_app_image/netx90_app_iflash_nosegments.nai'
-#           ],
-#           [   # extra args
-#               '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
-#               '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
-#           ],
-#           None
-#       )
-#           
-#   def test_app_image_iflash_sdram(self):
-#       self.__test_netx90_appimg_with_reference_bin(
-#           # XML file
-#           'netx90_app_image/app_images_iflash_extflash.xml',
-#           [   # output files
-#               'netx90_app_image/netx90_app_iflash_sdram.nai', 
-#               'netx90_app_image/netx90_app_iflash_sdram.nae'
-#           ],
-#           [   # extra args
-#               '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
-#               '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
-#               '-A', 'headeraddress_extflash=0x64300000',
-#               '-A', 'segments_intflash=.header,.code',
-#               '-A', 'segments_extflash=.code_SDRAM1,.code_SDRAM2',
-#           ],
-#           None
-#       )
+    # NXTHBOTIMG-47 test 2
+    # a project that results in a single intflash boot image and specifies the segments to write to the boot image
+    def test_app_image_iflash(self):
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            'netx90_app_image/app_image_iflash.xml',
+            [   # output files
+                'netx90_app_image/netx90_app_iflash.nai'
+            ],
+            [   # extra args
+                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+                '-A', 'segments_intflash=.header,.code',
+            ],
+            None
+        )
+
+    # NXTHBOTIMG-47 test 3
+    # a project that results in a  single intflash boot image and specifies no segments. 
+    # (The boot image tool should use segments with the progbits flag set inside the elf file.
+
+    def test_app_image_iflash_nosegments(self):
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            'netx90_app_image/app_image_iflash_nosegments.xml',
+            [   # output files
+                'netx90_app_image/netx90_app_iflash_nosegments.nai'
+            ],
+            [   # extra args
+                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+            ],
+            None
+        )
+            
+    # NXTHBOTIMG-47 test 1
+    # a Project that results in two boot images, intflash + external flash
+    # NXTHBOTIMG-48 test 1
+    # an elf file that contains a section located in SDRAM
+    def test_app_image_iflash_sdram(self):
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            'netx90_app_image/app_images_iflash_extflash.xml',
+            [   # output files
+                'netx90_app_image/netx90_app_iflash_sdram.nai', 
+                'netx90_app_image/netx90_app_iflash_sdram.nae'
+            ],
+            [   # extra args
+                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
+                '-A', 'headeraddress_extflash=0x64300000',
+                '-A', 'segments_intflash=.header,.code',
+                '-A', 'segments_extflash=.code_SDRAM1,.code_SDRAM2',
+            ],
+            None
+        )
         
         
 #    def test_app_image_iflash(self):
@@ -317,7 +327,19 @@ class TestExpectedBinaries(unittest.TestCase):
 #            ]
 #        )
             
-            
+    # The following three tests (HWC for NXHX90-JTAG Rev. 3+4, start APP CPU) 
+    # are used to run the APP boot images.
+    # Write a hardware config to Intflash 0 offset 0 and netx90_COM_start_APP.nxi to offset 0x3000.
+    def test_hwc_nxhx90jtag_rev3(self):
+        self.__test_with_reference_bin('netx90_app_image/hwc/hboot_image_hwc.xml', 'netx90_app_image/hwc/next_chunk_hwc_nxhx90-jtag_rev3_hboot.hwc', 'NETX90', 
+         ['-A', 'hw_config=../../../../../tests/netx90_app_image/hwc/next_chunk_hwc_nxhx90-jtag_rev3_hboot.xml'], None)
+
+    def test_hwc_nxhx90jtag_rev4(self):
+        self.__test_with_reference_bin('netx90_app_image/hwc/hboot_image_hwc.xml', 'netx90_app_image/hwc/next_chunk_hwc_nxhx90-jtag_rev4_hboot.hwc', 'NETX90B', 
+         ['-A', 'hw_config=../../../../../tests/netx90_app_image/hwc/next_chunk_hwc_nxhx90-jtag_rev4_hboot.xml'], None)
+
+    def test_start_app(self):
+        self.__test_with_reference_bin('netx90_app_image/netx90_COM_start_APP.xml', 'netx90_app_image/netx90_COM_start_APP.nxi', 'NETX90', None, None)
         
     def test_data_concat(self):
         self.__test_with_reference_bin('data/data_concat.xml', 'data/data_concat.bin', 'NETX90_MPW', None, None)

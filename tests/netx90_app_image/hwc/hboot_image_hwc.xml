@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!-- no end because the end is inside the following FW image. -->
+    <!-- Hardware configuration data located inside first 8kByte of internal flash  -->
+<HBootImage type="REGULAR" device="INTFLASH" has_header="True" has_end="False" offset="0x0000">
+  <Header set_flasher_parameters="true" />
+  <Chunks>
+    <!-- reserved 1.5kByte space for HTBL -->
+    <Skip absolute="0x600" fill="0x48" />
+
+    <Include name="@hw_config">
+        <Parameter name="HWC_TYPE_HEX">485743</Parameter> <!-- HWC -->
+        <Parameter name="HWC_TYPE">HWC</Parameter>
+        <Parameter name="HWC_INFO_ADDRESS">0x00100608</Parameter>
+    </Include>
+
+    <!-- Breakpoint used for HWC: Jump to a bx lr instruction in ROM at 0x1FF00 in netx90 -->
+    <Execute start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+      <Address>0x1FF01</Address>
+    </Execute>
+    
+    <!-- fill with dummy data until end of HW data is reached -->
+    <!-- check if HW data is not to big -->
+    <Skip absolute="0x1FF4" fill="0x40" />
+    
+    <!-- Skip over fdl and FW File Header V3 until the offset 0x00003200. -->
+    <SkipIncomplete absolute="0x3200" />
+  </Chunks>
+</HBootImage>

@@ -1,0 +1,34 @@
+
+
+NXTHBOTIMG-40 Set chip type in flash info in App images
+NXTHBOTIMG-45 Add tool to generate netx 90 APP images
+NXTHBOTIMG-37 netX 90: add support for use case preload SDRAM at COM side a single XML file for COM side
+
+NXTHBOTIMG-47 Tests for APP boot image generator: intflash only, intflash+extflash
+1) a Project that results in two boot images, intflash + external flash
+2) a project that results in a single intflash boot image and specifies the segments to write to the boot image
+3) a project that results in a  single intflash boot image and specifies no segments. (The boot image tool should use segments with the progbits flag set inside the elf file.
+Cases 2) and 3) should generate the same binaries.
+
+NXTHBOTIMG-48 Generate NAE file only if the sections contains data
+Add a test case with a single fix XML file.
+The single XML file describes the segmentation for internal and external flash.
+The tool must be able to handle empty or non-present sections. If there is effectively no data for an NAE file, it should not generate one.
+Required to simplify the automation process.
+
+Test cases:
+1 an elf file that contains a section located in SDRAM
+2 an elf file that does not contain a section located in SDRAM
+3 an elf file that contains a section located in SDRAM which is empty.
+We want to be able to handle all cases with the same XML file. The XML file must define an NAI file containing the sections located in intflash and an NAE file containing the sections that are loaded to SDRAM. It must reference all sections.
+
+Additional:
+3 images:  Intflash, extflash to SDRAM, extflash in-place
+4 images:  Intflash, extflash to SDRAM, extflash in-place, intflash to SDRAM
+
+netx90 Blinki-Testprog in HBoot Compiler
+-------------------------------------------
+netx90_app_iflash.ld        uses Iflash and Intram  -> 47-2, 47-3, 48-2
+netx90_app_iflash_sdram.ld  uses Iflash and SDRAM  -> 47-1, 48-1
+netx90_app_sdram.ld         identical to netx90_app_iflash_sdram.ld  
+

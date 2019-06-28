@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!-- software started at 12kByte of internal COM 0 flash -->    
+    <!-- Load programm for the COM CPU and start afterwards -->
+    <!-- no header because the header is inside HWconfig. -->
+<HBootImage type="REGULAR" device="INTFLASH" has_header="False" has_end="True" offset="0x3000">
+  <Chunks>
+    
+    <!-- Skip over FW File Header V3 until the offset 0x00003200. -->
+    <Skip absolute="0x3200" fill="0xFD" />
+
+    <!-- Reserve next 1k for secure boot hash table -->
+    <Skip absolute="0x3600" fill="0x27" />
+
+    <!-- FW code starts at address offset 0x3600 -->
+    <XIP>
+      <Concat address="0x00103608"> <!-- IFLASH01 -->
+        <UInt16>
+          0xE7FE,         <!-- b   # endless loop: branch to itself -->
+          0xBF00,         <!-- NOP -->
+          0xBF00,         <!-- NOP -->
+          0xBF00          <!-- NOP -->
+        </UInt16>
+      </Concat>
+    </XIP>
+    
+    <!-- Start COM side and start APP side inside reset -->
+    <!-- controlling if APP CPU should be started is included inside HWC -->
+    <!-- by disabling of clock mask bit for APP CPU, if the APP CPU is not allowed to be started. -->
+    <!-- Firewall settings are configured inside HWC and should not be necessary to be done here -->
+    <!-- debugging should be activated always here and disabled if required via the info pages -->
+    <Execute start_app="true" lock_firewall="true" activate_debugging="true" apply_firewall_settings="true">
+      <Address>0x00103609</Address>
+    </Execute>   
+  </Chunks>
+</HBootImage>
