@@ -5,7 +5,7 @@ import re
 import shutil
 import subprocess
 import sys
-
+import traceback
 
 class TestExpectedBinaries(unittest.TestCase):
 
@@ -137,15 +137,11 @@ class TestExpectedBinaries(unittest.TestCase):
         )
         astrCmd.extend(astrOutput)
 
-
-        try:
-            strOutput = subprocess.check_output(astrCmd)
-            print(strOutput)
-        except Exception as e:
-            print("Exception:")
-            print(e)
-            print("Exception output")
-            print(e.output)
+        # If an exception occurs, the output is included in the exception as e.output.
+        # stderr=subprocess.STDOUT appends the error messages to stdout.
+        strOutput = subprocess.check_output(astrCmd, stderr=subprocess.STDOUT)
+        #strOutput = subprocess.check_output(astrCmd)
+        print(strOutput)
 
         # Restore the old working directory.
         os.chdir(strOldPath)
@@ -165,8 +161,11 @@ class TestExpectedBinaries(unittest.TestCase):
         #strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
         astrOutputPaths = []
         for strReference in astrReferences:
-            strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
-            astrOutputPaths.append(strOutputPathFull)
+            if strReference != '':
+                strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
+                astrOutputPaths.append(strOutputPathFull)
+            else:
+                astrOutputPaths.append(strReference)
         # Copy files.
         if atCopyFiles is not None:
             for strFile in atCopyFiles:
@@ -189,38 +188,52 @@ class TestExpectedBinaries(unittest.TestCase):
 
         print("CWD: %s" % strCwd)
         self.__run_app_hboot_image_compiler(strCwd, strInputPathFull, astrOutputPaths, atExtraArguments)
-
+#        try:
+#            self.__run_app_hboot_image_compiler(strCwd, strInputPathFull, astrOutputPaths, atExtraArguments)
+#        except Exception as e:
+#            print(e)
+#            raise e
+            
         for strReference in astrReferences:
-            strRefPath = os.path.join(self.strTestsBaseDir, strReference)
-            strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
-            print("Comparing: Ref: %s <-> Out: %s" % (strRefPath, strOutputPathFull))
+            # Skip empty references.
+            if strReference != '':
+                strRefPath = os.path.join(self.strTestsBaseDir, strReference)
+                strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
+                print("Comparing: Ref: %s <-> Out: %s" % (strRefPath, strOutputPathFull))
+            
+                # Read the reference binary.
+                tFile = open(strRefPath, 'rb')
+                strBinReference = tFile.read()
+                tFile.close()
         
-            # Read the reference binary.
-            tFile = open(strRefPath, 'rb')
-            strBinReference = tFile.read()
-            tFile.close()
-    
-            # Read the output.
-            tFile = open(strOutputPathFull, 'rb')
-            strBinOutput = tFile.read()
-            tFile.close()
-    
-            self.assertEqual(strBinReference, strBinOutput)
+                # Read the output.
+                tFile = open(strOutputPathFull, 'rb')
+                strBinOutput = tFile.read()
+                tFile.close()
+        
+                self.assertEqual(strBinReference, strBinOutput)
             
 # ######################################################################## 
+    # Tests for netx90 APP images.
+    # ELF_NETX90_APP_BLINKI_IFLASH etc. are the names of the blinki elf files, passed from SConstruct.
+    
     strGccPath= 'C:/ProgramData/Hilscher GmbH/netX Studio CDT/BuildTools/arm-none-eabi-gcc/4.9.3/bin'
     strOCPath=os.path.join(strGccPath, 'arm-none-eabi-objcopy.exe')
     strODPath=os.path.join(strGccPath, 'arm-none-eabi-objdump.exe')
     strREPath=os.path.join(strGccPath, 'arm-none-eabi-readelf.exe')
-
+    
     # NXTHBOTIMG-47 test 2
     # a project that results in a single intflash boot image and specifies the segments to write to the boot image
+    # NXTHBOTIMG-48 test 4a
+    # no output file name is provided for NAE file. => NO NAE file is created. Create an ERROR, if a segment list is provided.
     def test_app_image_iflash(self):
         self.__test_netx90_appimg_with_reference_bin(
             # XML file
-            'netx90_app_image/app_image_iflash.xml',
+            #'netx90_app_image/app_image_iflash.xml',
+            'netx90_app_image/app_images_iflash_extflash.xml',
             [   # output files
-                'netx90_app_image/netx90_app_iflash.nai'
+                'netx90_app_image/netx90_app_iflash.nai',
+                #''
             ],
             [   # extra args
                 '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
@@ -232,7 +245,7 @@ class TestExpectedBinaries(unittest.TestCase):
 
     # NXTHBOTIMG-47 test 3
     # a project that results in a  single intflash boot image and specifies no segments. 
-    # (The boot image tool should use segments with the progbits flag set inside the elf file.
+    # The boot image tool should use segments with the progbits flag set inside the elf file.
 
     def test_app_image_iflash_nosegments(self):
         self.__test_netx90_appimg_with_reference_bin(
@@ -270,62 +283,93 @@ class TestExpectedBinaries(unittest.TestCase):
             None
         )
         
+    # NXTHBOTIMG-48 test 2
+    #  an elf file that does not contain a section located in SDRAM 
+    #  => create dummy NAE file (program inside INTflash ONLY)
+    def test_app_image_iflash_nae_dummy(self):
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            'netx90_app_image/app_images_iflash_extflash.xml',
+            [   # output files
+                'netx90_app_image/netx90_app_iflash_pseudo_sdram.nai', 
+                'netx90_app_image/netx90_app_iflash_pseudo_sdram.nae'
+            ],
+            [   # extra args
+                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+                '-A', 'headeraddress_extflash=0x64300000',
+                '-A', 'segments_intflash=.header,.code',
+                '-A', 'segments_extflash=,',
+            ],
+            None
+        )
+    
+    # NXTHBOTIMG-48 test 4b
+    # no output file name is provided for NAE file. => NO NAE file is created. Create an ERROR, if a segment list is provided.
+    def test_app_image_iflash_nae_dummy_error(self):
+        fTestPassed = False
+        strOldPath = os.getcwd()
+        try:
+            self.__test_netx90_appimg_with_reference_bin(
+                # XML file
+                'netx90_app_image/app_images_iflash_extflash.xml',
+                [   # output files
+                    'netx90_app_image/netx90_app_iflash_error.nai',
+                    #''
+                ],
+                [   # extra args
+                    '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                    '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+                    '-A', 'headeraddress_extflash=0x64300000',
+                    '-A', 'segments_intflash=.header,.code',
+                    '-A', 'segments_extflash=.some_segment',
+                ],
+                None
+            )
+        except Exception as e:
+            print("Exception output:")
+            print(e.output)
+            strExpectedError = "Output filename is empty but a segment list is specified"
+            if strExpectedError in e.output:
+                fTestPassed = True
+                print("Found expected error message")
+                
+        os.chdir(strOldPath)
+        assert fTestPassed, "Did not find expected error message"
+
+    # There should be an error if a segment containing loadable data is not used (code_SDRAM2)
+    def test_app_image_iflash_unused_segment_error(self):
+        fTestPassed = False
+        strOldPath = os.getcwd()
+        try:
+            self.__test_netx90_appimg_with_reference_bin(
+                # XML file
+                'netx90_app_image/app_images_iflash_extflash.xml',
+                [   # output files
+                    'netx90_app_image/netx90_app_iflash_sdram_unused_segment_error.nai', 
+                    'netx90_app_image/netx90_app_iflash_sdram_unused_segment_error.nae'
+                ],
+                [   # extra args
+                    '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                    '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
+                    '-A', 'headeraddress_extflash=0x64300000',
+                    '-A', 'segments_intflash=.header,.code',
+                    '-A', 'segments_extflash=.code_SDRAM1',
+                ],
+                None
+            )
         
-#    def test_app_image_iflash(self):
-#        self.__test_netx90_appimg_with_reference_bin(
-#            # XML file
-#            'netx90_app_image/app_image_iflash.xml',
-#            [   # output files
-#                'netx90_app_image/netx90_app_iflash.nai'
-#            ],
-#            [   # extra args
-#                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
-#                '-A', 'tElf=netx90_app_iflash.elf',
-#                '-A', 'segments_intflash=.header,.code',
-#            ],
-#            [   # Files to copy
-#                #'netx90_app_image/netx90_app_iflash.elf'
-#                '%%ELF_NETX90_APP_BLINKI_IFLASH%%'
-#            ]
-#        )
-#        
-#    def test_app_image_iflash_nosegments(self):
-#        self.__test_netx90_appimg_with_reference_bin(
-#            # XML file
-#            'netx90_app_image/app_image_iflash_nosegments.xml',
-#            [   # output files
-#                'netx90_app_image/netx90_app_iflash_nosegments.nai'
-#            ],
-#            [   # extra args
-#                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
-#                '-A', 'tElf=netx90_app_iflash.elf',
-#            ],
-#            [   # Files to copy
-#                #'netx90_app_image/netx90_app_iflash.elf'
-#                '%%ELF_NETX90_APP_BLINKI_IFLASH%%'
-#            ]
-#        )
-#            
-#    def test_app_image_iflash_sdram(self):
-#        self.__test_netx90_appimg_with_reference_bin(
-#            # XML file
-#            'netx90_app_image/app_images_iflash_extflash.xml',
-#            [   # output files
-#                'netx90_app_image/netx90_app_iflash_sdram.nai', 
-#                'netx90_app_image/netx90_app_iflash_sdram.nae'
-#            ],
-#            [   # extra args
-#                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
-#                '-A', 'tElf=netx90_app_iflash_sdram.elf',
-#                '-A', 'headeraddress_extflash=0x64300000',
-#                '-A', 'segments_intflash=.header,.code',
-#                '-A', 'segments_extflash=.code_SDRAM1,.code_SDRAM2',
-#            ],
-#            [   # Files to copy
-#                #'netx90_app_image/netx90_app_iflash_sdram.elf'
-#                '%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%'
-#            ]
-#        )
+        except Exception as e:
+            print("Exception output:")
+            print(e.output)
+            strExpectedError = "There are unused segments containing data"
+            if strExpectedError in e.output:
+                fTestPassed = True
+                print("Found expected error message")
+                
+        os.chdir(strOldPath)
+        assert fTestPassed, "Did not find expected error message"
+    
             
     # The following three tests (HWC for NXHX90-JTAG Rev. 3+4, start APP CPU) 
     # are used to run the APP boot images.
