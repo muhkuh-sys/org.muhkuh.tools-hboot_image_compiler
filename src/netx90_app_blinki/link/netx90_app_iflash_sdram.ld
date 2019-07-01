@@ -52,6 +52,7 @@ SECTIONS
     
         /* .rodata section which is used for read-only data (constants) */
         *mmio6*(.rodata*)
+        . = ALIGN(4); 
     } >SDRAM
     
     .code_SDRAM2 :
