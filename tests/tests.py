@@ -467,6 +467,15 @@ class TestExpectedBinaries(unittest.TestCase):
         os.chdir(strOldPath)
         assert fTestPassed, "Did not find expected error message"
 
+    # NXTHBOTIMG-55
+    # Build an execute_CA9 chunk with the target addresses both addresses set to 0. 
+    def test_execute_enable_debugging_netx4000(self):
+        self.__test_with_reference_bin(
+            'execute/execute_CA9_enable_debugging_netx4000.xml',
+            'execute/execute_CA9_enable_debugging_netx4000.bin', 
+            'NETX4000', 
+            [], None)
+
     def test_execute_address_netx90_mpw(self):
         self.__test_with_reference_bin('execute/execute_address_netx90_mpw.xml', 'execute/execute_address_netx90_mpw.bin', 'NETX90_MPW', None, None)
 

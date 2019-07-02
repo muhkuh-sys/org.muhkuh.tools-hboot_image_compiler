@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!-- simple image to just enable the debugging / JTAG interface -->
+<HBootImage type="REGULAR" device="SQIROM0" has_header="True" has_end="True" >
+  <Chunks>
+ 
+    <!-- just enable debugging at CA9 side without starting a program -->
+    <ExecuteCA9>
+    </ExecuteCA9>
+ 
+    <!-- Breakpoint: Jump to a "bx lr" instruction in netX 4000 ROM at 0x041120bc -->
+    <!-- increment the target address by one to change to Thumb mode -->
+    <Execute>
+      <Address>0x041120bd</Address>
+    </Execute>
+     
+    <!-- Stop further execution CR7 CPU -->
+    <Execute>
+      <Address>WFE_Loop</Address>
+    </Execute>
+ 
+   </Chunks>
+</HBootImage>
