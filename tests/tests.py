@@ -236,12 +236,14 @@ class TestExpectedBinaries(unittest.TestCase):
                 #''
             ],
             [   # extra args
+                '-n', 'netx90_rev0',
                 '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                 '-A', 'segments_intflash=.header,.code',
             ],
             None
         )
+        
 
     # NXTHBOTIMG-47 test 3
     # a project that results in a  single intflash boot image and specifies no segments. 
@@ -255,6 +257,7 @@ class TestExpectedBinaries(unittest.TestCase):
                 'netx90_app_image/netx90_app_iflash_nosegments.nai'
             ],
             [   # extra args
+                '-n', 'netx90_rev0',
                 '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
             ],
@@ -274,6 +277,7 @@ class TestExpectedBinaries(unittest.TestCase):
                 'netx90_app_image/netx90_app_iflash_sdram.nae'
             ],
             [   # extra args
+                '-n', 'netx90_rev0',
                 '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
                 '-A', 'headeraddress_extflash=0x64300000',
@@ -295,6 +299,7 @@ class TestExpectedBinaries(unittest.TestCase):
                 'netx90_app_image/netx90_app_iflash_pseudo_sdram.nae'
             ],
             [   # extra args
+                '-n', 'netx90_rev0',
                 '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                 '-A', 'headeraddress_extflash=0x64300000',
@@ -318,6 +323,7 @@ class TestExpectedBinaries(unittest.TestCase):
                     #''
                 ],
                 [   # extra args
+                    '-n', 'netx90_rev0',
                     '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                     '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                     '-A', 'headeraddress_extflash=0x64300000',
@@ -350,6 +356,7 @@ class TestExpectedBinaries(unittest.TestCase):
                     'netx90_app_image/netx90_app_iflash_sdram_unused_segment_error.nae'
                 ],
                 [   # extra args
+                    '-n', 'netx90_rev0',
                     '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                     '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
                     '-A', 'headeraddress_extflash=0x64300000',
@@ -370,7 +377,38 @@ class TestExpectedBinaries(unittest.TestCase):
         os.chdir(strOldPath)
         assert fTestPassed, "Did not find expected error message"
     
-            
+    # NXTHBOTIMG-52
+    # Test the -n/--netx command line arg by building the intflash image with different chip types 
+    def __test_app_image_iflash(self, strNetxType, strOutputFile):
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            'netx90_app_image/app_images_iflash_extflash.xml',
+            [   # output files
+                strOutputFile, 
+            ],
+            [   # extra args
+                '-n', strNetxType,
+                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+                '-A', 'segments_intflash=.header,.code',
+            ],
+            None
+        )
+        
+    def test_app_image_iflash_netx90(self):
+        self.__test_app_image_iflash('netx90', 'netx90_app_image/netx90_app_iflash_chiptype_netx90.nai')
+        
+    def test_app_image_iflash_netx90_mpw(self):
+        self.__test_app_image_iflash('netx90_mpw', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_mpw.nai')
+
+    def test_app_image_iflash_netx90_rev0(self):
+        self.__test_app_image_iflash('netx90_rev0', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_rev0.nai')
+        
+    def test_app_image_iflash_netx90_rev1(self):
+        self.__test_app_image_iflash('netx90_rev1', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_rev1.nai')
+
+        
+        
     # The following three tests (HWC for NXHX90-JTAG Rev. 3+4, start APP CPU) 
     # are used to run the APP boot images.
     # Write a hardware config to Intflash 0 offset 0 and netx90_COM_start_APP.nxi to offset 0x3000.
