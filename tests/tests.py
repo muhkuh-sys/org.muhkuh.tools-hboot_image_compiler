@@ -248,6 +248,7 @@ class TestExpectedBinaries(unittest.TestCase):
                 '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                 '-A', 'segments_intflash=.header,.code',
+                '--sdram_split_offset', '0x400000',
             ],
             None
         )
@@ -276,6 +277,9 @@ class TestExpectedBinaries(unittest.TestCase):
     # a Project that results in two boot images, intflash + external flash
     # NXTHBOTIMG-48 test 1
     # an elf file that contains a section located in SDRAM
+    # NXTHBOTIMG-61
+    # The image contains a part that is loaded to the SDRAM which is split between COM and APP,
+    # i.e. SDRAM address offset for the COM CPU is 0x400000
     def test_app_image_iflash_sdram(self):
         self.__test_netx90_appimg_with_reference_bin(
             # XML file
@@ -289,11 +293,36 @@ class TestExpectedBinaries(unittest.TestCase):
                 '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
                 '-A', 'headeraddress_extflash=0x64300000',
+                '--sdram_split_offset', '0x400000',
                 '-A', 'segments_intflash=.header,.code',
                 '-A', 'segments_extflash=.code_SDRAM1,.code_SDRAM2',
             ],
             None
         )
+        
+    # NXTHBOTIMG-61
+    # Same as above, except that the SDRAM is exclusive to the APP CPU
+    # i.e. SDRAM address offset for the COM CPU is 0.
+    def test_app_image_iflash_sdram_apponly(self):
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            'netx90_app_image/app_images_iflash_extflash.xml',
+            [   # output files
+                'netx90_app_image/netx90_app_iflash_sdram_app.nai', 
+                'netx90_app_image/netx90_app_iflash_sdram_app.nae'
+            ],
+            [   # extra args
+                '-n', 'netx90_rev0',
+                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
+                '-A', 'headeraddress_extflash=0x64300000',
+                '--sdram_split_offset', '0',
+                '-A', 'segments_intflash=.header,.code',
+                '-A', 'segments_extflash=.code_SDRAM1,.code_SDRAM2',
+            ],
+            None
+        )
+        
         
     # NXTHBOTIMG-48 test 2
     #  an elf file that does not contain a section located in SDRAM 
@@ -311,6 +340,7 @@ class TestExpectedBinaries(unittest.TestCase):
                 '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                 '-A', 'headeraddress_extflash=0x64300000',
+                '--sdram_split_offset', '0x400000',
                 '-A', 'segments_intflash=.header,.code',
                 '-A', 'segments_extflash=,',
             ],
@@ -332,6 +362,7 @@ class TestExpectedBinaries(unittest.TestCase):
                 '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                 '-A', 'headeraddress_extflash=0x64300000',
+                '--sdram_split_offset', '0x400000',
                 '-A', 'segments_intflash=.header,.code',
                 '-A', 'segments_extflash=.some_segment',
             ],
@@ -353,6 +384,7 @@ class TestExpectedBinaries(unittest.TestCase):
                 '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
                 '-A', 'headeraddress_extflash=0x64300000',
+                '--sdram_split_offset', '0x400000',
                 '-A', 'segments_intflash=.header,.code',
                 '-A', 'segments_extflash=.code_SDRAM1',
             ],
@@ -392,16 +424,25 @@ class TestExpectedBinaries(unittest.TestCase):
 
         
         
-    # The following three tests (HWC for NXHX90-JTAG Rev. 3+4, start APP CPU) 
+    # The following tests (HWC for NXHX90-JTAG Rev. 3+4, start APP CPU) 
     # are used to run the APP boot images.
     # Write a hardware config to Intflash 0 offset 0 and netx90_COM_start_APP.nxi to offset 0x3000.
-    def test_hwc_nxhx90jtag_rev3(self):
-        self.__test_with_reference_bin('netx90_app_image/hwc/hboot_image_hwc.xml', 'netx90_app_image/hwc/next_chunk_hwc_nxhx90-jtag_rev3_hboot.hwc', 'NETX90', 
-         ['-A', 'hw_config=../../../../../tests/netx90_app_image/hwc/next_chunk_hwc_nxhx90-jtag_rev3_hboot.xml'], None)
-
-    def test_hwc_nxhx90jtag_rev4(self):
-        self.__test_with_reference_bin('netx90_app_image/hwc/hboot_image_hwc.xml', 'netx90_app_image/hwc/next_chunk_hwc_nxhx90-jtag_rev4_hboot.hwc', 'NETX90B', 
-         ['-A', 'hw_config=../../../../../tests/netx90_app_image/hwc/next_chunk_hwc_nxhx90-jtag_rev4_hboot.xml'], None)
+    
+    def __app_image_hwc(self, strHwcName, strNetxType):
+        self.__test_with_reference_bin(
+            'netx90_app_image/hwc/hboot_image_hwc.xml',
+            'netx90_app_image/hwc/%s.hwc' % strHwcName, 
+            strNetxType, 
+         ['-A', 'hw_config=../../../../../tests/netx90_app_image/hwc/%s.xml' % strHwcName], None)
+    
+    def test_hwc_nxhx90jtag_rev3_sdram_split(self):
+        self.__app_image_hwc('next_chunk_hwc_nxhx90-jtag_rev3_hboot', 'NETX90')
+    def test_hwc_nxhx90jtag_rev4_sdram_split(self):
+        self.__app_image_hwc('next_chunk_hwc_nxhx90-jtag_rev4_hboot', 'NETX90B')
+    def test_hwc_nxhx90jtag_rev3_sdram_app(self):
+        self.__app_image_hwc('next_chunk_hwc_nxhx90-jtag_rev3_sdram_app_hboot', 'NETX90')
+    def test_hwc_nxhx90jtag_rev4_sdram_app(self):
+        self.__app_image_hwc('next_chunk_hwc_nxhx90-jtag_rev4_sdram_app_hboot', 'NETX90B')
 
     def test_start_app(self):
         self.__test_with_reference_bin('netx90_app_image/netx90_COM_start_APP.xml', 'netx90_app_image/netx90_COM_start_APP.nxi', 'NETX90', None, None)
