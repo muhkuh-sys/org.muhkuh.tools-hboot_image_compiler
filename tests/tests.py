@@ -114,7 +114,8 @@ class TestExpectedBinaries(unittest.TestCase):
 # strNetx is currently not needed
 # strReference may be multiple files
 
-    def __run_app_hboot_image_compiler(self, strCwd, strXml, astrOutput, atExtraArguments):
+    def __run_app_hboot_image_compiler(self, strCwd, strXml, astrOutput, atExtraArguments, strExpectedError = None):
+        
         # Save the current working directory for later.
         strOldPath = os.getcwd()
 
@@ -137,16 +138,26 @@ class TestExpectedBinaries(unittest.TestCase):
         )
         astrCmd.extend(astrOutput)
 
-        # If an exception occurs, the output is included in the exception as e.output.
-        # stderr=subprocess.STDOUT appends the error messages to stdout.
-        strOutput = subprocess.check_output(astrCmd, stderr=subprocess.STDOUT)
-        #strOutput = subprocess.check_output(astrCmd)
-        print(strOutput)
+        if strExpectedError==None:
+            subprocess.check_output(astrCmd)
+        else:
+            try:
+                # If an exception occurs, the output is included in the exception as e.output.
+                # stderr=subprocess.STDOUT appends the error messages to stdout.
+                subprocess.check_output(astrCmd, stderr=subprocess.STDOUT)
+            except Exception as e:
+                print("Exception output:")
+                print(e.output)
+                if strExpectedError in e.output:
+                    print("Found expected error message")
+                else:
+                    print('Did not find expected error message')
+                    raise Exception('Did not find expected error message')
 
         # Restore the old working directory.
         os.chdir(strOldPath)
 
-    def __test_netx90_appimg_with_reference_bin(self, strInput, astrReferences, atExtraArguments, atCopyFiles):
+    def __test_netx90_appimg_with_reference_bin(self, strInput, astrReferences, atExtraArguments, atCopyFiles, strExpectedError = None):
         strInputBase = os.path.basename(strInput)
         strInputPathFull = os.path.join(self.strTestsBaseDir, strInput)
         strInputDirectoryFull = os.path.dirname(strInputPathFull)
@@ -187,33 +198,30 @@ class TestExpectedBinaries(unittest.TestCase):
         strCwd = strOutputDirectoryFull
 
         print("CWD: %s" % strCwd)
-        self.__run_app_hboot_image_compiler(strCwd, strInputPathFull, astrOutputPaths, atExtraArguments)
-#        try:
-#            self.__run_app_hboot_image_compiler(strCwd, strInputPathFull, astrOutputPaths, atExtraArguments)
-#        except Exception as e:
-#            print(e)
-#            raise e
+        self.__run_app_hboot_image_compiler(strCwd, strInputPathFull, astrOutputPaths, atExtraArguments, strExpectedError = strExpectedError)
             
-        for strReference in astrReferences:
-            # Skip empty references.
-            if strReference != '':
-                strRefPath = os.path.join(self.strTestsBaseDir, strReference)
-                strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
-                print("Comparing: Ref: %s <-> Out: %s" % (strRefPath, strOutputPathFull))
+        # If an error is expected, do not try to verify the output files.
+        if strExpectedError == None:
+            for strReference in astrReferences:
+                # Skip empty references.
+                if strReference != '':
+                    strRefPath = os.path.join(self.strTestsBaseDir, strReference)
+                    strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
+                    print("Comparing: Ref: %s <-> Out: %s" % (strRefPath, strOutputPathFull))
+                
+                    # Read the reference binary.
+                    tFile = open(strRefPath, 'rb')
+                    strBinReference = tFile.read()
+                    tFile.close()
             
-                # Read the reference binary.
-                tFile = open(strRefPath, 'rb')
-                strBinReference = tFile.read()
-                tFile.close()
-        
-                # Read the output.
-                tFile = open(strOutputPathFull, 'rb')
-                strBinOutput = tFile.read()
-                tFile.close()
-        
-                self.assertEqual(strBinReference, strBinOutput)
+                    # Read the output.
+                    tFile = open(strOutputPathFull, 'rb')
+                    strBinOutput = tFile.read()
+                    tFile.close()
             
-# ######################################################################## 
+                    self.assertEqual(strBinReference, strBinOutput)
+            
+    # ######################################################################## 
     # Tests for netx90 APP images.
     # ELF_NETX90_APP_BLINKI_IFLASH etc. are the names of the blinki elf files, passed from SConstruct.
     
@@ -312,70 +320,45 @@ class TestExpectedBinaries(unittest.TestCase):
     # NXTHBOTIMG-48 test 4b
     # no output file name is provided for NAE file. => NO NAE file is created. Create an ERROR, if a segment list is provided.
     def test_app_image_iflash_nae_dummy_error(self):
-        fTestPassed = False
-        strOldPath = os.getcwd()
-        try:
-            self.__test_netx90_appimg_with_reference_bin(
-                # XML file
-                'netx90_app_image/app_images_iflash_extflash.xml',
-                [   # output files
-                    'netx90_app_image/netx90_app_iflash_error.nai',
-                    #''
-                ],
-                [   # extra args
-                    '-n', 'netx90_rev0',
-                    '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
-                    '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
-                    '-A', 'headeraddress_extflash=0x64300000',
-                    '-A', 'segments_intflash=.header,.code',
-                    '-A', 'segments_extflash=.some_segment',
-                ],
-                None
-            )
-        except Exception as e:
-            print("Exception output:")
-            print(e.output)
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            'netx90_app_image/app_images_iflash_extflash.xml',
+            [   # output files
+                'netx90_app_image/netx90_app_iflash_error.nai',
+                #''
+            ],
+            [   # extra args
+                '-n', 'netx90_rev0',
+                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+                '-A', 'headeraddress_extflash=0x64300000',
+                '-A', 'segments_intflash=.header,.code',
+                '-A', 'segments_extflash=.some_segment',
+            ],
+            None,
             strExpectedError = "Output filename is empty but a segment list is specified"
-            if strExpectedError in e.output:
-                fTestPassed = True
-                print("Found expected error message")
-                
-        os.chdir(strOldPath)
-        assert fTestPassed, "Did not find expected error message"
+        )
 
     # There should be an error if a segment containing loadable data is not used (code_SDRAM2)
     def test_app_image_iflash_unused_segment_error(self):
-        fTestPassed = False
-        strOldPath = os.getcwd()
-        try:
-            self.__test_netx90_appimg_with_reference_bin(
-                # XML file
-                'netx90_app_image/app_images_iflash_extflash.xml',
-                [   # output files
-                    'netx90_app_image/netx90_app_iflash_sdram_unused_segment_error.nai', 
-                    'netx90_app_image/netx90_app_iflash_sdram_unused_segment_error.nae'
-                ],
-                [   # extra args
-                    '-n', 'netx90_rev0',
-                    '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
-                    '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
-                    '-A', 'headeraddress_extflash=0x64300000',
-                    '-A', 'segments_intflash=.header,.code',
-                    '-A', 'segments_extflash=.code_SDRAM1',
-                ],
-                None
-            )
-        
-        except Exception as e:
-            print("Exception output:")
-            print(e.output)
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            'netx90_app_image/app_images_iflash_extflash.xml',
+            [   # output files
+                'netx90_app_image/netx90_app_iflash_sdram_unused_segment_error.nai', 
+                'netx90_app_image/netx90_app_iflash_sdram_unused_segment_error.nae'
+            ],
+            [   # extra args
+                '-n', 'netx90_rev0',
+                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
+                '-A', 'headeraddress_extflash=0x64300000',
+                '-A', 'segments_intflash=.header,.code',
+                '-A', 'segments_extflash=.code_SDRAM1',
+            ],
+            None,
             strExpectedError = "There are unused segments containing data"
-            if strExpectedError in e.output:
-                fTestPassed = True
-                print("Found expected error message")
-                
-        os.chdir(strOldPath)
-        assert fTestPassed, "Did not find expected error message"
+        )
     
     # NXTHBOTIMG-52
     # Test the -n/--netx command line arg by building the intflash image with different chip types 
