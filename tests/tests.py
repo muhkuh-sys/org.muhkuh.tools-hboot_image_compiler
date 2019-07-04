@@ -324,7 +324,7 @@ class TestExpectedBinaries(unittest.TestCase):
         )
         
         
-    # NXTHBOTIMG-48 test 2
+    # NXTHBOTIMG-48 test 2, segments for intflash specified
     #  an elf file that does not contain a section located in SDRAM 
     #  => create dummy NAE file (program inside INTflash ONLY)
     def test_app_image_iflash_nae_dummy(self):
@@ -346,7 +346,31 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             None
         )
-    
+
+    # NXTHBOTIMG-48 test 2, segments for intflash not specified
+    #  an elf file that does not contain a section located in SDRAM 
+    #  => create dummy NAE file (program inside INTflash ONLY)
+    def test_app_image_iflash_nae_dummy_empty_segment_list(self):
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            'netx90_app_image/app_images_iflash_extflash.xml',
+            [   # output files
+                'netx90_app_image/netx90_app_iflash_pseudo_sdram_no_seglist.nai', 
+                'netx90_app_image/netx90_app_iflash_pseudo_sdram_no_seglist.nae'
+            ],
+            [   # extra args
+                '-n', 'netx90_rev0',
+                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+                '-A', 'headeraddress_extflash=0x64300000',
+                '--sdram_split_offset', '0x400000',
+                '-A', 'segments_intflash=',
+                '-A', 'segments_extflash=,',
+            ],
+            None
+        )
+
+        
     # NXTHBOTIMG-48 test 4b
     # no output file name is provided for NAE file. => NO NAE file is created. Create an ERROR, if a segment list is provided.
     def test_app_image_iflash_nae_dummy_error(self):
