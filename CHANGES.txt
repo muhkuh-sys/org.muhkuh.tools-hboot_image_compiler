@@ -1,3 +1,29 @@
+v0.0.11
+
+netX 90 APP image compiler:
+
+  * Add command line argument to specify the chip type.
+  
+  * Rename argument --sdsize to --sdram_split_offset. 
+    New default value is 0 (i.e. SDRAM exclusive to APP CPU). 
+  
+  * Allow building an empty dummy image by passing a "," as the segment list. 
+    When there is no data for an image, the header will be written anyway.
+  
+  * Do not build a boot image if its output file name has been omitted from 
+    the command line or an empty string is passed.
+  
+  * Keep track of segments in the ELF file containing data and which ones have
+    been output to a boot image.
+  
+  * Set the destination address in the boot header if the address is in the SDRAM. 
+    Otherwise, set it to 0.
+  
+netX 4000 HBoot image compiler:
+
+  * Allow building execute CA9 chunks with both target addresses set to 0 to enable 
+    JTAG debugging.
+
 v0.0.10
 
   * Add support for the chip type netx 90 Rev.1 (NETX90B)
