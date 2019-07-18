@@ -322,8 +322,33 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             None
         )
-        
-        
+
+    # Build two images in Intflash:
+    # Part 1 is at address 0 and contains only the vectors and image header,
+    # Part 2 is at address 4K and contains the program itself.
+    # This allows us to put an additional block (common header) between the vectors and the main program 
+    # that is not included in the checksums/hashes.
+    # Note: app_images_iflash_extflash and headeraddress_extflash/segments_extflash 
+    #   are inadequately named in this case.
+    def test_app_image_iflash_2part(self):
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            'netx90_app_image/app_images_iflash_extflash.xml',
+            [   # output files
+                'netx90_app_image/netx90_app_iflash_part1_0x0000.nai', 
+                'netx90_app_image/netx90_app_iflash_part2_0x1000.nai'
+            ],
+            [   # extra args
+                '-n', 'netx90_rev0',
+                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_2PART%%',
+                '-A', 'headeraddress_extflash=0x1000',
+                '-A', 'segments_intflash=.header',
+                '-A', 'segments_extflash=.code',
+            ],
+            None
+        )
+       
     # NXTHBOTIMG-48 test 2, segments for intflash specified
     #  an elf file that does not contain a section located in SDRAM 
     #  => create dummy NAE file (program inside INTflash ONLY)

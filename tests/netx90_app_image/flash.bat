@@ -11,13 +11,14 @@ if "%1"=="com_rev3_sdram_app" goto flash_com_rev3_sdram_app
 if "%1"=="com_rev4" goto flash_com_rev4
 if "%1"=="com_rev4_sdram_app" goto flash_com_rev4_sdram_app
 if "%1"=="app_iflash" goto flash_app_iflash
+if "%1"=="app_iflash_2part" goto flash_app_iflash_2part
 if "%1"=="app_iflash_sqi" goto flash_app_iflash_sqi
 if "%1"=="app_iflash_sqi_sdram_app" goto flash_app_iflash_sqi_sdram_app
 
 
 echo Usage: flash.bat  task  interface  [root_dir]
 echo tasks (COM): com_rev3, com_rev4, com_rev3_sdram_app, com_rev4_sdram_app
-echo tasks (APP): app_iflash, app_iflash_sqi, app_iflash_sqi_sdram_app 
+echo tasks (APP): app_iflash, app_iflash_2part, app_iflash_sqi, app_iflash_sqi_sdram_app 
 echo tasks:       erase
 echo interface: Name of the interface to use for flashing.
 echo root_dir: Path to the cloned repository (not required for erase).
@@ -25,6 +26,7 @@ echo .
 echo com_rev3/4: write hw config for NXHX90-JTAG Rev. 3/4 and a firmware to start the APP CPU.
 echo com_rev3/4_sdram_app: save as above, but SDRAM is exclusive to APP CPU
 echo app_iflash: write single-part blinki for APP CPU (intflash2 only)
+echo app_iflash_2part: write two-part Intflash image for APP CPU
 echo app_iflash_sqi: write blinki for APP CPU (intflash2+SQI)
 echo app_iflash_sqi_sdram_app: save as above, but SDRAM is exclusive to APP CPU
 echo erase: erase internal and SQI flash
@@ -105,6 +107,19 @@ echo Intflash 2 offset 0
 %FLA% flash %INTERFACE% -b 2 -u 2  %DATADIR%\netx90_app_iflash.nai
 if errorlevel 1 goto error
 goto ok
+
+
+:flash_app_iflash_2part
+echo Two-part Intflash blinki for APP CPU
+echo -------------------------------------
+echo Intflash 2 offset 0
+%FLA% flash %INTERFACE% -b 2 -u 2  %DATADIR%\netx90_app_iflash_part1_0x0000.nai
+if errorlevel 1 goto error
+echo Intflash 2 offset 0x1000
+%FLA% flash %INTERFACE% -b 2 -u 2 -s 0x1000 %DATADIR%\netx90_app_iflash_part2_0x1000.nai
+if errorlevel 1 goto error
+goto ok
+
 
 :flash_app_iflash_sqi
 echo Two-part blinki for APP CPU (Intflash + SQI)

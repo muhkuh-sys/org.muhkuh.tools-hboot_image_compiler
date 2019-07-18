@@ -109,6 +109,9 @@ tElf_netx90_app_blinki_iflash_sdram = build_blinki(
 tElf_netx90_app_blinki_iflash = build_blinki(
     'netx90_app_blinki_iflash', 'netx90_app_blinki_iflash', 'src/netx90_app_blinki/link/netx90_app_iflash.ld')
 
+tElf_netx90_app_blinki_iflash_2part = build_blinki(
+    'netx90_app_blinki_iflash_2part', 'netx90_app_blinki_iflash_2part', 'src/netx90_app_blinki/link/netx90_app_iflash_2part.ld')
+
 tElf_netx90_app_blinki_sdram = build_blinki(
     'netx90_app_blinki_sdram', 'netx90_app_blinki_sdram', 'src/netx90_app_blinki/link/netx90_app_sdram.ld')
     
@@ -176,6 +179,7 @@ atEnvVars = {
     
     'ELF_NETX90_APP_BLINKI_IFLASH_SDRAM': tElf_netx90_app_blinki_iflash_sdram[0].get_abspath(),
     'ELF_NETX90_APP_BLINKI_IFLASH': tElf_netx90_app_blinki_iflash[0].get_abspath(),
+    'ELF_NETX90_APP_BLINKI_IFLASH_2PART': tElf_netx90_app_blinki_iflash_2part[0].get_abspath(),
     'ELF_NETX90_APP_BLINKI_SDRAM': tElf_netx90_app_blinki_sdram[0].get_abspath()    
 }
 
