@@ -752,5 +752,60 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_xip_hex_NETX90_MPW_SQIROM(self):
         self.__test_with_reference_bin('xip/xip_hex_NETX90_MPW_SQIROM.xml', 'xip/xip_hex_NETX90_MPW_SQIROM.bin', 'NETX90_MPW', None, None)
 
+#    def test_hash_table_fwk_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_fwk.xml',
+#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_fwk.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-rand-off'],
+#            ['secure_boot\\NXHX90-JTAG_COM\\keyrom.xml'])
+#
+#    def test_hash_table_rk_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_rk.xml',
+#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_rk.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-rand-off'],
+#            ['secure_boot\\NXHX90-JTAG_COM\\keyrom.xml'])
+#
+#    def test_asig_NETX90_B(self):
+#        self.__test_netx90_appimg_with_reference_bin(
+#            'secure_boot\\NXHX90-JTAG_APP\\asig.xml',
+#            ['secure_boot\\NXHX90-JTAG_APP\\asig.nai',
+#             'secure_boot\\NXHX90-JTAG_APP\\asig.nae'],
+#            ['-n', 'netx90_rev1' ,
+#             '--keyrom' , 'keyrom.xml',
+#             '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+#             '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
+#             '--openssl-exe' , 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-rand-off'],
+#            ['secure_boot\\NXHX90-JTAG_APP\\keyrom.xml'])
+#
+#    def test_usip_app_set_pk_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot\\UpdateSecureInfoPage\\usip_app_set_pk.xml',
+#            'secure_boot\\UpdateSecureInfoPage\\usip_app_set_pk.bin',
+#            'NETX90B',
+#            ['--keyrom' , 'keyrom.xml',
+#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-rand-off'],
+#            ['secure_boot\\UpdateSecureInfoPage\\keyrom.xml'])
+#
+#    def test_usip_com_set_sbo_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot\\UpdateSecureInfoPage\\usip_com_set_sbo.xml',
+#            'secure_boot\\UpdateSecureInfoPage\\usip_com_set_sbo.bin',
+#            'NETX90B',
+#            ['--keyrom' , 'keyrom.xml',
+#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-rand-off'],
+#            ['secure_boot\\UpdateSecureInfoPage\\keyrom.xml'])
+
+
+
 if __name__ == '__main__':
     unittest.main()

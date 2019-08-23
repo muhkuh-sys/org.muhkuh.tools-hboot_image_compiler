@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<HBootImage type="INTRAM">
+    <Chunks>
+        <UpdateSecureInfoPage>
+            <TargetInfoPage>APP</TargetInfoPage>
+            <Data>
+                <!-- PublicFwKey -->
+                <!-- store the public key -->
+                <Concat>
+                    <UInt16>568</UInt16>  <!-- This is the offset. -->
+                    <UInt16>517</UInt16>  <!-- This is the number of bytes to patch. -->
+                    <Key idx="5"/>
+                </Concat>
+            </Data>
+        </UpdateSecureInfoPage>
+    </Chunks>
+</HBootImage>
