@@ -316,11 +316,6 @@ class TestExpectedBinaries(unittest.TestCase):
     # Tests for netx90 APP images.
     # ELF_NETX90_APP_BLINKI_IFLASH etc. are the names of the blinki elf files, passed from SConstruct.
     
-    strGccPath= 'C:/ProgramData/Hilscher GmbH/netX Studio CDT/BuildTools/arm-none-eabi-gcc/4.9.3/bin'
-    strOCPath=os.path.join(strGccPath, 'arm-none-eabi-objcopy.exe')
-    strODPath=os.path.join(strGccPath, 'arm-none-eabi-objdump.exe')
-    strREPath=os.path.join(strGccPath, 'arm-none-eabi-readelf.exe')
-    
     # NXTHBOTIMG-47 test 2
     # a project that results in a single intflash boot image and specifies the segments to write to the boot image
     # NXTHBOTIMG-48 test 4a
@@ -336,7 +331,7 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             [   # extra args
                 '-n', 'netx90_rev0',
-                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                 '-A', 'segments_intflash=.header,.code',
                 '--sdram_split_offset', '0x400000',
@@ -358,7 +353,7 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             [   # extra args
                 '-n', 'netx90_rev0',
-                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
             ],
             None
@@ -381,7 +376,7 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             [   # extra args
                 '-n', 'netx90_rev0',
-                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
                 '-A', 'headeraddress_extflash=0x64300000',
                 '--sdram_split_offset', '0x400000',
@@ -404,7 +399,7 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             [   # extra args
                 '-n', 'netx90_rev0',
-                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
                 '-A', 'headeraddress_extflash=0x64300000',
                 '--sdram_split_offset', '0',
@@ -431,7 +426,7 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             [   # extra args
                 '-n', 'netx90_rev0',
-                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_2PART%%',
                 '-A', 'headeraddress_extflash=0x1000',
                 '-A', 'segments_intflash=.header',
@@ -453,7 +448,7 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             [   # extra args
                 '-n', 'netx90_rev0',
-                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                 '-A', 'headeraddress_extflash=0x64300000',
                 '--sdram_split_offset', '0x400000',
@@ -476,7 +471,7 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             [   # extra args
                 '-n', 'netx90_rev0',
-                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                 '-A', 'headeraddress_extflash=0x64300000',
                 '--sdram_split_offset', '0x400000',
@@ -499,7 +494,7 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             [   # extra args
                 '-n', 'netx90_rev0',
-                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                 '-A', 'headeraddress_extflash=0x64300000',
                 '--sdram_split_offset', '0x400000',
@@ -521,7 +516,7 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             [   # extra args
                 '-n', 'netx90_rev0',
-                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
                 '-A', 'headeraddress_extflash=0x64300000',
                 '--sdram_split_offset', '0x400000',
@@ -543,7 +538,7 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             [   # extra args
                 '-n', strNetxType,
-                '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+                '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
                 '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
                 '-A', 'segments_intflash=.header,.code',
             ],

@@ -165,6 +165,8 @@ tArtifactPom = atEnv.DEFAULT.ArtifactVersion('%s.pom' % strBasePath, 'templates/
 # Run tests.
 #
 
+strGccPath= 'C:/ProgramData/Hilscher GmbH/netX Studio CDT/BuildTools/arm-none-eabi-gcc/4.9.3/bin'
+
 atEnvVars = {
     'NETX4000_OBJCOPY': atEnv.NETX4000['OBJCOPY'],
     'NETX4000_OBJDUMP': atEnv.NETX4000['OBJDUMP'],
@@ -173,6 +175,10 @@ atEnvVars = {
     'NETX90_OBJCOPY': atEnv.NETX90_FULL['OBJCOPY'],
     'NETX90_OBJDUMP': atEnv.NETX90_FULL['OBJDUMP'],
     'NETX90_READELF': atEnv.NETX90_FULL['READELF'],
+    
+#    'NETX90_OBJCOPY': os.path.join(strGccPath, 'arm-none-eabi-objcopy.exe'),
+#    'NETX90_OBJDUMP': os.path.join(strGccPath, 'arm-none-eabi-objdump.exe'),
+#    'NETX90_READELF': os.path.join(strGccPath, 'arm-none-eabi-readelf.exe'),
 
     'ELF_NETX4000_SKIP': tElf_netx4000_skip[0].get_abspath(),
     'ELF_NETX4000_SKIPSECT': tElf_netx4000_skipsect[0].get_abspath(),
