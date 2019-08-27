@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" device="INTFLASH" has_header="False" has_end="True" offset="0x3000">
+	<Chunks>
+		<!-- Skip over FW File Header V3 until the offset 0x3200. -->
+  		<Skip absolute="0x3200" fill="0xFD" />
+    	
+    	<HashTable entries="16">
+            <TargetInfoPage>COM</TargetInfoPage>
+            <RootKeyIndex>16</RootKeyIndex>
+            <!-- key taken out of romkey.xml file -->
+            <Key idx="7"></Key>
+            <Binding>
+                <Value>
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                </Value>
+                <Mask>
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                </Mask>
+            </Binding>
+        </HashTable>
+		
+		<!-- Skip to fill 1.5K until the offset 0x3800. -->
+        <Skip absolute="0x3800" fill="0xFD" />
+		  
+		<XIP>
+            <Concat address="0x00103808">
+                <Hex>01020304</Hex>
+                <UInt32>0x05060708, 0x090a0b0c</UInt32>
+                <UInt16>0x0d0e, 0x0f10</UInt16>
+                <UInt8>0x11, 0x12, 0x13, 0x14</UInt8>
+                <String>abcdABCD0123</String>
+            </Concat>
+        </XIP>
+		
+		<Register>
+            <nop />
+            <set address="0xff401000" value="0x12345678" /> 
+            <set address="0xff401000" value="0x12345678" unlock="true" /> 
+            <copy source="0xff401004" dest="0xff401000"  unlock="true" />
+            <delay time_ms="200" />
+            <!-- mask defaults to 0xffffffff; timeout is in ms -->
+            <poll  address="0xff401540"                   cmp="0x40000000" timeout_ms="200" />
+            <poll  address="0xff401544" mask="0xf0000000" cmp="0x40000000" timeout_ms="100" />
+        </Register>
+		
+		<!-- Load Programm for the COM CPU and start afterwards -->
+		<Data>
+			<UInt8 address="0x00040000">
+				0x01,
+				0x23,
+				0x45,
+				0x67,
+				0x89,
+				0xab,
+				0xcd,
+				0xef
+			</UInt8>
+		</Data>
+		
+		<Data>
+			<Hex address="0x00040100">
+				0123456789abcdef
+			</Hex>
+		</Data>
+		
+		<Data>
+			<UInt16 address="0x00040200">
+				0x2301,
+				0x6745,
+				0xab89,
+				0xefcd
+			</UInt16>
+		</Data>
+		
+		<Data>
+			<UInt32 address="0x00040300">
+				0x67452301,
+				0xefcdab89
+			</UInt32>
+		</Data>
+		
+		<!-- random skip. -->
+        <Skip relative="16" />
+		
+		<Execute start_app="true" lock_firewall="true" activate_debugging="true" apply_firewall_settings="true">
+			<Address>0x000001f7</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		
+		<Text>
+			This is a text chunk.
+		</Text>
+		
+		<SpiMacro device="SPI_UNIT_OFFSET_SQI_CS0">
+			SMC_SEND_SNN|0, 0xeb,
+        
+			SMC_MODE|2,
+			SMC_SEND_NNN|3, 0x00, 0x00, 0x00, 0xa5,
+			SMC_IDLE_NNN|3,
+			SMC_RECEIVE_SDD|3,
+        
+			SMC_CHTR_ROM
+		</SpiMacro>
+
+		
+		<Text>
+			Just to get 16 Chunks...
+		</Text>
+		
+		<Text>
+			Just to get 16 Chunks...
+		</Text>
+		
+		<Text>
+			Just to get 16 Chunks...
+		</Text>
+		
+		<Text>
+			Just to get 16 Chunks...
+		</Text>
+		
+		<Next>
+			<Device>BOOTDEV_SQI_FLASH_CS0</Device>
+			<!-- Offset must be the same in header of parttwo xml-file -->
+			<!-- Offset is start_add. of .nae image -->
+			<Offset>0x0</Offset>
+		</Next>
+	</Chunks>
+</HBootImage>
+

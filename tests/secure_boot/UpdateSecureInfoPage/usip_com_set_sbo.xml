@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<HBootImage type="INTRAM">
+	<Chunks>
+		<UpdateSecureInfoPage>
+			<TargetInfoPage>COM</TargetInfoPage>
+			<Data>
+                <!-- ProtectionOptionFlags -->
+                <!-- set secureBootViaSignature -->
+			    <Concat>
+                    <UInt16>556</UInt16>  <!-- This is the offset. -->
+                    <UInt16>2</UInt16>    <!-- This is the number of bytes to patch. -->
+                    <UInt16>0</UInt16>
+                </Concat>
+			</Data>
+		</UpdateSecureInfoPage>
+	</Chunks>
+</HBootImage>

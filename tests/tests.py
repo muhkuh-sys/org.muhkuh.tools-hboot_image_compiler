@@ -98,6 +98,97 @@ class TestExpectedBinaries(unittest.TestCase):
 
         self.assertEqual(strBinReference, strBinOutput)
 
+    def __run_hboot_image_compiler_public(self, strCwd, strXml, strOutput, strNetx, atExtraArguments, strExpectedError = None):
+        # Save the current working directory for later.
+        strOldPath = os.getcwd()
+
+        # Change to the new working directory.
+        os.chdir(strCwd)
+
+        # Run the HBOOT image compiler.
+        astrCmd = [
+            sys.executable,
+            self.strHBootImageCompiler
+        ]
+        if strNetx:
+            astrCmd.extend(['--netx-type-public', strNetx])
+        if atExtraArguments is not None:
+            tRe = re.compile('%%([\w]+)%%')
+            # Replace all ENV vars in the extra arguments.
+            for strArg in atExtraArguments:
+                astrCmd.append(tRe.sub(self.__get_env_var, strArg))
+        astrCmd.extend([
+            strXml,
+            strOutput
+        ])
+
+        if strExpectedError==None:
+            subprocess.check_output(astrCmd)
+        else:
+            try:
+                # If an exception occurs, the output is included in the exception as e.output.
+                # stderr=subprocess.STDOUT appends the error messages to stdout.
+                subprocess.check_output(astrCmd, stderr=subprocess.STDOUT)
+            except Exception as e:
+                print("Exception output:")
+                print(e.output)
+                if strExpectedError in e.output:
+                    print("Found expected error message")
+                else:
+                    print('Did not find expected error message')
+                    raise Exception('Did not find expected error message')
+
+        # Restore the old working directory.
+        os.chdir(strOldPath)
+
+    def __test_with_reference_bin_public(self, strInput, strReference, strNetx, atExtraArguments, atCopyFiles, strExpectedError = None):
+        strInputBase = os.path.basename(strInput)
+        strInputPathFull = os.path.join(self.strTestsBaseDir, strInput)
+        strInputDirectoryFull = os.path.dirname(strInputPathFull)
+
+        strOutputDirectory = os.path.dirname(strReference)
+
+        # Create the output folder.
+        strOutputDirectoryFull = os.path.join(self.strOutputBaseDir, strOutputDirectory)
+        if os.path.exists(strOutputDirectoryFull) == False:
+            os.makedirs(strOutputDirectoryFull)
+        strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
+
+        # Copy files.
+        if atCopyFiles is not None:
+            for strFile in atCopyFiles:
+                strSrcAbs = os.path.join(self.strTestsBaseDir, strFile)
+                strSrcDirAbs = os.path.dirname(strSrcAbs)
+                strDstAbs = os.path.join(self.strOutputBaseDir, strFile)
+                strDstDirAbs = os.path.dirname(strDstAbs)
+                if os.path.exists(strSrcDirAbs) == False:
+                    os.makedirs(strSrcDirAbs)
+                if os.path.exists(strDstDirAbs) == False:
+                    os.makedirs(strDstDirAbs)
+                shutil.copy(strSrcAbs, strDstAbs)
+
+        # Copy the input file to the working folder.
+        shutil.copy(strInputPathFull, strOutputDirectoryFull)
+
+        # The working folder is the test path.
+        strCwd = strOutputDirectoryFull
+
+        self.__run_hboot_image_compiler_public(strCwd, strInputPathFull, strOutputPathFull, strNetx, atExtraArguments, strExpectedError)
+
+        
+        strRefPath = os.path.join(self.strTestsBaseDir, strReference)
+        #print("Comparing: Ref: %s <-> Out: %s" % (strRefPath, strOutputPathFull))
+        # Read the reference binary.
+        tFile = open(strRefPath, 'rb')
+        strBinReference = tFile.read()
+        tFile.close()
+
+        # Read the output.
+        tFile = open(strOutputPathFull, 'rb')
+        strBinOutput = tFile.read()
+        tFile.close()
+
+        self.assertEqual(strBinReference, strBinOutput)
 
 # ######################################################################## 
 #                                   
@@ -776,6 +867,103 @@ class TestExpectedBinaries(unittest.TestCase):
 
     def test_xip_hex_NETX90_MPW_SQIROM(self):
         self.__test_with_reference_bin('xip/xip_hex_NETX90_MPW_SQIROM.xml', 'xip/xip_hex_NETX90_MPW_SQIROM.bin', 'NETX90_MPW', None, None)
+
+#    def test_hash_table_fwk_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_fwk.xml',
+#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_fwk.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-rand-off'],
+#            ['secure_boot\\NXHX90-JTAG_COM\\keyrom.xml'])
+#
+#    def test_hash_table_rk_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_rk.xml',
+#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_rk.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-rand-off'],
+#            ['secure_boot\\NXHX90-JTAG_COM\\keyrom.xml'])
+#
+#    def test_asig_NETX90_B(self):
+#        self.__test_netx90_appimg_with_reference_bin(
+#            'secure_boot\\NXHX90-JTAG_APP\\asig.xml',
+#            ['secure_boot\\NXHX90-JTAG_APP\\asig.nai',
+#             'secure_boot\\NXHX90-JTAG_APP\\asig.nae'],
+#            ['-n', 'netx90_rev1' ,
+#             '--keyrom' , 'keyrom.xml',
+#             '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+#             '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
+#             '--openssl-exe' , 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-rand-off'],
+#            ['secure_boot\\NXHX90-JTAG_APP\\keyrom.xml'])
+#
+#    def test_usip_app_set_pk_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot\\UpdateSecureInfoPage\\usip_app_set_pk.xml',
+#            'secure_boot\\UpdateSecureInfoPage\\usip_app_set_pk.bin',
+#            'NETX90B',
+#            ['--keyrom' , 'keyrom.xml',
+#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-rand-off'],
+#            ['secure_boot\\UpdateSecureInfoPage\\keyrom.xml'])
+#
+#    def test_usip_com_set_sbo_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot\\UpdateSecureInfoPage\\usip_com_set_sbo.xml',
+#            'secure_boot\\UpdateSecureInfoPage\\usip_com_set_sbo.bin',
+#            'NETX90B',
+#            ['--keyrom' , 'keyrom.xml',
+#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-rand-off'],
+#            ['secure_boot\\UpdateSecureInfoPage\\keyrom.xml'])
+
+    def test_data_hex_public(self):
+        self.__test_with_reference_bin_public('data/data_hex.xml', 'data/data_hex.bin', 'netx90_mpw', None, None)
+
+    def test_regi_chunk_public(self):
+        self.__test_with_reference_bin_public('regi/regi.xml', 'regi/regi.bin', 'netx90_rev0', None, None)
+
+    def test_firewall_chunk_public(self):
+        self.__test_with_reference_bin_public(
+            'firewall/firewall.xml',
+            'firewall/firewall.bin',
+            'netx90',
+            ['--netx-type', 'NETX90'],
+            None,
+            strExpectedError = "hboot_image_compiler: error: argument -n/--netx-type: not allowed with argument --netx-type-public"
+        )
+
+    def test_skip_absolute_parameter_public(self):
+        self.__test_with_reference_bin_public(
+            'skip/absolute_parameter.xml',
+            'skip/absolute_parameter.bin',
+            None,
+            ['--define', 'skipUntil=0x1000'],
+            None,
+            strExpectedError = "hboot_image_compiler: error: one of the arguments -n/--netx-type --netx-type-public is required"
+        )
+		
+    def test_text_NETX4000_INTFLASH_public(self):
+        self.__test_with_reference_bin_public('text/text_NETX4000_4100_SQIROM0.xml', 'text/text.bin', 'NETX4000', None, None)
+
+    def test_text_NETX4100_INTFLASH_public(self):
+        self.__test_with_reference_bin_public('text/text_NETX4000_4100_SQIROM0.xml', 'text/text.bin', 'NETX4100', None, None)
+		
+    def test_xip_hex_NETX4000_RELAXED_SQIROM0_public(self):
+        self.__test_with_reference_bin_public('xip/xip_hex_NETX4000_RELAXED_SQIROM0.xml', 'xip/xip_hex_NETX4000_RELAXED_SQIROM0.bin', 'NETX4000_RELAXED', None, None)
+		
+    def test_option_chunks_netx90B_options(self):
+        self.__test_with_reference_bin('option_chunks/netx90b_options.xml', 'option_chunks/netx90b_options.bin', 'NETX90B', None, None)
+
+    def test_option_chunks_netx90_rev1_options_public(self):
+        self.__test_with_reference_bin_public('option_chunks/netx90b_options.xml', 'option_chunks/netx90b_options.bin', 'netx90_rev1', None, None)
+		
+    def test_option_chunks_netx90_options_public(self):
+        self.__test_with_reference_bin_public('option_chunks/netx90b_options.xml', 'option_chunks/netx90b_options.bin', 'netx90', None, None)
 
 if __name__ == '__main__':
     unittest.main()
