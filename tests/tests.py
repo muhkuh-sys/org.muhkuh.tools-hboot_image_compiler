@@ -865,56 +865,56 @@ class TestExpectedBinaries(unittest.TestCase):
 
 #    def test_hash_table_fwk_NETX90_B(self):
 #        self.__test_with_reference_bin(
-#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_fwk.xml',
-#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_fwk.bin',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk.xml',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk.bin',
 #            'NETX90B',
 #            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-exe', <your openssl path>,
 #             '--openssl-rand-off'],
-#            ['secure_boot\\NXHX90-JTAG_COM\\keyrom.xml'])
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
 #
 #    def test_hash_table_rk_NETX90_B(self):
 #        self.__test_with_reference_bin(
-#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_rk.xml',
-#            'secure_boot\\NXHX90-JTAG_COM\\hash_table_rk.bin',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_rk.xml',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_rk.bin',
 #            'NETX90B',
 #            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-exe', <your openssl path>,
 #             '--openssl-rand-off'],
-#            ['secure_boot\\NXHX90-JTAG_COM\\keyrom.xml'])
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
 #
 #    def test_asig_NETX90_B(self):
 #        self.__test_netx90_appimg_with_reference_bin(
-#            'secure_boot\\NXHX90-JTAG_APP\\asig.xml',
-#            ['secure_boot\\NXHX90-JTAG_APP\\asig.nai',
-#             'secure_boot\\NXHX90-JTAG_APP\\asig.nae'],
+#            'secure_boot/NXHX90-JTAG_APP/asig.xml',
+#            ['secure_boot/NXHX90-JTAG_APP/asig.nai',
+#             'secure_boot/NXHX90-JTAG_APP/asig.nae'],
 #            ['-n', 'netx90_rev1' ,
 #             '--keyrom' , 'keyrom.xml',
-#             '-c', self.strOCPath, '-d', self.strODPath, '-r', self.strREPath,
+#             '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
 #             '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
-#             '--openssl-exe' , 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-exe' , <your openssl path>,
 #             '--openssl-rand-off'],
-#            ['secure_boot\\NXHX90-JTAG_APP\\keyrom.xml'])
+#            ['secure_boot/NXHX90-JTAG_APP/keyrom.xml'])
 #
 #    def test_usip_app_set_pk_NETX90_B(self):
 #        self.__test_with_reference_bin(
-#            'secure_boot\\UpdateSecureInfoPage\\usip_app_set_pk.xml',
-#            'secure_boot\\UpdateSecureInfoPage\\usip_app_set_pk.bin',
+#            'secure_boot/UpdateSecureInfoPage/usip_app_set_pk.xml',
+#            'secure_boot/UpdateSecureInfoPage/usip_app_set_pk.bin',
 #            'NETX90B',
 #            ['--keyrom' , 'keyrom.xml',
-#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-exe', <your openssl path>,
 #             '--openssl-rand-off'],
-#            ['secure_boot\\UpdateSecureInfoPage\\keyrom.xml'])
+#            ['secure_boot/UpdateSecureInfoPage/keyrom.xml'])
 #
 #    def test_usip_com_set_sbo_NETX90_B(self):
 #        self.__test_with_reference_bin(
-#            'secure_boot\\UpdateSecureInfoPage\\usip_com_set_sbo.xml',
-#            'secure_boot\\UpdateSecureInfoPage\\usip_com_set_sbo.bin',
+#            'secure_boot/UpdateSecureInfoPage/usip_com_set_sbo.xml',
+#            'secure_boot/UpdateSecureInfoPage/usip_com_set_sbo.bin',
 #            'NETX90B',
 #            ['--keyrom' , 'keyrom.xml',
-#             '--openssl-exe', 'C:\\Users\\timstelz\\Desktop\\openssl-1.1.1c-win64-mingw\\openssl.exe',
+#             '--openssl-exe', <your openssl path>,
 #             '--openssl-rand-off'],
-#            ['secure_boot\\UpdateSecureInfoPage\\keyrom.xml'])
+#            ['secure_boot/UpdateSecureInfoPage/keyrom.xml'])
 
     def test_data_hex_public(self):
         self.__test_with_reference_bin_public('data/data_hex.xml', 'data/data_hex.bin', 'netx90_mpw', None, None)
@@ -959,6 +959,31 @@ class TestExpectedBinaries(unittest.TestCase):
 		
     def test_option_chunks_netx90_options_public(self):
         self.__test_with_reference_bin_public('option_chunks/netx90b_options.xml', 'option_chunks/netx90b_options.bin', 'netx90', None, None)
+
+#    def test_secure_netx4000_root_cert(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX4000-JTAG/ValidRootCertNewRegTemplate.xml',
+#            'secure_boot/NXHX4000-JTAG/ValidRootCertNewRegTemplate.bin',
+#            'NETX4000',
+#            ['--keyrom' , 'Keys/keyrom.xml',
+#             '-A', 'licensePublicKey=Keys/licensePublicKey.der', '-A', 'cr7PublicKey=Keys/cr7PublicKey.der', '-A', 'a9PublicKey=Keys/a9PublicKey.der',
+#             '--openssl-exe', <your openssl path>,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX4000-JTAG/Keys/keyrom.xml',
+#             'secure_boot/NXHX4000-JTAG/Keys/a9PublicKey.der',
+#             'secure_boot/NXHX4000-JTAG/Keys/cr7PublicKey.der',
+#             'secure_boot/NXHX4000-JTAG/Keys/licensePublicKey.der'
+#			])
+#
+#    def test_secure_netx4000_lic_cert(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX4000-JTAG/ValidLicenseCertNewRegTemplate.xml',
+#            'secure_boot/NXHX4000-JTAG/ValidLicenseCertNewRegTemplate.bin',
+#            'NETX4000',
+#            ['-A', 'licensePrivatKey=Keys/licensePrivatKey.der',
+#             '--openssl-exe', <your openssl path>,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX4000-JTAG/Keys/licensePrivatKey.der'])
 
 if __name__ == '__main__':
     unittest.main()
