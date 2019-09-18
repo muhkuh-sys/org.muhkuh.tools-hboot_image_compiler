@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<!-- The certificate mask and reference values have following structure -->
+<!-- RAP_SYSCTRL.CHIP_ID_0 					1 DWORD -->											<!-- Unique ID -->
+<!-- RAP_SYSCTRL.CHIP_ID_1 					1 DWORD -->											<!-- Unique ID -->	
+<!-- RAP_SYSCTRL.CHIP_ID_2 					1 DWORD -->											<!-- Unique ID -->
+<!-- RAP_SYSCTRL.CHIP_ID_3 					1 DWORD -->											<!-- Unique ID -->
+<!-- RAP_SYSCTRL.BOOTMODE_CORE[8,6:0] 		1 BYTE  -->
+<!-- RAP_SYSCTRL.NOCPWRMASK[7:0] 			1 BYTE  --> 
+<!-- ASIC_CTRL.ASR_ID[0] 					1 BYTE  --> <!-- 31:16 Customer ID 15:13 Chip Type 12:0 Rom Key Selection -->
+<!-- ASIC_CTRL.ASR_ID[1]                    1 DWORD --> <!-- 31:16 ASR ID REgister Status 15:8 Secure Mode 7:0 Boot Modes -->
+<!-- ASIC_CTRL.ASR_ID[2] 					1 DWORD --> <!-- Manufaturer ID -->					<!-- Anchor [0] -->
+<!-- ASIC_CTRL.ASR_ID[3] 					1 DWORD --> <!-- Product ID -->						<!-- Anchor [1] -->
+<!-- ASIC_CTRL.ASR_ID[4] 					1 DWORD --> <!-- Root Certificate Nr -->			<!-- Anchor [2] -->
+<!-- ASIC_CTRL.ASR_ID[5] 					1 DWORD --> <!-- MAC ID1 -->						<!-- Anchor [3] -->
+<!-- ASIC_CTRL.ASR_ID[6] 					1 DWORD --> <!-- 31:16 MAC ID2 : 15:0 MAC ID1 --> 
+<!-- ASIC_CTRL.ASR_ID[7] 					1 DWORD --> <!-- MAC ID2 -->
+<!-- NETX_LIC_ID 							1 DWORD -->
+<!-- ASIC_CTRL.NETX_LIC_FLAGS0 				1 DWORD -->
+<!-- ASIC_CTRL.NETX_LIC_FLAGS1 				1 DWORD -->
+<!-- ASIC_CTRL.DEBUG_CTRL_SET[15:0] 		1 DWORD -->
+
+<HBootImage type="REGULAR" device="SQIROM0" has_header="True" has_end="False" offset="0x0000">
+  <Header set_flasher_parameters="true" />
+	<Chunks>
+    
+		<XIP>
+			<Concat address="0x10000048">
+				<!-- FileType -->
+				<String>KEK</String>
+				<!-- StructVersion -->
+				<String>S</String>  <UInt8>2</UInt8>
+				<!-- FileVersion -->
+				<String>V</String>  <UInt8>1</UInt8>
+				<!-- FileText: fixed length of 108 bytes -->
+									   <!-- 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678 -->
+				<String>:</String>  <String>NETX4000 ROOT CERT TEMPLATE                                                                                 </String>
+			</Concat>
+		</XIP>
+		
+		<RootCert>
+			<RootPublicKey idx="3" />
+			<Binding>
+				<Mask>
+					ff ff ff ff <!-- RAP_SYSCTRL.CHIP_ID_0 -->
+					ff ff ff ff <!-- RAP_SYSCTRL.CHIP_ID_1 -->				
+					ff ff ff ff <!-- RAP_SYSCTRL.CHIP_ID_2 -->
+					ff ff ff ff <!-- RAP_SYSCTRL.CHIP_ID_3 -->
+					00          <!-- RAP_SYSCTRL.BOOTMODE_CORE[8,6:0] -->
+					00          <!-- RAP_SYSCTRL.NOCPWRMASK[7:0] --> 
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[0] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[1][27:0], ASIC_CTRL.MISC_ASIC_CTRL[11:8] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[2] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[3] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[4] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[5] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[6] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[7] -->
+					00 00 00 00 <!-- NETX_LIC_ID -->
+					00 00 00 00 <!-- ASIC_CTRL.NETX_LIC_FLAGS0 -->
+					00 00 00 00 <!-- ASIC_CTRL.NETX_LIC_FLAGS1 -->
+					00 00       <!-- ASIC_CTRL.DEBUG_CTRL_SET[15:0] -->
+				</Mask>
+				<Ref>
+					00 00 00 00 <!-- RAP_SYSCTRL.CHIP_ID_0 -->
+					00 00 00 00	<!-- RAP_SYSCTRL.CHIP_ID_1 -->				
+					00 06 27 50 <!-- RAP_SYSCTRL.CHIP_ID_2 -->
+					17 98 4d 1e	<!-- RAP_SYSCTRL.CHIP_ID_3 -->
+					00          <!-- RAP_SYSCTRL.BOOTMODE_CORE[8,6:0] -->
+					00          <!-- RAP_SYSCTRL.NOCPWRMASK[7:0] --> 
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[0] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[1][27:0], ASIC_CTRL.MISC_ASIC_CTRL[11:8] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[2] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[3] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[4] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[5] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[6] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[7] -->
+					00 00 00 00 <!-- NETX_LIC_ID -->
+					00 00 00 00 <!-- ASIC_CTRL.NETX_LIC_FLAGS0 -->
+					00 00 00 00 <!-- ASIC_CTRL.NETX_LIC_FLAGS1 -->
+					00 00       <!-- ASIC_CTRL.DEBUG_CTRL_SET[15:0] -->
+				</Ref>
+			</Binding>
+			
+			<NewRegisterValues>				
+				<!-- Anchor register -->
+				<Value offset="0x0d0" size="128">
+					4e 45 54 58 <!-- Anchor [0] -->
+					34 30 30 30 <!-- Anchor [1] -->
+					48 49 4c 53 <!-- Anchor [2] -->
+					43 48 45 52 <!-- Anchor [3] -->
+				</Value>
+			</NewRegisterValues>	
+			
+			<TrustedPathLicense>
+				<File name="@licensePublicKey"/>
+				<Mask>
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00
+					00
+					00 00 00 00
+					00 00 00 00
+					ff ff ff ff
+					ff ff ff ff
+					ff ff ff ff
+					ff ff ff ff
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00
+				</Mask>
+			</TrustedPathLicense>
+									
+			<TrustedPathCr7Sw>
+				<File name="@cr7PublicKey"/>
+				<Mask>
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00
+					00
+					00 00 00 00
+					00 00 00 00
+					ff ff ff ff
+					ff ff ff ff
+					ff ff ff ff
+					ff ff ff ff
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00
+				</Mask>
+			</TrustedPathCr7Sw>
+
+			<TrustedPathCa9Sw>
+				<File name="@a9PublicKey"/>
+				<Mask>
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00
+					00
+					00 00 00 00
+					00 00 00 00
+					ff ff ff ff
+					ff ff ff ff
+					ff ff ff ff
+					ff ff ff ff
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00 00 00
+					00 00
+				</Mask>
+			</TrustedPathCa9Sw>
+			
+		</RootCert>
+		
+		<!-- Skip to fill ~4K until the offset 0xFF4. -->
+		<!-- Some free space for skip incomplete -->
+		<Skip absolute="0xFF4" fill="0xFD" />
+		
+		<!-- Skip over boot header of license file -->
+		<SkipIncomplete absolute="0x1040" />
+        
+	</Chunks>
+</HBootImage>
+

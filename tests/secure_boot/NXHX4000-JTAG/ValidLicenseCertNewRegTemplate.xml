@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!-- The certificate mask and reference values have following structure -->
+<!-- RAP_SYSCTRL.CHIP_ID_0 					1 DWORD -->											<!-- Unique ID -->
+<!-- RAP_SYSCTRL.CHIP_ID_1 					1 DWORD -->											<!-- Unique ID -->	
+<!-- RAP_SYSCTRL.CHIP_ID_2 					1 DWORD -->											<!-- Unique ID -->
+<!-- RAP_SYSCTRL.CHIP_ID_3 					1 DWORD -->											<!-- Unique ID -->
+<!-- RAP_SYSCTRL.BOOTMODE_CORE[8,6:0] 		1 BYTE  -->
+<!-- RAP_SYSCTRL.NOCPWRMASK[7:0] 			1 BYTE  --> 
+<!-- ASIC_CTRL.ASR_ID[0] 					1 BYTE  --> <!-- 31:16 Customer ID 15:13 Chip Type 12:0 Rom Key Selection -->
+<!-- ASIC_CTRL.ASR_ID[1]                    1 DWORD --> <!-- 31:16 ASR ID REgister Status 15:8 Secure Mode 7:0 Boot Modes -->
+<!-- ASIC_CTRL.ASR_ID[2] 					1 DWORD --> <!-- Manufaturer ID -->					<!-- Anchor [0] -->
+<!-- ASIC_CTRL.ASR_ID[3] 					1 DWORD --> <!-- Product ID -->						<!-- Anchor [1] -->
+<!-- ASIC_CTRL.ASR_ID[4] 					1 DWORD --> <!-- Root Certificate Nr -->			<!-- Anchor [2] -->
+<!-- ASIC_CTRL.ASR_ID[5] 					1 DWORD --> <!-- MAC ID1 -->						<!-- Anchor [3] -->
+<!-- ASIC_CTRL.ASR_ID[6] 					1 DWORD --> <!-- 31:16 MAC ID2 : 15:0 MAC ID1 --> 
+<!-- ASIC_CTRL.ASR_ID[7] 					1 DWORD --> <!-- MAC ID2 -->
+<!-- NETX_LIC_ID 							1 DWORD -->
+<!-- ASIC_CTRL.NETX_LIC_FLAGS0 				1 DWORD -->
+<!-- ASIC_CTRL.NETX_LIC_FLAGS1 				1 DWORD -->
+<!-- ASIC_CTRL.DEBUG_CTRL_SET[15:0] 		1 DWORD -->
+
+<HBootImage type="REGULAR" device="SQIROM0" has_header="True" has_end="False" offset="0x1000">
+  <Header set_flasher_parameters="true" />
+	<Chunks>
+    
+		<XIP>
+			<Concat address="0x10001048">
+				<!-- FileType -->
+				<String>LIC</String>
+				<!-- StructVersion -->
+				<String>S</String>  <UInt8>2</UInt8>
+				<!-- FileVersion -->
+				<String>V</String>  <UInt8>1</UInt8>
+				<!-- FileText: fixed length of 108 bytes -->
+									   <!-- 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678 -->
+				<String>:</String>  <String>NETX4000 LIC CERT TEMPLATE                                                                                  </String>
+			</Concat>
+		</XIP>		
+		
+		<LicenseCert>
+			<Key>
+				<File name="@licensePrivatKey"/>
+			</Key>
+            <Binding>
+				<Mask>
+					00 00 00 00 <!-- RAP_SYSCTRL.CHIP_ID_0 -->
+					00 00 00 00 <!-- RAP_SYSCTRL.CHIP_ID_1 -->				
+					00 00 00 00 <!-- RAP_SYSCTRL.CHIP_ID_2 -->
+					00 00 00 00 <!-- RAP_SYSCTRL.CHIP_ID_3 -->
+					00          <!-- RAP_SYSCTRL.BOOTMODE_CORE[8,6:0] -->
+					00          <!-- RAP_SYSCTRL.NOCPWRMASK[7:0] --> 
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[0] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[1][27:0], ASIC_CTRL.MISC_ASIC_CTRL[11:8] -->
+					ff ff ff ff <!-- ASIC_CTRL.ASR_ID[2] -->
+					ff ff ff ff <!-- ASIC_CTRL.ASR_ID[3] -->
+					ff ff ff ff <!-- ASIC_CTRL.ASR_ID[4] -->
+					ff ff ff ff <!-- ASIC_CTRL.ASR_ID[5] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[6] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[7] -->
+					00 00 00 00 <!-- NETX_LIC_ID -->
+					00 00 00 00 <!-- ASIC_CTRL.NETX_LIC_FLAGS0 -->
+					00 00 00 00 <!-- ASIC_CTRL.NETX_LIC_FLAGS1 -->
+					00 00       <!-- ASIC_CTRL.DEBUG_CTRL_SET[15:0] -->
+				</Mask>
+				<Ref>
+					00 00 00 00 <!-- RAP_SYSCTRL.CHIP_ID_0 -->
+					00 00 00 00	<!-- RAP_SYSCTRL.CHIP_ID_1 -->				
+					00 06 27 50 <!-- RAP_SYSCTRL.CHIP_ID_2 -->
+					17 98 4d 1e	<!-- RAP_SYSCTRL.CHIP_ID_3 -->
+					00          <!-- RAP_SYSCTRL.BOOTMODE_CORE[8,6:0] -->
+					00          <!-- RAP_SYSCTRL.NOCPWRMASK[7:0] --> 
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[0] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[1][27:0], ASIC_CTRL.MISC_ASIC_CTRL[11:8] -->
+					4e 45 54 58 <!-- ASIC_CTRL.ASR_ID[2] -->
+					34 30 30 30 <!-- ASIC_CTRL.ASR_ID[3] -->
+					48 49 4c 53 <!-- ASIC_CTRL.ASR_ID[4] -->
+					43 48 45 52 <!-- ASIC_CTRL.ASR_ID[5] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[6] -->
+					00 00 00 00 <!-- ASIC_CTRL.ASR_ID[7] -->
+					00 00 00 00 <!-- NETX_LIC_ID -->
+					00 00 00 00 <!-- ASIC_CTRL.NETX_LIC_FLAGS0 -->
+					00 00 00 00 <!-- ASIC_CTRL.NETX_LIC_FLAGS1 -->
+					00 00       <!-- ASIC_CTRL.DEBUG_CTRL_SET[15:0] -->
+				</Ref>
+			</Binding>
+
+			<NewRegisterValues>
+				<!-- Registers for License  -->
+				<!-- for more detailed information look at regdef 0xf4080160 netx_lic_id -->
+				<!-- NETX_LIC_ID -->
+				<Value offset="0x190" size="32">
+					f8 e7 d6 c5
+				</Value>
+				
+				<!-- NETX_LIC_FLAGS[0] and NETX_LIC_FLAGS[1] -->
+				<Value offset="0x1b0" size="64">
+					7f 6e 5d 4c
+					3b 2a 19 08
+				</Value>
+			</NewRegisterValues>					   
+					
+		</LicenseCert>
+		
+		<!-- Skip to fill ~4K until the offset 0x1FF4. -->
+		<!-- Some free space for skip incomplete -->
+		<Skip absolute="0x1FF4" fill="0x4C" />
+		
+		<!-- Skip over boot header of license file -->
+		<SkipIncomplete absolute="0x2040" />
+        
+	</Chunks>
+</HBootImage>
+
