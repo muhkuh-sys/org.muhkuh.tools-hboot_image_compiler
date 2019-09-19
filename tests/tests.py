@@ -984,6 +984,18 @@ class TestExpectedBinaries(unittest.TestCase):
 #             '--openssl-exe', <your openssl path>,
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX4000-JTAG/Keys/licensePrivatKey.der'])
+#
+#    def test_secure_netx4000_sw_cert(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX4000-JTAG/ValidSecureSwCr7A9Template.xml',
+#            'secure_boot/NXHX4000-JTAG/ValidSecureSwCr7A9Template.bin',
+#            'NETX4000',
+#            ['-A', 'a9PrivatKey=Keys/a9PrivatKey.der', '-A', 'cr7PrivatKey=Keys/cr7PrivatKey.der',
+#             '--openssl-exe', '<your openssl path>,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX4000-JTAG/Keys/a9PrivatKey.der',
+#             'secure_boot/NXHX4000-JTAG/Keys/cr7PrivatKey.der'
+#            ])
 
 if __name__ == '__main__':
     unittest.main()
