@@ -750,6 +750,21 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_secure_root_cert_file(self):
         self.__test_with_reference_bin('secure/root_cert_file.xml', 'secure/root_cert_file.bin', 'NETX4000', None, ['secure/fake_root_cert.bin'])
 
+
+
+#    special test for a root certificate. It requires files, which are not part of the repository 
+#    see commit 
+#        Revision: 9238cfd7f7c4fafac3ddb6354b416bfdba6be6a1
+#        Author: Christoph Thelen <doc_bacardi@users.sourceforge.net>
+#        Date: 26.10.2017 16:13:02
+#        Message:
+#        Add deactivated root_cert test.
+#        
+#        ----
+#        Modified: mbs
+#        Modified: tests/tests.py
+#        
+#        
 #    def test_secure_root_cert(self):
 #        self.__test_with_reference_bin('secure/root_cert.xml', 'secure/root_cert.bin', 'NETX90_MPW', ['--keyrom', 'keyrom.xml', '--openssl-options=-rand', '--openssl-options=random.bin'], ['secure/demo_key_public.der', 'secure/keyrom.xml', 'secure/random.bin'])
 
