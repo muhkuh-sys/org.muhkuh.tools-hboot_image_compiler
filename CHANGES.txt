@@ -1,3 +1,15 @@
+v0.0.12
+
+  * add support for secure boot and license handling for netX 4000
+
+  * add support for secure boot for netX 90
+
+  * add new public netX names for all tools
+
+  * remove temporary file .sniplib.dblite
+
+  * include license information
+
 v0.0.11
 
 netX 90 APP image compiler:
