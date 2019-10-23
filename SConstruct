@@ -152,7 +152,8 @@ tArcList.AddFiles('hboot_image_compiler/',
     'mbs/site_scons/hboot_netx90_patch_table.xml',
     'mbs/site_scons/hboot_netx90b_patch_table.xml',
     'mbs/site_scons/hboot_netx90_mpw_patch_table.xml',
-    'CHANGES.txt')
+    'CHANGES.txt',
+    'LICENSE.txt')
 
 
 strBasePath = os.path.join(strModulePath, '%s-%s' % (strArtifact, PROJECT_VERSION))
@@ -166,6 +167,8 @@ tArtifactPom = atEnv.DEFAULT.ArtifactVersion('%s.pom' % strBasePath, 'templates/
 #
 
 strGccPath= 'C:/ProgramData/Hilscher GmbH/netX Studio CDT/BuildTools/arm-none-eabi-gcc/4.9.3/bin'
+
+strHbootDepackPath = 'targets/tests/bin'
 
 atEnvVars = {
     'NETX4000_OBJCOPY': atEnv.NETX4000['OBJCOPY'],
@@ -186,7 +189,9 @@ atEnvVars = {
     'ELF_NETX90_APP_BLINKI_IFLASH_SDRAM': tElf_netx90_app_blinki_iflash_sdram[0].get_abspath(),
     'ELF_NETX90_APP_BLINKI_IFLASH': tElf_netx90_app_blinki_iflash[0].get_abspath(),
     'ELF_NETX90_APP_BLINKI_IFLASH_2PART': tElf_netx90_app_blinki_iflash_2part[0].get_abspath(),
-    'ELF_NETX90_APP_BLINKI_SDRAM': tElf_netx90_app_blinki_sdram[0].get_abspath()    
+    'ELF_NETX90_APP_BLINKI_SDRAM': tElf_netx90_app_blinki_sdram[0].get_abspath(), 
+    
+    'HBOOT_DEPACK_FOLDER': strHbootDepackPath
 }
 
 
@@ -200,7 +205,6 @@ for k in astrWinRequiredEnv:
     if k in os.environ:
         atEnvVars[k] = os.environ[k]
 
-strHbootDepackPath = 'targets/tests/bin'
 tUnpackStamp = atEnv.DEFAULT.Unpack('targets/tests/.unpack_stamp', tArtifactZip, UNPACK_FOLDER=strHbootDepackPath)
 tTestStamp = atEnv.DEFAULT.Tests('targets/tests/.test_stamp', 'tests/tests.py', ENVVARS=atEnvVars)
 atEnv.DEFAULT.Depends(tTestStamp, tUnpackStamp)

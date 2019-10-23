@@ -1012,5 +1012,56 @@ class TestExpectedBinaries(unittest.TestCase):
 #             'secure_boot/NXHX4000-JTAG/Keys/cr7PrivatKey.der'
 #            ])
 
+    # Check that each file with suffix .py contains the license header
+    def test_License_Header(self):
+        astrLicenseHeader =[
+            '# ***************************************************************************',
+            '# *   Copyright (C) 2019 by Hilscher GmbH                                   *',
+            '# *   netXsupport@hilscher.com                                              *',
+            '# *                                                                         *',
+            '# *   This program is free software; you can redistribute it and/or modify  *',
+            '# *   it under the terms of the GNU General Public License as published by  *',
+            '# *   the Free Software Foundation; either version 2 of the License, or     *',
+            '# *   (at your option) any later version.                                   *',
+            '# *                                                                         *',
+            '# *   This program is distributed in the hope that it will be useful,       *',
+            '# *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *',
+            '# *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *',
+            '# *   GNU General Public License for more details.                          *',
+            '# *                                                                         *',
+            '# *   You should have received a copy of the GNU General Public License     *',
+            '# *   along with this program; if not, write to the                         *',
+            '# *   Free Software Foundation, Inc.,                                       *',
+            '# *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *',
+            '# ***************************************************************************',
+            ]
+            
+        strLicenseHeader = ''.join(astrLicenseHeader)
+        strLicenseLine = ''.join(strLicenseHeader.split())
+        strRootDir = os.environ["HBOOT_DEPACK_FOLDER"]
+        
+        print("Checking files for GPL header: .py in" + strRootDir)
+        
+        fResult = True
+        
+        for strDir, astrSubdirs, astrFiles in os.walk(strRootDir):
+            for strFile in astrFiles:
+                strFilePath = os.path.join(strDir, strFile)
+                strBasename, strExt = os.path.splitext(strFilePath)
+                if strExt == ".py":
+                    fd = open(strFilePath, "r")
+                    strContents = fd.read()
+                    fd.close()
+                    
+                    strContentsLine = ''.join(strContents.split())
+                    if strContentsLine.find(strLicenseLine) > 0:
+                        print("Has license header: " + strFilePath)
+                    else:
+                        print("No license header:  " + strFilePath)
+                        fResult = False
+    
+        self.assertEqual(fResult, True)
+
+
 if __name__ == '__main__':
     unittest.main()
