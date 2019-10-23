@@ -22,6 +22,7 @@
 
 import os.path
 import os
+from datetime import datetime
 
 #----------------------------------------------------------------------------
 #
@@ -115,6 +116,17 @@ tElf_netx90_app_blinki_iflash_2part = build_blinki(
 tElf_netx90_app_blinki_sdram = build_blinki(
     'netx90_app_blinki_sdram', 'netx90_app_blinki_sdram', 'src/netx90_app_blinki/link/netx90_app_sdram.ld')
     
+
+# ----------------------------------------------------------------------------
+# 
+# Generate the ersion file.
+# 
+
+tBuildTime = datetime.now()
+strBuildTime = tBuildTime.strftime("%Y-%B-%d-T%H:%M")
+tDict = {'BUILD_TIME': strBuildTime, 'BUILD_TYPE': '_RC1'}
+version_py_tmp = atEnv.DEFAULT.Version('targets/version/hboot_image_version_tmp.py', 'templates/hboot_image_version.py')
+version_py = atEnv.DEFAULT.Filter('#/targets/version/hboot_image_version.py', version_py_tmp, SUBSTITUTIONS=tDict)
     
 # ----------------------------------------------------------------------------
 #
@@ -135,6 +147,7 @@ strArtifact = 'hboot_image_compiler'
 tArcList = atEnv.DEFAULT.ArchiveList('zip')
 
 tArcList.AddFiles('hboot_image_compiler/hboot_image_compiler/',
+    version_py,
     'mbs/site_scons/hboot_image_compiler/__init__.py',
     'mbs/site_scons/hboot_image_compiler/__main__.py',
     'mbs/site_scons/elf_support.py',
@@ -159,6 +172,7 @@ tArcList.AddFiles('hboot_image_compiler/',
 strBasePath = os.path.join(strModulePath, '%s-%s' % (strArtifact, PROJECT_VERSION))
 tArtifactZip = atEnv.DEFAULT.Archive('%s.zip' % strBasePath, None, ARCHIVE_CONTENTS = tArcList)
 tArtifactPom = atEnv.DEFAULT.ArtifactVersion('%s.pom' % strBasePath, 'templates/pom.xml')
+
 
 
 #----------------------------------------------------------------------------
