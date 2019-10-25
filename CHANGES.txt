@@ -1,4 +1,5 @@
 
+  * Add command --version.
   * Add license text (GPL v2).
 
 v0.0.12
