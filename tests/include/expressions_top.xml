@@ -10,7 +10,7 @@ a &amp;lt;&amp;lt; b
 or as:
 <![CDATA[| a &lt;&lt; b]]>
 or as:
-a * 2^b
+a * 2**b
 
 The following forms do not work:
 <![CDATA[ 1 << 12 ]]> 
