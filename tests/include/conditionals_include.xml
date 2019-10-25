@@ -1,0 +1,87 @@
+
+<XIP>    
+    <Concat address="%%XIPADDR%%">
+        <String>%%HWC_TYPE%%</String>
+    
+        <UInt32>
+            %%VAL0%% if %%IS_MWC%%==0 else %%VAL1%% if %%FLAG%%==0 else %%VAL2%%
+        </UInt32>
+        
+        <UInt16>
+            0x0101 if %%IS_MWC%%==0 else 0x0202 if %%FLAG%%==0 else 0x0303
+        </UInt16>
+    
+        <UInt8>
+            0x01 if %%IS_MWC%%==0 else 0x02 if %%FLAG%%==0 else 0x03
+        </UInt8>
+    </Concat>
+</XIP>
+
+<Data>    
+    <UInt32 address="0x00020010">
+        %%VAL0%% if %%IS_MWC%%==0 else %%VAL1%% if %%FLAG%%==0 else %%VAL2%%
+    </UInt32>
+</Data>
+<Data>   
+    <UInt16 address="0x00020014">
+        0x0101 if %%IS_MWC%%==0 else 0x0202 if %%FLAG%%==0 else 0x0303
+    </UInt16>
+</Data>
+<Data>   
+    <UInt8 address="0x00020016">
+        0x01 if %%IS_MWC%%==0 else 0x02 if %%FLAG%%==0 else 0x03
+    </UInt8>
+</Data>
+
+<Register>
+    <set address="0xff401000" value="%%VAL0%% if %%IS_MWC%%==0 else %%VAL1%% if %%FLAG%%==0 else %%VAL2%%" />
+</Register>
+
+
+<Firewall>
+    <UInt32>
+         <!-- Firewall chunk workaround for ROM RC5 -->
+         <!-- Registers from asic_ctrl_com -->
+        0x0000000a,  <!-- netx_lock -->
+        0x00000003 if %%IS_MWC%%==0 else 0x00000000,  <!-- split_sdram -->
+         <!-- Registers from slave_firewall_ctrl -->
+        0x00000011,  <!-- firewall_cfg_crypt_system -->
+        0x00000000,  <!-- firewall_cfg_debug_slave -->
+        0x00000022,  <!-- firewall_cfg_eth_system -->
+        0x00000022 if %%IS_MWC%%==0 else 0x00000011,  <!-- firewall_cfg_sqirom -->
+        0x00000022,  <!-- firewall_cfg_hifmem_amem -->
+        0x00000033 if %%IS_MWC%%==0 else 0x00000011,  <!-- firewall_cfg_hifmem_sdram -->
+         <!-- Registers from slave_firewall_ctrl (repeated) -->
+        0x00000011,  <!-- firewall_cfg_crypt_system -->
+        0x00000000,  <!-- firewall_cfg_debug_slave -->
+        0x00000022,  <!-- firewall_cfg_eth_system -->
+        0x00000022 if %%IS_MWC%%==0 else 0x00000011,  <!-- firewall_cfg_sqirom -->
+        0x00000022,  <!-- firewall_cfg_hifmem_amem -->
+        0x00000033 if %%IS_MWC%%==0 else 0x00000011,  <!-- firewall_cfg_hifmem_sdram -->
+         <!-- Padding -->
+        0x00000000, 
+        0x00000000, 
+        0x00000000, 
+        0x00000000, 
+         <!-- Registers from asic_ctrl -->
+        0x0000ffff,  <!-- io_config0_mask -->
+        0x0000ffff,  <!-- io_config1_mask -->
+        0x0000ffff,  <!-- io_config2_mask -->
+        0x0000ffff,  <!-- io_config3_mask -->
+        0x00000fff,  <!-- io_config4_mask -->
+        0x0000ff7f,  <!-- io_config5_mask -->
+        0x0000ffff,  <!-- io_config6_mask -->
+        0x00001fff,  <!-- io_config7_mask -->
+        0x0000000f,  <!-- io_config8_mask -->
+        0x0000ffff,  <!-- io_config9_mask -->
+        0x00001fff,  <!-- io_config10_mask -->
+        0x000006ff,  <!-- io_config11_mask -->
+        0x00000fff,  <!-- phy_ctrl0_mask -->
+        0x00002fff if %%IS_MWC%%==0 else  0x000027ff, <!-- clock_enable0_mask -->
+        0x0000000f,  <!-- clock_enable1_mask -->
+        0x00000003,  <!-- systime_eth_system_ctrl_mask -->
+        0x00000003,  <!-- systime_gpio_com_ctrl_mask -->
+        0x00000003   <!-- systime_gpio_app_ctrl_mask -->
+    </UInt32>
+</Firewall>
+

@@ -1,0 +1,50 @@
+<XIP>
+    <Concat address="%%XIPADDR%%">
+        <UInt32>
+            0x10000001  %%EQUATION_11%%,
+            0x10000001  %%EQUATION_12%%,
+            0x10000001  %%EQUATION_13%%,
+            0x20000002  %%EQUATION_21%%,
+            0x20000002  %%EQUATION_22%%,
+            0x20000002  %%EQUATION_23%%
+        </UInt32>
+        <UInt16>
+            0x0003  %%EQUATION_11%%,
+            0x0003  %%EQUATION_12%%,
+            0x0003  %%EQUATION_13%%
+        </UInt16>
+        <UInt8>
+            0x11  %%EQUATION_13%%
+        </UInt8>
+    </Concat>
+</XIP>
+<Data>
+    <UInt32 address="0x00020010">
+        0x10000001  %%EQUATION_11%%,
+        0x10000001  %%EQUATION_12%%,
+        0x10000001  %%EQUATION_13%%,
+        0x20000002  %%EQUATION_21%%,
+        0x20000002  %%EQUATION_22%%,
+        0x20000002  %%EQUATION_23%%
+    </UInt32>
+</Data>
+<Data>
+    <UInt16 address="0x00020020">
+        0x0003  %%EQUATION_11%%,
+        0x0003  %%EQUATION_12%%,
+        0x0003  %%EQUATION_13%%
+    </UInt16>
+</Data>
+<Data>
+   <UInt8 address="0x00020030">
+        0x11  %%EQUATION_13%%
+    </UInt8>
+</Data>
+<Register>
+    <set address="0xff401011" value="0x10000001  %%EQUATION_11%%" />
+    <set address="0xff401012" value="0x10000001  %%EQUATION_12%%" />
+    <set address="0xff401013" value="0x10000001  %%EQUATION_13%%" />
+    <set address="0xff401021" value="0x20000002  %%EQUATION_21%%" />
+    <set address="0xff401022" value="0x20000002  %%EQUATION_22%%" />
+    <set address="0xff401023" value="0x20000002  %%EQUATION_23%%" />
+</Register>

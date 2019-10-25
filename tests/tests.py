@@ -581,7 +581,7 @@ class TestExpectedBinaries(unittest.TestCase):
 
     def test_start_app(self):
         self.__test_with_reference_bin('netx90_app_image/netx90_COM_start_APP.xml', 'netx90_app_image/netx90_COM_start_APP.nxi', 'NETX90', None, None)
-        
+
     def test_data_concat(self):
         self.__test_with_reference_bin('data/data_concat.xml', 'data/data_concat.bin', 'NETX90_MPW', None, None)
 
@@ -683,6 +683,18 @@ class TestExpectedBinaries(unittest.TestCase):
         'NETX90', 
         None,
         ['include/text_placeholder.xml'])
+        
+    def test_include_expressions(self):
+        self.__test_with_reference_bin('include/expressions_top.xml', 'include/expressions.bin', 
+        'NETX90', 
+        None, 
+        ['include/expressions_include.xml'])
+        
+    def test_include_conditionals(self):
+        self.__test_with_reference_bin('include/conditionals_top.xml', 'include/conditionals.bin', 
+        'NETX90', 
+        None, 
+        ['include/conditionals_include.xml'])
         
     def test_netx_types_netx4000(self):
         self.__test_with_reference_bin('netx_types/netx4000.xml', 'netx_types/netx4000.bin', 'NETX4000', None, None)

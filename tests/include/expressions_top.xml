@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" device="INTFLASH" has_header="True" has_end="False" offset="0x0000">
+
+
+<!--
+Passing expressions as parameters
+Any <>& need to be double-escaped, because the expression is de-escaped twice.
+For example, a << b can be written as:
+a &amp;lt;&amp;lt; b
+or as:
+<![CDATA[| a &lt;&lt; b]]>
+or as:
+a * 2^b
+
+The following forms do not work:
+<![CDATA[ 1 << 12 ]]> 
+neither
+<![CDATA[ <![CDATA[ | 1 << 12 ]]> ]]>
+-->
+<Chunks>
+    <Include name="expressions_include.xml">
+        <Parameter name="XIPADDR">0x00100048</Parameter>
+        <Parameter name="EQUATION_11"> <![CDATA[ | 1 &lt;&lt; 12 ]]> </Parameter>
+        <Parameter name="EQUATION_12"> | 0x1 &amp;lt;&amp;lt; 12 </Parameter>
+        <Parameter name="EQUATION_13"> | (1 * 2**6) </Parameter>
+        <Parameter name="EQUATION_22"> | 0x5 &amp;lt;&amp;lt; 24 | 0x7 &amp;lt;&amp;lt; 16 </Parameter>
+        <Parameter name="EQUATION_21"> <![CDATA[ | 0x5 &lt;&lt; 24 | 0x7 &lt;&lt; 16 ]]> </Parameter>
+        <Parameter name="EQUATION_23"> | (5 * 2**24) | (7 * 2**16) </Parameter>        
+    </Include>    
+</Chunks>
+</HBootImage>
+
+        
+
+<!-- 
+00000000: f3beaf00 00000000 00000000 00000000  ................
+00000010: 00000032 00000000 484f4f4d 00000000  2.......MOOH....
+00000020: f168e095 d5c2be2d 8facbeb2 081aea6f  ..h.-.......o...
+00000030: 6975a6f9 122f1290 5888344f 90d1cbc6  ..ui../.O4.X....
+
+00000040: 
+54584554 00000009 TEXT 9 dwords
+10001001 10001001 10000041 
+25070002 25070002 25070002 
+1003 1003 0043
+51 
+00
+ebd6006e checksum
+
+41544144 00000008  DATA len=8 dwords 
+00020010 addr  
+10001001 10001001 10000041 
+25070002 25070002 25070002  
+4e5acdc3 checksum
+
+41544144 00000004 DATA len=4 dwords 
+00020020 addr 
+1003 1003 0043
+0000 
+90a10cf7 checksum
+
+41544144 00000003  DATA len=3 dwords
+00020030 addr 
+00000051 
+4a016e6c checksum
+
+
+52 45 47 49 REGI
+0f 00 00 00 15 dwords
+
+01 set
+01 10 00 10 val 0x100010001
+11 10 40 ff addr 0xff401011
+
+01 set
+01 10 00 10 val 0x100010001
+12 10 40 ff addr 0xff401012
+
+01 set
+41 00 00 10 val 0x100000041
+13 10 40 ff addr 0xff401013
+
+01 set
+02 00 07 25 val 0x25070002
+21 10 40 ff addr 0xff401021
+
+01 set
+02 00 07 25 val 0x25070002
+22 10 40 ff addr 0xff401022
+
+01 set
+02 00 07 25 val 0x25070002
+23 10 40 ff addr 0xff401023
+
+00 00  
+40 1b b5 b7 checksum                                   
+
+-->
