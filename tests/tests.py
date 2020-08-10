@@ -7,7 +7,24 @@ import subprocess
 import sys
 import traceback
 
+
 class TestExpectedBinaries(unittest.TestCase):
+    """
+    Execute tests:
+
+        # from root directory of repository run to build bins and execute the tests afterwards.
+        python2 mbs/mbs
+        # to clean do:
+        python2 mbs/mbs clean
+
+    In build process a zip-package is created containing a out of the box working hboot_image_compiler. See the log for
+    the resulting *.zip-location
+
+    Hints for implementing new tests:
+    - rule: if one test fails, all consecutive test DO FAIL too!!!
+    - If you are working at the hboot_image_compiler, make sure, you're not working in the resulting zip-package, work
+      at the origin place.
+    """
 
     def setUp(self):
         self.strTestsBaseDir = os.path.realpath(os.path.dirname(__file__))
@@ -142,6 +159,19 @@ class TestExpectedBinaries(unittest.TestCase):
         os.chdir(strOldPath)
 
     def __test_with_reference_bin_public(self, strInput, strReference, strNetx, atExtraArguments, atCopyFiles, strExpectedError = None):
+        """
+        todo: improve general description
+        todo: remove unused variables
+        Wrapper to run the hboot_image_compiler
+        In case you provide a strExpectedError, the input file must have the same content like the outputfile.
+        :param strInput: typically the xml-file containing the chunk description
+        :param strReference: the golden reference file which the resulting binary is compared to
+        :param strNetx: a carefully picked name of the netX, enter a wrong one to retrieve the list of the choices
+        :param atExtraArguments: Additional command line arguments for hboot_image_compiler ( passed as list )
+        :param atCopyFiles: ?
+        :param strExpectedError: If you expect a exception-message from hboot_image_compiler, put it here.
+         in the compiler you have implemented this message as "raise BaseException(strExpectedError)"
+        """
         strInputBase = os.path.basename(strInput)
         strInputPathFull = os.path.join(self.strTestsBaseDir, strInput)
         strInputDirectoryFull = os.path.dirname(strInputPathFull)
@@ -622,7 +652,8 @@ class TestExpectedBinaries(unittest.TestCase):
             if strExpectedError in e.output:
                 fTestPassed = True
                 print("Found expected error message")
-                
+
+        # todo: as fare as I can see, this backup path is redundant. It is handled in __run_hboot_image_compiler()
         os.chdir(strOldPath)
         assert fTestPassed, "Did not find expected error message"
 
@@ -664,7 +695,6 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_header_NETX4000_SQIROM0_flash_param_true(self):
         self.__test_with_reference_bin('header/header_NETX4000_SQIROM0_flash_param_true.xml', 
         'header/header_NETX4000_SQIROM0_flash_param_true.bin', 'NETX4000', None, None)
-    
     
     def test_include_file_alias(self):
         self.__test_with_reference_bin('include/include_file_alias.xml', 'include/include_file_alias.bin', 'NETX4000', ['--alias', 'Data=data.xml'], ['include/data.xml'])
