@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="mbs/setup2html.xsl"?>
 
-<muhkuh_buildsystem project="hboot_image_compiler">
+<muhkuh_buildsystem group="org.muhkuh.lua" module="hboot_image_compiler">
 	<project_version>0.0.12</project_version>
 
 	<scons>
