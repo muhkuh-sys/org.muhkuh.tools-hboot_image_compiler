@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+        <!-- should raise error cause of index out of bound -->
+		<Execute bxlr_index="16">
+			<Address>0x000001f7</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+	</Chunks>
+</HBootImage>

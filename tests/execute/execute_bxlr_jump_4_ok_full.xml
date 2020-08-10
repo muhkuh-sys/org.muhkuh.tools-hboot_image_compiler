@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<!-- Prepare: Set a data-chunk somewhere [0x00021000] which will be executed by every EXEC-Chunk. (bxlr, nop)-->
+		<!-- To quickly check if it works: flas it to $CMD_BASE_FLASHER flash -b 2 -u 0 $FILE_TO_LOAD and stop in boot_common.c:936-->
+		<Data >
+			<UInt8 address="0x00021000">
+				0x70,
+				0x47,
+				0x00,
+				0xbf
+			</UInt8>
+		</Data>
+		<!-- Execute the target in thumb mode: somewhere+1 [0x00021000], here: unaltred demonstration -->
+		<Execute start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<!-- Values in here just taken from simple exec example -->
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<!-- Execute the target in thumb mode: somewhere+1 [0x00021000], here: first of the 16 trampoline addresses-->
+		<Execute bxlr_index="0" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<!-- Execute the target in thumb mode: somewhere+1 [0x00021000], here: second... -->
+		<Execute bxlr_index="1" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="2" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="3" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="4" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="5" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="6" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="7" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="8" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="9" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="10" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="11" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="12" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="13" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="14" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+		<Execute bxlr_index="15" start_app="false" lock_firewall="false" activate_debugging="true" apply_firewall_settings="false">
+			<Address>0x00021001</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+	</Chunks>
+</HBootImage>
+

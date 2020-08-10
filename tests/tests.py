@@ -672,9 +672,40 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_execute_address_netx90(self):
         self.__test_with_reference_bin('execute/execute_address_netx90.xml', 'execute/execute_address_netx90.bin', 'NETX90', None, None)
 
+    def test_execute_bxlr_1_ok(self):
+        self.__test_with_reference_bin('execute/execute_bxlr_jump_1_ok.xml', 'execute/execute_bxlr_jump_1_ok.bin',
+                                       'NETX90', None, None)
+
+    def test_execute_bxlr_2_err_out_of_bound(self):
+        strOldPath = os.getcwd()
+        test_file = 'execute/execute_bxlr_jump_2_err_out_of_bound.xml'
+        self.__test_with_reference_bin_public(
+            test_file, test_file,
+                                       'netx90_rev1', None, None,
+            strExpectedError="In chunk idx 0 expected attribute 'bxlr_index' to be between 0 to 15. Your bxlr_index index is at 16"
+        )
+
+        # todo: as fare as I can see, this backup path is redundant. It is handled in __run_hboot_image_compiler()
+        os.chdir(strOldPath)
+
+    def test_execute_bxlr_3_err_negative_num(self):
+        strOldPath = os.getcwd()
+        test_file = 'execute/execute_bxlr_jump_3_err_negative_num.xml'
+        self.__test_with_reference_bin_public(
+            test_file, test_file,
+                                       'netx90_rev1', None, None,
+            strExpectedError="In chunk idx 0 expected attribute 'bxlr_index' to be between 0 to 15."
+        )
+
+        # todo: as fare as I can see, this backup path is redundant. It is handled in __run_hboot_image_compiler()
+        os.chdir(strOldPath)
+
+    def test_execute_bxlr_4_ok_full(self):
+        self.__test_with_reference_bin('execute/execute_bxlr_jump_4_ok_full.xml', 'execute/execute_bxlr_jump_4_ok_full.bin',
+                                       'NETX90', None, None)
+
     def test_firewall_chunk(self):
         self.__test_with_reference_bin('firewall/firewall.xml', 'firewall/firewall.bin', 'NETX90', None, None)
-    
     
     def test_header_NETX90_INTFLASH_flash_param_true(self):
         self.__test_with_reference_bin('header/header_NETX90_INTFLASH_flash_param_true.xml', 
