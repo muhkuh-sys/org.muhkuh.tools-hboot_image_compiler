@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<Execute 
+			start_app="true" 
+			lock_firewall="true" 
+			activate_debugging="true" 
+			apply_firewall_settings="true"  
+			apply_firewall_settings_full="true">
+			<Address>0x000001f7</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+	</Chunks>
+</HBootImage>
+
+
+<!--
+00000000: 00 af be f3 00 00 00 00 00 00 00 00 00 00 00 00  ................
+00000010: 0a 00 00 00 00 00 00 00 4d 4f 4f 48 00 00 00 00  ........MOOH....
+00000020: 5d 01 0f 7a 70 e2 25 07 b8 01 26 49 96 d2 21 d4  ]..zp.%...&I..!.
+00000030: 2c 2c 51 bb 90 65 68 04 13 65 bf ff bf 52 fc 65  ,,Q..eh..e...R.e
+
+00000040: 
+45 58 45 43 chunk ID EXEC
+07 00 00 00 chunk size 
+f7 01 00 00 address
+11 11 11 11 R0
+22 22 22 22 R1
+33 33 33 33 R2
+44 44 44 44 R3
+0f 02 00 00 flags 
+46 86 79 70 checksum
+00 00 00 00 end of image
+
+Flags:
+#define MSK_EXEC_CHUNK_FLAGS_StartAppCpu            0x00000001
+#define MSK_EXEC_CHUNK_FLAGS_LockFirewall           0x00000002
+#define MSK_EXEC_CHUNK_FLAGS_ActivateDebugging      0x00000004
+#define MSK_EXEC_CHUNK_FLAGS_ApplyFirewallSettings  0x00000008
+#define MSK_EXEC_CHUNK_FLAGS_ApplyFirewallSettingsFull  0x00000200
+
+-->

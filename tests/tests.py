@@ -672,6 +672,15 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_execute_address_netx90(self):
         self.__test_with_reference_bin('execute/execute_address_netx90.xml', 'execute/execute_address_netx90.bin', 'NETX90', None, None)
 
+    # apply_firewall_settings_full="false"
+    # Should generate the same binary as the previous test
+    def test_execute_address_apply_firewall_full_false_netx90(self):
+        self.__test_with_reference_bin('execute/execute_address_apply_firewall_full_false_netx90.xml', 'execute/execute_address_netx90.bin', 'NETX90', None, None)
+
+    # apply_firewall_settings_full="true"
+    def test_execute_address_apply_firewall_full_netx90(self):
+        self.__test_with_reference_bin('execute/execute_address_apply_firewall_full_netx90.xml', 'execute/execute_address_apply_firewall_full_netx90.bin', 'NETX90', None, None)
+                
     def test_execute_bxlr_1_ok(self):
         self.__test_with_reference_bin('execute/execute_bxlr_jump_1_ok.xml', 'execute/execute_bxlr_jump_1_ok.bin',
                                        'NETX90', None, None)
