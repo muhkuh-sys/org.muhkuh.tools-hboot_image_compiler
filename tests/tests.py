@@ -1111,6 +1111,23 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_option_chunks_netx90_options_public(self):
         self.__test_with_reference_bin_public('option_chunks/netx90b_options.xml', 'option_chunks/netx90b_options.bin', 'netx90', None, None)
 
+    def test_option_chunks_raw_file(self):
+        self.__test_with_reference_bin(
+            'option_chunks/option_raw_file.xml',
+            'option_chunks/option_raw_file.bin', 'NETX90B', None, 
+            ['option_chunks/dummy_255_bytes.bin'])
+
+    def test_option_chunks_raw_large(self):
+        self.__test_with_reference_bin(
+            'option_chunks/option_raw_large.xml',
+            'option_chunks/option_raw_large.bin', 'NETX90B', None, None)
+
+    def test_option_chunks_raw_file_large(self):
+        self.__test_with_reference_bin(
+            'option_chunks/option_raw_file_large.xml',
+            'option_chunks/option_raw_file_large.bin', 'NETX90B', None, 
+            ['option_chunks/fullfull_intphy_default_calv6_padded.bin'])
+
 #    def test_secure_netx4000_root_cert(self):
 #        self.__test_with_reference_bin(
 #            'secure_boot/NXHX4000-JTAG/ValidRootCertNewRegTemplate.xml',
