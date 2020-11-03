@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" device="INTFLASH" has_header="True" has_end="True">
+    <Chunks>
+        <HashTable entries="9" size="1024">
+            <TargetInfoPage>COM</TargetInfoPage>
+            <!-- The key index to be put into the HTBL header. -->
+            <RootKeyIndex>17</RootKeyIndex>
+            <!-- The index of the key to read from the the romkey.xml file. 
+                 Key 6 is a 2048 bit key. -->
+            <Key idx="6"></Key>
+            <Binding>
+                <Value>
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                </Value>
+                <Mask>
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                    00000000
+                </Mask>
+            </Binding>
+        </HashTable>
+        
+        <Text>
+            Chunk 1
+        </Text>
+        <Text>
+            Chunk 2
+        </Text>
+        <Text>
+            Chunk 3
+        </Text>
+        <Text>
+            Chunk 4
+        </Text>
+        <Text>
+            Chunk 5
+        </Text>
+        <Text>
+            Chunk 6
+        </Text>
+        <Text>
+            Chunk 7
+        </Text>
+        <Text>
+            Chunk 8
+        </Text>
+        <Text>
+            Chunk 9
+        </Text>
+        <Text>
+            Chunk 10
+        </Text>
+        <Text>
+            Chunk 11
+        </Text>
+        <Text>
+            Chunk 12
+        </Text>
+        <Text>
+            Chunk 13
+        </Text>
+        <Text>
+            Chunk 14
+        </Text>
+        <Text>
+            Chunk 15
+        </Text>
+        <Text>
+            Chunk 16
+        </Text>
+    </Chunks>
+</HBootImage>
+

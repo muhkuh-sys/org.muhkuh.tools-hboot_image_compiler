@@ -7,7 +7,6 @@ import subprocess
 import sys
 import traceback
 
-
 class TestExpectedBinaries(unittest.TestCase):
     """
     Execute tests:
@@ -16,6 +15,9 @@ class TestExpectedBinaries(unittest.TestCase):
         python2 mbs/mbs
         # to clean do:
         python2 mbs/mbs clean
+
+    Note: The signing tests are commented out as they require OpenSSL.
+    To run them, uncomment them (search for test_hash_table) and adjust strOpenSSLPath below.
 
     In build process a zip-package is created containing a out of the box working hboot_image_compiler. See the log for
     the resulting *.zip-location
@@ -31,7 +33,8 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strOutputBaseDir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'output'))
         self.strHBootImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler'))
         self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler', 'netx90_app_image.py'))
-        
+        self.strOpenSSLPath='openssl-1.1.1c-win64-mingw\\openssl.exe'
+
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
         if strEnvKey not in os.environ:
@@ -61,6 +64,7 @@ class TestExpectedBinaries(unittest.TestCase):
             strOutput
         ])
 
+        # print(astrCmd)
         subprocess.check_output(astrCmd)
 
         # Restore the old working directory.
@@ -966,7 +970,57 @@ class TestExpectedBinaries(unittest.TestCase):
 #            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk.bin',
 #            'NETX90B',
 #            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', <your openssl path>,
+#             '--openssl-exe', self.strOpenSSLPath,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+#
+#    def test_hash_table_fwk17_16hashes_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_16hashes.xml',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_16hashes.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', self.strOpenSSLPath,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+#
+#    def test_hash_table_fwk17_size1536_16hashes_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1536_16hashes.xml',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1536_16hashes.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', self.strOpenSSLPath,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+#
+#    def test_hash_table_fwk17_size1024_8hashes_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_8hashes.xml',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_8hashes.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', self.strOpenSSLPath,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+#
+#    def test_hash_table_fwk17_size1024_9hashes_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes.xml',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', self.strOpenSSLPath,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+#
+#    def test_hash_table_fwk17_size1024_9hashes_2048bitkey_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes_2048bitkey.xml',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes_2048bitkey.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', self.strOpenSSLPath,
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
 #
@@ -976,7 +1030,7 @@ class TestExpectedBinaries(unittest.TestCase):
 #            'secure_boot/NXHX90-JTAG_COM/hash_table_rk.bin',
 #            'NETX90B',
 #            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', <your openssl path>,
+#             '--openssl-exe', self.strOpenSSLPath,
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
 #
@@ -989,7 +1043,7 @@ class TestExpectedBinaries(unittest.TestCase):
 #             '--keyrom' , 'keyrom.xml',
 #             '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
 #             '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
-#             '--openssl-exe' , <your openssl path>,
+#             '--openssl-exe', self.strOpenSSLPath,
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX90-JTAG_APP/keyrom.xml'])
 #
@@ -999,7 +1053,7 @@ class TestExpectedBinaries(unittest.TestCase):
 #            'secure_boot/UpdateSecureInfoPage/usip_app_set_pk.bin',
 #            'NETX90B',
 #            ['--keyrom' , 'keyrom.xml',
-#             '--openssl-exe', <your openssl path>,
+#             '--openssl-exe', self.strOpenSSLPath,
 #             '--openssl-rand-off'],
 #            ['secure_boot/UpdateSecureInfoPage/keyrom.xml'])
 #
@@ -1009,7 +1063,7 @@ class TestExpectedBinaries(unittest.TestCase):
 #            'secure_boot/UpdateSecureInfoPage/usip_com_set_sbo.bin',
 #            'NETX90B',
 #            ['--keyrom' , 'keyrom.xml',
-#             '--openssl-exe', <your openssl path>,
+#             '--openssl-exe', self.strOpenSSLPath,
 #             '--openssl-rand-off'],
 #            ['secure_boot/UpdateSecureInfoPage/keyrom.xml'])
 
