@@ -975,7 +975,28 @@ class TestExpectedBinaries(unittest.TestCase):
         self.__test_with_reference_bin('xip/xip_hex_NETX90_MPW_SQIROM.xml', 'xip/xip_hex_NETX90_MPW_SQIROM.bin', 'NETX90_MPW', None, None)
 
 # Signed COM images
+# Two signed boot images that start the APP CPU and jump to the While1 loop in ROM.
 
+#    def test_hash_table_fwk17_startapp_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_startapp.xml',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_startapp.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', self.strOpenSSLPath,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+#
+#    def test_hash_table_fwk17_size1024_startapp_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_startapp.xml',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_startapp.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', self.strOpenSSLPath,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+            
     # The XML file acutally contains Root key index 16, which
     # should trigger a warning.
 #    def test_hash_table_fwk_NETX90_B(self):
@@ -988,6 +1009,9 @@ class TestExpectedBinaries(unittest.TestCase):
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'],
 #            strExpectedOutput='Warning: The key index in a HTBL chunk must be 17!')
+
+# Several signed COM images that test combinations of 
+# selected key, number of hashes and chunk size.
 
 #    def test_hash_table_fwk17_16hashes_NETX90_B(self):
 #        self.__test_with_reference_bin(
