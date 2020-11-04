@@ -1,3 +1,7 @@
+  * tool netx90_app_iflash_image.py is depricated use netx90_app_image.py instead
+
+  * allow SkipIncomplete into hash table
+
   * Allow RAW option data to be larger than 255 bytes.
 
   * Allow reading the contents of an option chunk from a binary file.
