@@ -33,7 +33,8 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strOutputBaseDir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'output'))
         self.strHBootImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler'))
         self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler', 'netx90_app_image.py'))
-        self.strOpenSSLPath='openssl-1.1.1c-win64-mingw\\openssl.exe'
+        #self.strOpenSSLPath='C:\\Daten_local_only\\Tools\\openssl\\openssl-1.1.1c-win64-mingw\\openssl.exe'
+        self.strOpenSSLPath='<your openssl path>'
 
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
@@ -1010,6 +1011,18 @@ class TestExpectedBinaries(unittest.TestCase):
 #            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'],
 #            strExpectedOutput='Warning: The key index in a HTBL chunk must be 17!')
 
+   # The XML file acutally contains Root key index 17
+   # include skipIncomplete into hash table
+#    def test_hash_table_fwk_SkipIncomplete_NETX90_B(self):
+#        self.__test_with_reference_bin(
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk_SkipIncomplete.xml',
+#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk_SkipIncomplete.bin',
+#            'NETX90B',
+#            ['--keyrom', 'keyrom.xml',
+#             '--openssl-exe', self.strOpenSSLPath,
+#             '--openssl-rand-off'],
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+
 # Several signed COM images that test combinations of 
 # selected key, number of hashes and chunk size.
 
@@ -1180,7 +1193,7 @@ class TestExpectedBinaries(unittest.TestCase):
 #            'NETX4000',
 #            ['--keyrom' , 'Keys/keyrom.xml',
 #             '-A', 'licensePublicKey=Keys/licensePublicKey.der', '-A', 'cr7PublicKey=Keys/cr7PublicKey.der', '-A', 'a9PublicKey=Keys/a9PublicKey.der',
-#             '--openssl-exe', <your openssl path>,
+#             '--openssl-exe', self.strOpenSSLPath,
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX4000-JTAG/Keys/keyrom.xml',
 #             'secure_boot/NXHX4000-JTAG/Keys/a9PublicKey.der',
@@ -1194,7 +1207,7 @@ class TestExpectedBinaries(unittest.TestCase):
 #            'secure_boot/NXHX4000-JTAG/ValidLicenseCertNewRegTemplate.bin',
 #            'NETX4000',
 #            ['-A', 'licensePrivatKey=Keys/licensePrivatKey.der',
-#             '--openssl-exe', <your openssl path>,
+#             '--openssl-exe', self.strOpenSSLPath,
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX4000-JTAG/Keys/licensePrivatKey.der'])
 #
@@ -1204,7 +1217,7 @@ class TestExpectedBinaries(unittest.TestCase):
 #            'secure_boot/NXHX4000-JTAG/ValidSecureSwCr7A9Template.bin',
 #            'NETX4000',
 #            ['-A', 'a9PrivatKey=Keys/a9PrivatKey.der', '-A', 'cr7PrivatKey=Keys/cr7PrivatKey.der',
-#             '--openssl-exe', '<your openssl path>,
+#             '--openssl-exe', self.strOpenSSLPath,
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX4000-JTAG/Keys/a9PrivatKey.der',
 #             'secure_boot/NXHX4000-JTAG/Keys/cr7PrivatKey.der'
