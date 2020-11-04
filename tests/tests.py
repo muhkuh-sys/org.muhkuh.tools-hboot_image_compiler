@@ -65,12 +65,16 @@ class TestExpectedBinaries(unittest.TestCase):
         ])
 
         # print(astrCmd)
-        subprocess.check_output(astrCmd)
+        strOutput = subprocess.check_output(astrCmd)
 
         # Restore the old working directory.
         os.chdir(strOldPath)
 
-    def __test_with_reference_bin(self, strInput, strReference, strNetx, atExtraArguments, atCopyFiles):
+        return strOutput
+
+    def __test_with_reference_bin(self, 
+        strInput, strReference, strNetx, atExtraArguments, atCopyFiles,
+        strExpectedOutput=None):
         strInputBase = os.path.basename(strInput)
         strInputPathFull = os.path.join(self.strTestsBaseDir, strInput)
         strInputDirectoryFull = os.path.dirname(strInputPathFull)
@@ -102,9 +106,15 @@ class TestExpectedBinaries(unittest.TestCase):
         # The working folder is the test path.
         strCwd = strOutputDirectoryFull
 
-        self.__run_hboot_image_compiler(strCwd, strInputPathFull, strOutputPathFull, strNetx, atExtraArguments)
+        strOutput = self.__run_hboot_image_compiler(strCwd, strInputPathFull, strOutputPathFull, strNetx, atExtraArguments)
 
-        
+        if strExpectedOutput is not None:
+            if strExpectedOutput in strOutput:
+                print("Found expected message")
+            else:
+                print('Did not find expected message: %s' % (strExpectedOutput))
+                raise Exception('Did not find expected message: %s' % (strExpectedOutput))
+                
         strRefPath = os.path.join(self.strTestsBaseDir, strReference)
         #print("Comparing: Ref: %s <-> Out: %s" % (strRefPath, strOutputPathFull))
         # Read the reference binary.
@@ -964,6 +974,10 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_xip_hex_NETX90_MPW_SQIROM(self):
         self.__test_with_reference_bin('xip/xip_hex_NETX90_MPW_SQIROM.xml', 'xip/xip_hex_NETX90_MPW_SQIROM.bin', 'NETX90_MPW', None, None)
 
+# Signed COM images
+
+    # The XML file acutally contains Root key index 16, which
+    # should trigger a warning.
 #    def test_hash_table_fwk_NETX90_B(self):
 #        self.__test_with_reference_bin(
 #            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk.xml',
@@ -972,8 +986,9 @@ class TestExpectedBinaries(unittest.TestCase):
 #            ['--keyrom', 'keyrom.xml',
 #             '--openssl-exe', self.strOpenSSLPath,
 #             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
-#
+#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'],
+#            strExpectedOutput='Warning: The key index in a HTBL chunk must be 17!')
+
 #    def test_hash_table_fwk17_16hashes_NETX90_B(self):
 #        self.__test_with_reference_bin(
 #            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_16hashes.xml',
@@ -1034,6 +1049,9 @@ class TestExpectedBinaries(unittest.TestCase):
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
 #
+
+# APP image
+
 #    def test_asig_NETX90_B(self):
 #        self.__test_netx90_appimg_with_reference_bin(
 #            'secure_boot/NXHX90-JTAG_APP/asig.xml',
@@ -1047,6 +1065,9 @@ class TestExpectedBinaries(unittest.TestCase):
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX90-JTAG_APP/keyrom.xml'])
 #
+
+# USIP
+
 #    def test_usip_app_set_pk_NETX90_B(self):
 #        self.__test_with_reference_bin(
 #            'secure_boot/UpdateSecureInfoPage/usip_app_set_pk.xml',
