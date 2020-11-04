@@ -1,5 +1,16 @@
+  * Allow RAW option data to be larger than 255 bytes.
+
+  * Allow reading the contents of an option chunk from a binary file.
+    (Only tested with RAW options)
+
+  * Correct next header address in APP images located in Intflash2.
+
+  * Exclude the filler data in a HTBL chunk from the signature.
+
+  * Issue a warning if the key index in a HTBL chunk is not 17, or if the key index in an USIP chunk is greater than 17 (and not 0xff).
 
   * Add command --version.
+
   * Add license text (GPL v2).
 
 v0.0.12
