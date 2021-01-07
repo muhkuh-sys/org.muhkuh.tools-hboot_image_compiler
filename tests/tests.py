@@ -645,6 +645,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_data_uint32(self):
         self.__test_with_reference_bin('data/data_uint32.xml', 'data/data_uint32.bin', 'NETX90_MPW', None, None)
 
+    def test_secure_copy(self):
+        self.__test_with_reference_bin('secure_copy/secure_copy.xml', 'secure_copy/secure_copy.bin', 'NETX90B', None, None)
+
     def test_execute_file_elf(self):
         self.__test_with_reference_bin('execute/execute_file_elf.xml', 'execute/execute_file_elf.bin', 'NETX4000', ['--objcopy', '%%NETX4000_OBJCOPY%%', '--objdump', '%%NETX4000_OBJDUMP%%', '--readelf', '%%NETX4000_READELF%%', '--alias', 'Program=%%ELF_NETX4000_SKIP%%'], None)
         

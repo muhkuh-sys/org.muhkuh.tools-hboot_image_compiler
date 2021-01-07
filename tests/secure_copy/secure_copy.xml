@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<!-- Copy 0x1000 bytes from 0x28000 to 0x20000. -->
+		<SecureCopy destination_address="0x00020000" source_address="0x00028000" size="0x1000" />
+	</Chunks>
+</HBootImage>
+
+<!--
+Header:
+00000000: f3beaf00 00000000 00000000 00000000  ................
+00000010: 00000007 00000000 484f4f4d 00000000  ........MOOH....
+00000020: e48b9242 ccf89ff9 1a245cc9 1ecfc0eb  B........\$.....
+00000030: 3380bfac d159e400 e260a238 f23e6bd9  ...3..Y.8.`..k>.
+
+00000040: 
+59504353 Chunk ID
+00000004 Chunk size
+00028000 Source address
+00020000 Destination address 
+00001000 Size 
+612bf2c6 Chunk Hash 
+00000000 End marker.
+-->
