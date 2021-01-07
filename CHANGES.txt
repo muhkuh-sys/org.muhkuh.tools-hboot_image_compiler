@@ -1,4 +1,6 @@
-  * tool netx90_app_iflash_image.py is depricated use netx90_app_image.py instead
+  * Add the secure copy/SCPY chunk for netx 90 Rev. 0 and Rev. 1
+
+  * tool netx90_app_iflash_image.py is deprecated use netx90_app_image.py instead
 
   * allow SkipIncomplete into hash table
 
