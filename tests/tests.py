@@ -52,7 +52,8 @@ class TestExpectedBinaries(unittest.TestCase):
         # Run the HBOOT image compiler.
         astrCmd = [
             sys.executable,
-            self.strHBootImageCompiler,
+            #"C:\\Python37\\python.exe",
+             self.strHBootImageCompiler,
             '--netx-type', strNetx
         ]
         if atExtraArguments is not None:
@@ -937,6 +938,146 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_snippets_precedence(self):
         self.__test_with_reference_bin('snippets/precedence.xml', 'snippets/precedence.bin', 'NETX90_MPW', ['--sniplib', 'custom_sniplib', '--sniplib', 'sniplib'], ['snippets/sniplib/precedence-1.0.0.xml', 'snippets/custom_sniplib/precedence-1.0.0.xml'])
 
+    # Tests for min_size 
+    # An image that is smaller than the min_size is padded.
+    def test_min_max_size_img_size_less_than_min_size(self):
+        self.__test_with_reference_bin(
+            'min_max_size/img_size_less_than_min_size.xml', 
+            'min_max_size/img_size_less_than_min_size.bin', 
+            'NETX90B', None, None
+            )
+            
+    # An image that is smaller than the min_size is padded.
+    # If min_size_fill_value is specified, this value is used for padding.
+    def test_min_max_size_img_size_less_than_min_size_with_fill_value(self):
+        self.__test_with_reference_bin(
+            'min_max_size/img_size_less_than_min_size_with_fill_value.xml', 
+            'min_max_size/img_size_less_than_min_size_with_fill_value.bin', 
+            'NETX90B', None, None
+            )
+            
+    # min_size and max_size are the same, 
+    # the image contains a data chunk and a skipIncomplete chunk 
+    # and is padded at the end.
+    # Before the start of the image, a pre-padding is inserted.
+    def test_min_max_size_fix_size_with_offset_padding_pre_skip_incomplete(self):
+        self.__test_with_reference_bin(
+            'min_max_size/fix_size_with_offset_padding_pre_skip_incomplete.xml', 
+            'min_max_size/fix_size_with_offset_padding_pre_skip_incomplete.bin', 
+            'NETX90B', None, None
+            )
+    
+    # The image size equals the max. size and is not padded.
+    def test_min_max_size_img_size_equal_min_size(self):
+        self.__test_with_reference_bin(
+            'min_max_size/img_size_equal_min_size.xml', 
+            'min_max_size/img_size_min_max.bin', 
+            'NETX90B', None, None
+            )
+            
+    # The image size is larger than the min_size and is not padded.
+    def test_min_max_size_img_size_greater_than_min_size(self):
+        self.__test_with_reference_bin(
+            'min_max_size/img_size_greater_than_min_size.xml', 
+            'min_max_size/img_size_min_max.bin', 
+            'NETX90B', None, None
+            )
+        
+    # Tests for max_size
+    # The image is smaller than the max_size.
+    def test_min_max_size_img_size_less_than_max_size(self):
+        self.__test_with_reference_bin(
+            'min_max_size/img_size_less_than_max_size.xml', 
+            'min_max_size/img_size_min_max.bin', 
+            'NETX90B', None, None
+            )
+        
+    # The image is smaller equal to the max_size.
+    def test_min_max_size_img_size_equal_max_size(self):
+        self.__test_with_reference_bin(
+            'min_max_size/img_size_equal_max_size.xml', 
+            'min_max_size/img_size_min_max.bin', 
+            'NETX90B', None, None
+            )
+            
+    # The image is larger than max_size and generates an error. 
+    def test_min_max_size_img_size_greater_than_max_size(self):
+        self.__test_with_reference_bin_public(
+            'min_max_size/img_size_greater_than_max_size.xml', 
+            'min_max_size/img_size_min_max.bin', # dummy
+            'netx90_rev1', None, None,
+            strExpectedError = 'Image exceeds maximum size'
+            )
+            
+            
+    # Tests for the sanity checks 
+    # min_size is negative
+    def test_min_max_size_min_size_negative(self):
+        self.__test_with_reference_bin_public(
+            'min_max_size/min_size_negative.xml', 
+            'min_max_size/img_size_min_max.bin', # dummy
+            'netx90_rev1', None, None,
+            strExpectedError = 'The min_size is invalid'
+            )
+            
+    # max_size is negative
+    def test_min_max_size_max_size_negative(self):
+        self.__test_with_reference_bin_public(
+            'min_max_size/max_size_negative.xml', 
+            'min_max_size/img_size_min_max.bin', # dummy
+            'netx90_rev1', None, None,
+            strExpectedError = 'The max_size is invalid'
+            )
+            
+    # min_size is not a multiple of 4
+    def test_min_max_size_min_size_mod_4(self):
+        self.__test_with_reference_bin_public(
+            'min_max_size/min_size_mod_4.xml', 
+            'min_max_size/img_size_min_max.bin', # dummy
+            'netx90_rev1', None, None,
+            strExpectedError = 'The min_size is not a multiple of four'
+            )
+            
+    # max_size is not a multiple of 4
+    def test_min_max_size_max_size_mod_4(self):
+        self.__test_with_reference_bin_public(
+            'min_max_size/max_size_mod_4.xml', 
+            'min_max_size/img_size_min_max.bin', # dummy
+            'netx90_rev1', None, None,
+            strExpectedError = 'The max_size is not a multiple of four'
+            )
+            
+    # min_size_fill_value is negative
+    def test_min_max_size_min_size_fill_value_negative(self):
+        self.__test_with_reference_bin_public(
+            'min_max_size/min_size_fill_value_negative.xml', 
+            'min_max_size/img_size_min_max.bin', # dummy
+            'netx90_rev1', None, None,
+            strExpectedError = 'The min_size_fill_value is invalid'
+            )
+            
+    # min_size_fill_value is too large
+    def test_min_max_size_min_size_fill_value_too_large(self):
+        self.__test_with_reference_bin_public(
+            'min_max_size/min_size_fill_value_too_large.xml', 
+            'min_max_size/img_size_min_max.bin', # dummy
+            'netx90_rev1', None, None,
+            strExpectedError = 'The min_size_fill_value is invalid'
+            )
+            
+    # min_size is greater than max_size
+    def test_min_max_size_min_size_greater_than_max_size(self):
+        self.__test_with_reference_bin_public(
+            'min_max_size/min_size_greater_than_max_size.xml', 
+            'min_max_size/img_size_min_max.bin', # dummy
+            'netx90_rev1', None, None,
+            strExpectedError = 'min_size is greater than max_size'
+            )
+            
+            
+            
+            
+            
     def test_text_NETX90_INTFLASH(self):
         self.__test_with_reference_bin('text/text_NETX90_INTFLASH.xml', 'text/text.bin', 'NETX90', None, None)
     def test_text_NETX4000_INTFLASH(self):

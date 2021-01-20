@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- max_size not a multiple of 4 -->
+<HBootImage has_header="True" has_end="True" max_size="155">
+    <Chunks>
+        <Data>
+            <Hex address="0x00020000">
+                0123456789abcdef0123456789abcdef
+                0123456789abcdef0123456789abcdef
+                0123456789abcdef0123456789abcdef
+                0123456789abcdef0123456789abcdef
+            </Hex>
+        </Data>
+    </Chunks>
+</HBootImage>
+

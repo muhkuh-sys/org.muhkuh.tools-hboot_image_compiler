@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Combine offset, pre-padding and a skip incomplete chunk. -->
+<HBootImage type="REGULAR" device="INTFLASH" has_header="True" has_end="False"
+    offset="0x1000"
+    padding_pre_size="0x1000" padding_pre_value="0x11"
+    min_size="0x2000" min_size_fill_value="0x55aa55aa"
+    max_size="0x2000" >
+    <Header set_flasher_parameters="true" />
+    <Chunks>
+    
+        <Data>
+            <Hex address="0x00020000">
+                0123456789abcdef0123456789abcdef
+                0123456789abcdef0123456789abcdef
+                0123456789abcdef0123456789abcdef
+                0123456789abcdef0123456789abcdef
+            </Hex>
+        </Data>
+        
+        <!-- Skip over fdl and FW File Header V3 until the offset 0x00003200. -->
+        <SkipIncomplete absolute="0x3200" />
+    </Chunks>
+</HBootImage>
+
+<!--
+pre-padding:
+00000000: 11111111 11111111 11111111 11111111  ................
+00000010: 11111111 11111111 11111111 11111111  ................
+
+...
+
+00000fe0: 11111111 11111111 11111111 11111111  ................
+00000ff0: 11111111 11111111 11111111 11111111  ................
+header:
+00001000: 00afbef3 00000000 00100000 00000000  ................
+00001010: 18000000 0e020300 4d4f4f48 00000000  ........MOOH....
+00001020: 24e559f6 e87ac718 46724c21 f1ec45d9  $.Y..z..FrL!..E.
+00001030: 691de01b 658569c2 e604fdcb 9688f40f  i...e.i.........
+
+00001040: 44415441 12000000 00000200 01234567  DATA.........#Eg
+00001050: 89abcdef 01234567 89abcdef 01234567  .....#Eg.....#Eg
+00001060: 89abcdef 01234567 89abcdef 01234567  .....#Eg.....#Eg
+00001070: 89abcdef 01234567 89abcdef 01234567  .....#Eg.....#Eg
+00001080: 89abcdef 01234567 89abcdef 3a08e12b  .....#Eg....:..+
+
+00001090: 534b4950 5a080000 556ec7e8           SKIPZ...Un..
+
+padding:
+                                     aa55aa55  .U.U
+000010a0: aa55aa55 aa55aa55 aa55aa55 aa55aa55  .U.U.U.U.U.U.U.U
+000010b0: aa55aa55 aa55aa55 aa55aa55 aa55aa55  .U.U.U.U.U.U.U.U
+
+...
+
+00002fe0: aa55aa55 aa55aa55 aa55aa55 aa55aa55  .U.U.U.U.U.U.U.U
+00002ff0: aa55aa55 aa55aa55 aa55aa55 aa55aa55  .U.U.U.U.U.U.U.U
+-->
