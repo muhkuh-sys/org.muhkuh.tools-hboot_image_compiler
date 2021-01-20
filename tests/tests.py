@@ -591,8 +591,9 @@ class TestExpectedBinaries(unittest.TestCase):
             None
         )
         
+    # TODO: what should the default chip type be?
     def test_app_image_iflash_netx90(self):
-        self.__test_app_image_iflash('netx90', 'netx90_app_image/netx90_app_iflash_chiptype_netx90.nai')
+        self.__test_app_image_iflash('netx90', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_rev2.nai')
         
     def test_app_image_iflash_netx90_mpw(self):
         self.__test_app_image_iflash('netx90_mpw', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_mpw.nai')
@@ -603,6 +604,8 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_app_image_iflash_netx90_rev1(self):
         self.__test_app_image_iflash('netx90_rev1', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_rev1.nai')
 
+    def test_app_image_iflash_netx90_rev2(self):
+        self.__test_app_image_iflash('netx90_rev2', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_rev2.nai')
         
         
     # The following tests (HWC for NXHX90-JTAG Rev. 3+4, start APP CPU) 
@@ -1075,6 +1078,29 @@ class TestExpectedBinaries(unittest.TestCase):
             )
             
             
+    # Test netx90C patch table
+    # First, build an image containing all the symbol values,
+    # then, build one containing all the symbolic values, 
+    # and compare the two images.
+    # 
+    # Todo:
+    # Replace this with a test that 
+    # - parses the patch table XML file, gathers the symbols and values 
+    # - constructs a boot image with the symbols in a data chunk 
+    # - builds the image 
+    # - parses the image and compares the contents with the values from 
+    #   the patch table XML file.
+    def test_netx90c_patch_table_keys(self):
+        self.__test_with_reference_bin_public(
+            'netx_types/netx90c_patch_table_values.xml', 
+            'netx_types/netx90c_patch_table_values.bin', 
+            'netx90_rev2', None, None
+            )
+        self.__test_with_reference_bin(
+            'netx_types/netx90c_patch_table_keys.xml', 
+            'netx_types/netx90c_patch_table_values.bin', 
+            'NETX90C', None, None
+            )
             
             
             
