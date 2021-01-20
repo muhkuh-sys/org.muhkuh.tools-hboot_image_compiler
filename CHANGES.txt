@@ -1,4 +1,20 @@
-  * Add the secure copy/SCPY chunk for netx 90 Rev. 0 and Rev. 1
+  * Add the attributes 'min_size' and 'min_size_fill_value' to the HBootImage 
+    tag, which allow specifying a minimum size for the generated boot image. 
+    If the size of the image is smaller, it is padded to the minimum size. 
+    If 'min_size_fill_value' is specified with a 32-bit value, this value is 
+    used for padding, otherwise 0xffffffff is used.
+
+  * Add the attribute 'max_size' to the HBootImage tag, which allows 
+    specifying a maximum size for the generated boot image. 
+    If the size of the image exceeds the maximum size, an error is raised.
+
+  * Support signing with ECC keys
+
+  * Support creating signed APP images for netX 90 rev. 1 and 2
+
+  * Support HTBL chunks with filler data 
+
+  * Add the secure copy/SCPY chunk for netx 90 Rev. 0 and Rev. 1 (and later)
 
   * tool netx90_app_iflash_image.py is deprecated use netx90_app_image.py instead
 
