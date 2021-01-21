@@ -1,3 +1,5 @@
+  * Add the chip type NETX90B/netx90_rev2 and its patch table.
+  
   * Add the attributes 'min_size' and 'min_size_fill_value' to the HBootImage 
     tag, which allow specifying a minimum size for the generated boot image. 
     If the size of the image is smaller, it is padded to the minimum size. 
@@ -8,32 +10,40 @@
     specifying a maximum size for the generated boot image. 
     If the size of the image exceeds the maximum size, an error is raised.
 
-  * Support signing with ECC keys
-
   * Support creating signed APP images for netX 90 rev. 1 and 2
-
-  * Support HTBL chunks with filler data 
+    (using the attribute "signed_binding" in the ASIG chunk).
 
   * Add the secure copy/SCPY chunk for netx 90 Rev. 0 and Rev. 1 (and later)
 
-  * tool netx90_app_iflash_image.py is deprecated use netx90_app_image.py instead
+  * netx90_app_iflash_image.py is deprecated, use netx90_app_image.py instead.
 
-  * allow SkipIncomplete into hash table
+  * Allow SkipIncomplete into hash table
 
   * Allow RAW option data to be larger than 255 bytes.
 
   * Allow reading the contents of an option chunk from a binary file.
     (Only tested with RAW options)
 
-  * Correct next header address in APP images located in Intflash2.
-
-  * Exclude the filler data in a HTBL chunk from the signature.
-
   * Issue a warning if the key index in a HTBL chunk is not 17, or if the key index in an USIP chunk is greater than 17 (and not 0xff).
 
   * Add command --version.
 
   * Add license text (GPL v2).
+  
+Features supported only by the netx90 Rev. 2:
+
+  * Support signing with ECC keys
+
+  * Correct next header address in APP images located in Intflash2. (allows multi-part images in Intflash2)
+
+  * Support HTBL chunks with filler data 
+
+  * Exclude the filler data in a HTBL chunk from the signature.
+
+  * Add attribute 'apply_firewall_settings_full' to execute chunk.
+
+  * Add bxlr feature to exec chunk
+ 
 
 v0.0.12
 
