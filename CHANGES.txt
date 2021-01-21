@@ -32,8 +32,6 @@
   
 Features supported only by the netx90 Rev. 2:
 
-  * Support signing with ECC keys
-
   * Correct next header address in APP images located in Intflash2. (allows multi-part images in Intflash2)
 
   * Support HTBL chunks with filler data 
