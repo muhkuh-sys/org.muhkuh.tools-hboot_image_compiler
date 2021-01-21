@@ -1153,6 +1153,19 @@ class TestExpectedBinaries(unittest.TestCase):
         
 
 # Signed COM images
+
+#                                               hashes  chunks  RKI  keyidx   size
+# hash_table_fwk                                 16      16      16   7
+# hash_table_fwk_SkipIncomplete                  16      16      17   7
+# hash_table_fwk17_16hashes                      16      16      17   7
+# hash_table_fwk17_size1024_8hashes               8      16      17   7        1024
+# hash_table_fwk17_size1024_9hashes               9      16      17   7        1024
+# hash_table_fwk17_size1024_9hashes_2048bitkey    9      16      17   6        1024
+# hash_table_fwk17_size1024_startapp              1       1      17   7        1024
+# hash_table_fwk17_size1536_16hashes             16      16      17   7        1536
+# hash_table_fwk17_startapp                       1       1      17   7
+# hash_table_rk                                   3      16       3   3
+
 # Two signed boot images that start the APP CPU and jump to the While1 loop in ROM.
 
 #    def test_hash_table_fwk17_startapp_NETX90_B(self):
