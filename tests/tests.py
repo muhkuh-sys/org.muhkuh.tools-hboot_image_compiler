@@ -1144,6 +1144,13 @@ class TestExpectedBinaries(unittest.TestCase):
 
     def test_xip_hex_NETX90_MPW_SQIROM(self):
         self.__test_with_reference_bin('xip/xip_hex_NETX90_MPW_SQIROM.xml', 'xip/xip_hex_NETX90_MPW_SQIROM.bin', 'NETX90_MPW', None, None)
+        
+    def test_NETX90_spi_macro(self):
+        self.__test_with_reference_bin(
+            'spi_macro/spi_macro.xml', 
+            'spi_macro/spi_macro.bin', 
+            'NETX90_MPW', None, None)
+        
 
 # Signed COM images
 # Two signed boot images that start the APP CPU and jump to the While1 loop in ROM.

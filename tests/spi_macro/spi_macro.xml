@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" device="INTFLASH" has_header="True" has_end="True" offset="0">
+	<Chunks>
+		<SpiMacro device="SPI_UNIT_OFFSET_SQI_CS0">
+			SMC_SEND_SNN|0, 0xeb,
+			SMC_MODE|2,
+			SMC_SEND_NNN|3, 0x00, 0x00, 0x00, 0xa5,
+			SMC_IDLE_NNN|3,
+			SMC_RECEIVE_SDD|3,
+			SMC_CHTR_ROM
+		</SpiMacro>
+	</Chunks>
+</HBootImage>
+
+<!--
+00000000: 00afbef3 00000000 00000000 00000000  ................
+00000010: 08000000 00000000 4d4f4f48 00000000  ........MOOH....
+00000020: 39878cf8 4408651f 94af9eff 9fb9df87  9...D.e.........
+00000030: 6516d858 a65a270f 4b7f62c2 a51820fa  e..X.Z'.K.b... .
+
+00000040: 5350494d 05000000 010b50eb fa430000  SPIM......P..C..
+00000050: 00a58333 ca000000 b76d84e6 00000000  ...3.....m......
+
+5350494d Chunk ID SPIM
+05000000 length 5 dwords
+
+01                        SPI_UNIT_OFFSET_SQI_CS0
+0b                        length
+50 eb                     SMC_SEND_SNN|0, 0xeb,
+fa                        SMC_MODE|2,
+43 00 00 00 a5            SMC_SEND_NNN|3, 0x00, 0x00, 0x00, 0xa5,
+83                        SMC_IDLE_NNN|3,
+33                        SMC_RECEIVE_SDD|3,
+ca                        SMC_CHTR_ROM
+
+b76d84e6 hash
+00000000 end marker
+-->
