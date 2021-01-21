@@ -591,9 +591,8 @@ class TestExpectedBinaries(unittest.TestCase):
             None
         )
         
-    # TODO: what should the default chip type be?
     def test_app_image_iflash_netx90(self):
-        self.__test_app_image_iflash('netx90', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_rev2.nai')
+        self.__test_app_image_iflash('netx90', 'netx90_app_image/netx90_app_iflash_chiptype_netx90.nai')
         
     def test_app_image_iflash_netx90_mpw(self):
         self.__test_app_image_iflash('netx90_mpw', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_mpw.nai')
