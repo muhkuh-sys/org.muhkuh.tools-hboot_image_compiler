@@ -1333,6 +1333,66 @@ class TestExpectedBinaries(unittest.TestCase):
 #             '--openssl-rand-off'],
 #            ['secure_boot/UpdateSecureInfoPage/keyrom.xml'])
 
+    # Test unsigned USIPs
+    def __test_usip(self, strUsipName):
+        self.__test_with_reference_bin(
+            'usip/%s.xml' % strUsipName,
+            'usip/%s.usp' % strUsipName,
+            'NETX90B',
+            ['--keyrom' , 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['usip/keyrom.xml'])
+
+#    def test_usip_app_set_anchor(self):
+#        self.__test_usip('usip_app_set_anchor')
+#
+#    def test_usip_app_set_any_data(self):
+#        self.__test_usip('usip_app_set_any_data')
+#
+#    def test_usip_app_set_idx_0(self):
+#        self.__test_usip('usip_app_set_idx_0')
+#        
+#    def test_usip_app_set_idx_10(self):
+#        self.__test_usip('usip_app_set_idx_10')
+#        
+#    def test_usip_app_set_idx_14(self):
+#        self.__test_usip('usip_app_set_idx_14')
+#        
+#    def test_usip_app_set_idx_5(self):
+#        self.__test_usip('usip_app_set_idx_5')
+#        
+#    def test_usip_app_set_keys(self):
+#        self.__test_usip('usip_app_set_keys')
+#        
+#    def test_usip_app_set_other_data(self):
+#        self.__test_usip('usip_app_set_other_data')
+#        
+#    def test_usip_app_set_sec_lvl_1(self):
+#        self.__test_usip('usip_app_set_sec_lvl_1')
+#        
+#    def test_usip_com_set_anchor(self):
+#        self.__test_usip('usip_com_set_anchor')
+#        
+#    def test_usip_com_set_any_data(self):
+#        self.__test_usip('usip_com_set_any_data')
+#        
+#    def test_usip_com_set_idx_9(self):
+#        self.__test_usip('usip_com_set_idx_9')
+#        
+#    def test_usip_com_set_intram_ecc(self):
+#        self.__test_usip('usip_com_set_intram_ecc')
+#        
+#    def test_usip_com_set_keys(self):
+#        self.__test_usip('usip_com_set_keys')
+#        
+#    def test_usip_com_set_other_data(self):
+#        self.__test_usip('usip_com_set_other_data')
+#        
+#    def test_usip_com_set_sec_lvl_2(self):
+#        self.__test_usip('usip_com_set_sec_lvl_2')
+
+
     def test_data_hex_public(self):
         self.__test_with_reference_bin_public('data/data_hex.xml', 'data/data_hex.bin', 'netx90_mpw', None, None)
 
