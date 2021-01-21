@@ -1168,7 +1168,7 @@ class TestExpectedBinaries(unittest.TestCase):
 #             '--openssl-rand-off'],
 #            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
             
-    # The XML file acutally contains Root key index 16, which
+    # The XML file actually contains Root key index 16, which
     # should trigger a warning.
 #    def test_hash_table_fwk_NETX90_B(self):
 #        self.__test_with_reference_bin(
@@ -1181,8 +1181,8 @@ class TestExpectedBinaries(unittest.TestCase):
 #            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'],
 #            strExpectedOutput='Warning: The key index in a HTBL chunk must be 17!')
 
-   # The XML file acutally contains Root key index 17
-   # include skipIncomplete into hash table
+    # The XML file acutally contains Root key index 17
+    # include skipIncomplete into hash table
 #    def test_hash_table_fwk_SkipIncomplete_NETX90_B(self):
 #        self.__test_with_reference_bin(
 #            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk_SkipIncomplete.xml',
