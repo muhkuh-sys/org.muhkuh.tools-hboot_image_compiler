@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<HbootImage has_end="True" has_header="True" type="INTRAM">
+	<Chunks>
+		<UpdateSecureInfoPage>
+			<TargetInfoPage>APP</TargetInfoPage>
+			<Data>
+				<Concat>
+					<!--# enable_secure_boot-->
+					<!--data offset-->
+					<UInt16>552</UInt16>
+					<!--data size-->
+					<UInt16>2</UInt16>
+					<!--set MSK_APP_PROTECTION_OPTIONS_FLAGS_SECURE_BOOT_VIA_SIGNATURE-->
+					<!--set SECURITY_LEVEL1-->
+					<!--value in hex: 0x00000005-->
+					<UInt16>5</UInt16>
+				</Concat>
+			</Data>
+		</UpdateSecureInfoPage>
+	</Chunks>
+</HbootImage>

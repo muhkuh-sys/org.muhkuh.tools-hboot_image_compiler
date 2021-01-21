@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<HbootImage has_end="True" has_header="True" type="INTRAM">
+	<Chunks>
+		<UpdateSecureInfoPage>
+			<TargetInfoPage>COM</TargetInfoPage>
+			<Data>
+				<Concat>
+					<!--# set master key-->
+					<!--data offset-->
+					<UInt16>16</UInt16>
+					<!--data size-->
+					<UInt16>517</UInt16>
+					<Key idx="5"/>
+					<!--# pk_idx-->
+					<!--data offset-->
+					<UInt16>568</UInt16>
+					<!--data size-->
+					<UInt16>517</UInt16>
+					<Key idx="7"/>
+				</Concat>
+			</Data>
+		</UpdateSecureInfoPage>
+	</Chunks>
+</HbootImage>

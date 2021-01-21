@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<HbootImage has_end="True" has_header="True" type="INTRAM">
+	<Chunks>
+		<UpdateSecureInfoPage>
+			<TargetInfoPage>COM</TargetInfoPage>
+			<Data>
+				<Concat>
+					<!--# add other data-->
+					<!--data offset-->
+					<UInt16>1856</UInt16>
+					<!--data size-->
+					<UInt16>37</UInt16>
+					<Hex>48 65 6c 6c 6f 20 66 72 6f 6d 20 61 6e 79 20 63 6f 6d 20 73 69 64 65 20 6f 66 20 74 68 65 20 77 6f 72 6c 64 21 </Hex>
+				</Concat>
+			</Data>
+		</UpdateSecureInfoPage>
+	</Chunks>
+</HbootImage>

@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<HbootImage has_end="True" has_header="True" type="INTRAM">
+	<Chunks>
+		<UpdateSecureInfoPage>
+			<TargetInfoPage>APP</TargetInfoPage>
+			<Data>
+				<Concat>
+					<!--# disable root keys-->
+					<!--data offset-->
+					<UInt16>556</UInt16>
+					<!--data size-->
+					<UInt16>2</UInt16>
+					<Hex>2000</Hex>
+				</Concat>
+			</Data>
+		</UpdateSecureInfoPage>
+	</Chunks>
+</HbootImage>

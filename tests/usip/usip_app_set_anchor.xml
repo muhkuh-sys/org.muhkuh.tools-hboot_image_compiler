@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<HbootImage has_end="True" has_header="True" type="INTRAM">
+	<Chunks>
+		<UpdateSecureInfoPage>
+			<TargetInfoPage>APP</TargetInfoPage>
+			<Data>
+				<Concat>
+					<!--# add anchor 0-->
+					<!--data offset-->
+					<UInt16>536</UInt16>
+					<!--data size-->
+					<UInt16>4</UInt16>
+					<!--anchor 0-->
+					<UInt32>0x306e4141</UInt32>
+					<!--# add anchor 1-->
+					<!--data offset-->
+					<UInt16>540</UInt16>
+					<!--data size-->
+					<UInt16>4</UInt16>
+					<!--anchor 1-->
+					<UInt32>0x316e4141</UInt32>
+					<!--# add anchor 2-->
+					<!--data offset-->
+					<UInt16>544</UInt16>
+					<!--data size-->
+					<UInt16>4</UInt16>
+					<!--anchor 2-->
+					<UInt32>0x326e4141</UInt32>
+					<!--# add anchor 3-->
+					<!--data offset-->
+					<UInt16>548</UInt16>
+					<!--data size-->
+					<UInt16>4</UInt16>
+					<!--anchor 3-->
+					<UInt32>0x336e4141</UInt32>
+				</Concat>
+			</Data>
+		</UpdateSecureInfoPage>
+	</Chunks>
+</HbootImage>
