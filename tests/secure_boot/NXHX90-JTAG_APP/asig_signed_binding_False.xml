@@ -1,0 +1,35 @@
+<AppImage>
+	<!-- The start part in INTFLASH2. -->
+	<data padding_pre_size="0" headeraddress="0">
+		<File name="@tElf" segments=".header,.code"/>
+	</data>
+
+	<!-- Code/data in the external flash. -->
+	<data headeraddress="0x64300000">
+		<File name="@tElf" segments=".code_SDRAM1,.code_SDRAM2"/>
+	</data>
+	
+	<asig signed_binding="False">
+        <Key idx="5"></Key>
+        <Binding>
+            <Value>
+                00000000
+                00000000
+                00000000
+                00000000
+                00000000
+                00000000
+                00000000
+            </Value>
+            <Mask>
+                00000000
+                00000000
+                00000000
+                00000000
+                00000000
+                00000000
+                00000000
+            </Mask>
+        </Binding>
+    </asig>
+</AppImage>

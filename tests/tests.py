@@ -1264,21 +1264,39 @@ class TestExpectedBinaries(unittest.TestCase):
 #            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
 #
 
-# APP image
-
+    # Tests for signed APP images (ASIG chunk).
+    #
+    # The following 4 test cases also test the evaluation of
+    # boolean values from XML attributes.
+    def __test_asig(self, strName, strNetxType, strExpectedError=None):
+        self.__test_netx90_appimg_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_APP/%s.xml' % strName,
+            ['secure_boot/NXHX90-JTAG_APP/%s.nai' % strName,
+             'secure_boot/NXHX90-JTAG_APP/%s.nae' % strName],
+            ['-n', strNetxType,
+             '--keyrom' , 'keyrom.xml',
+             '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
+             '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_APP/keyrom.xml'], 
+            strExpectedError = strExpectedError)
+    
 #    def test_asig_NETX90_B(self):
-#        self.__test_netx90_appimg_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_APP/asig.xml',
-#            ['secure_boot/NXHX90-JTAG_APP/asig.nai',
-#             'secure_boot/NXHX90-JTAG_APP/asig.nae'],
-#            ['-n', 'netx90_rev1' ,
-#             '--keyrom' , 'keyrom.xml',
-#             '-c', '%%NETX90_OBJCOPY%%', '-d', '%%NETX90_OBJDUMP%%', '-r', '%%NETX90_READELF%%',
-#             '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH_SDRAM%%',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_APP/keyrom.xml'])
-#
+#        self.__test_asig("asig", "netx90_rev1")
+        
+#    def test_asig_NETX90_C_signed_binding_True(self):
+#        self.__test_asig("asig_signed_binding_True", "netx90_rev2")
+        
+#    def test_asig_NETX90_C_signed_binding_False(self):
+#        self.__test_asig("asig_signed_binding_False", "netx90_rev2")
+        
+#    def test_asig_NETX90_B_signed_binding_invalid(self):
+#        self.__test_asig("asig_signed_binding_invalid", "netx90_rev1", 
+#        strExpectedError = 
+#        "The attribute 'signed_binding' in node 'asig' has an illegal value!"
+#        )
+        
 
 # USIP
 
