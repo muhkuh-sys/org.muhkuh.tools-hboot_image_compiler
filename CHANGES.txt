@@ -1,4 +1,4 @@
-  * Add the chip type NETX90B/netx90_rev2 and its patch table.
+  * Add the chip type NETX90C/netx90_rev2 and its patch table.
   
   * Add the attributes 'min_size' and 'min_size_fill_value' to the HBootImage 
     tag, which allow specifying a minimum size for the generated boot image. 
