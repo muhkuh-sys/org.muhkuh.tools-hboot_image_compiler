@@ -1,3 +1,13 @@
+
+  * Add attribute 'do_not_lock_system_cfg' to EXEC chunk. 
+
+    If true, the flags are or'ed with 0x00000400.
+    This flag will suppress the locking of the system configuration which 
+    normally occurs automatically when an exec chunk is processed and the 
+    attribute is not present, or false.
+
+v0.0.13
+
   * Add the chip type NETX90C/netx90_rev2 and its patch table.
   
   * Add the attributes 'min_size' and 'min_size_fill_value' to the HBootImage 
