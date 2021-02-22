@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR">
+	<Chunks>
+		<Execute start_app="true" lock_firewall="true" activate_debugging="true" apply_firewall_settings="true" do_not_lock_system_cfg="false">
+			<Address>0x000001f7</Address>
+			<R0>0x11111111</R0>
+			<R1>0x22222222</R1>
+			<R2>0x33333333</R2>
+			<R3>0x44444444</R3>
+		</Execute>
+	</Chunks>
+</HBootImage>
+
+<!--
+
+Hboot Header
+00000000: 00afbef3 00000000 00000000 00000000  ................
+00000010: 0a000000 00000000 4d4f4f48 00000000  ........MOOH....
+00000020: cddd0ce1 0e1e7989 7a41bda0 70c735c6  ......y.zA..p.5.
+00000030: 2313954c 7bffafff d4588fb6 7291a4ef  #..L{....X..r...
+
+00000040: 
+45584543  EXEC
+07000000  chunk size
+f7010000  Address
+11111111  R0
+22222222  R1
+33333333  R2
+44444444  R3 
+0f000000  flags: 
+	StartAppCpu            0x00000001
+	LockFirewall           0x00000002
+	ActivateDebugging      0x00000004
+	ApplyFirewallSettings  0x00000008
+ea5f45a9fa3c46f2  Chunk hash
+
+00000000  End
+
+-->

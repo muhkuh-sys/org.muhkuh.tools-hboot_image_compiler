@@ -35,7 +35,8 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler', 'netx90_app_image.py'))
         #self.strOpenSSLPath='C:\\Daten_local_only\\Tools\\openssl\\openssl-1.1.1c-win64-mingw\\openssl.exe'
         self.strOpenSSLPath='<your openssl path>'
-
+        self.strOpenSSLPath='c:\\Users\\StephanL\\Desktop\\work\\tools\\openssl-1.1.1c-win64-mingw\\openssl.exe'
+        
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
         if strEnvKey not in os.environ:
@@ -693,6 +694,18 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_execute_address_netx90(self):
         self.__test_with_reference_bin('execute/execute_address_netx90.xml', 'execute/execute_address_netx90.bin', 'NETX90', None, None)
 
+    def test_execute_address_dont_lock_syscfg_false_netx90(self):
+        self.__test_with_reference_bin(
+        'execute/execute_address_dont_lock_syscfg_false_netx90.xml',
+        'execute/execute_address_dont_lock_syscfg_false_netx90.bin', 
+        'NETX90', None, None)
+
+    def test_execute_address_dont_lock_syscfg_true_netx90(self):
+        self.__test_with_reference_bin(
+        'execute/execute_address_dont_lock_syscfg_true_netx90.xml',
+        'execute/execute_address_dont_lock_syscfg_true_netx90.bin', 
+        'NETX90', None, None)
+
     # apply_firewall_settings_full="false"
     # Should generate the same binary as the previous test
     def test_execute_address_apply_firewall_full_false_netx90(self):
@@ -1167,114 +1180,114 @@ class TestExpectedBinaries(unittest.TestCase):
 
 # Two signed boot images that start the APP CPU and jump to the While1 loop in ROM.
 
-#    def test_hash_table_fwk17_startapp_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_startapp.xml',
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_startapp.bin',
-#            'NETX90B',
-#            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
-#
-#    def test_hash_table_fwk17_size1024_startapp_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_startapp.xml',
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_startapp.bin',
-#            'NETX90B',
-#            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
-            
-    # The XML file actually contains Root key index 16, which
-    # should trigger a warning.
-#    def test_hash_table_fwk_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk.xml',
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk.bin',
-#            'NETX90B',
-#            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'],
-#            strExpectedOutput='Warning: The key index in a HTBL chunk must be 17!')
+    def test_hash_table_fwk17_startapp_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_startapp.xml',
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_startapp.bin',
+            'NETX90B',
+            ['--keyrom', 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
 
-    # The XML file acutally contains Root key index 17
-    # include skipIncomplete into hash table
-#    def test_hash_table_fwk_SkipIncomplete_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk_SkipIncomplete.xml',
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk_SkipIncomplete.bin',
-#            'NETX90B',
-#            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+    def test_hash_table_fwk17_size1024_startapp_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_startapp.xml',
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_startapp.bin',
+            'NETX90B',
+            ['--keyrom', 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+           
+   # The XML file actually contains Root key index 16, which
+   # should trigger a warning.
+    def test_hash_table_fwk_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk.xml',
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk.bin',
+            'NETX90B',
+            ['--keyrom', 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'],
+            strExpectedOutput='Warning: The key index in a HTBL chunk must be 17!')
+
+   # The XML file acutally contains Root key index 17
+   # include skipIncomplete into hash table
+    def test_hash_table_fwk_SkipIncomplete_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk_SkipIncomplete.xml',
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk_SkipIncomplete.bin',
+            'NETX90B',
+            ['--keyrom', 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
 
 # Several signed COM images that test combinations of 
 # selected key, number of hashes and chunk size.
 
-#    def test_hash_table_fwk17_16hashes_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_16hashes.xml',
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_16hashes.bin',
-#            'NETX90B',
-#            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
-#
-#    def test_hash_table_fwk17_size1536_16hashes_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1536_16hashes.xml',
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1536_16hashes.bin',
-#            'NETX90B',
-#            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
-#
-#    def test_hash_table_fwk17_size1024_8hashes_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_8hashes.xml',
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_8hashes.bin',
-#            'NETX90B',
-#            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
-#
-#    def test_hash_table_fwk17_size1024_9hashes_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes.xml',
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes.bin',
-#            'NETX90B',
-#            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
-#
-#    def test_hash_table_fwk17_size1024_9hashes_2048bitkey_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes_2048bitkey.xml',
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes_2048bitkey.bin',
-#            'NETX90B',
-#            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
-#
-#    def test_hash_table_rk_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_rk.xml',
-#            'secure_boot/NXHX90-JTAG_COM/hash_table_rk.bin',
-#            'NETX90B',
-#            ['--keyrom', 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
-#
+    def test_hash_table_fwk17_16hashes_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_16hashes.xml',
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_16hashes.bin',
+            'NETX90B',
+            ['--keyrom', 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+
+    def test_hash_table_fwk17_size1536_16hashes_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1536_16hashes.xml',
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1536_16hashes.bin',
+            'NETX90B',
+            ['--keyrom', 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+
+    def test_hash_table_fwk17_size1024_8hashes_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_8hashes.xml',
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_8hashes.bin',
+            'NETX90B',
+            ['--keyrom', 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+
+    def test_hash_table_fwk17_size1024_9hashes_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes.xml',
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes.bin',
+            'NETX90B',
+            ['--keyrom', 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+
+    def test_hash_table_fwk17_size1024_9hashes_2048bitkey_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes_2048bitkey.xml',
+            'secure_boot/NXHX90-JTAG_COM/hash_table_fwk17_size1024_9hashes_2048bitkey.bin',
+            'NETX90B',
+            ['--keyrom', 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+
+    def test_hash_table_rk_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/NXHX90-JTAG_COM/hash_table_rk.xml',
+            'secure_boot/NXHX90-JTAG_COM/hash_table_rk.bin',
+            'NETX90B',
+            ['--keyrom', 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/NXHX90-JTAG_COM/keyrom.xml'])
+
 
     # Tests for signed APP images (ASIG chunk).
     #
@@ -1294,43 +1307,43 @@ class TestExpectedBinaries(unittest.TestCase):
             ['secure_boot/NXHX90-JTAG_APP/keyrom.xml'], 
             strExpectedError = strExpectedError)
     
-#    def test_asig_NETX90_B(self):
-#        self.__test_asig("asig", "netx90_rev1")
-        
-#    def test_asig_NETX90_C_signed_binding_True(self):
-#        self.__test_asig("asig_signed_binding_True", "netx90_rev2")
-        
-#    def test_asig_NETX90_C_signed_binding_False(self):
-#        self.__test_asig("asig_signed_binding_False", "netx90_rev2")
-        
-#    def test_asig_NETX90_B_signed_binding_invalid(self):
-#        self.__test_asig("asig_signed_binding_invalid", "netx90_rev1", 
-#        strExpectedError = 
-#        "The attribute 'signed_binding' in node 'asig' has an illegal value!"
-#        )
+    def test_asig_NETX90_B(self):
+        self.__test_asig("asig", "netx90_rev1")
+       
+    def test_asig_NETX90_C_signed_binding_True(self):
+        self.__test_asig("asig_signed_binding_True", "netx90_rev2")
+       
+    def test_asig_NETX90_C_signed_binding_False(self):
+        self.__test_asig("asig_signed_binding_False", "netx90_rev2")
+       
+    def test_asig_NETX90_B_signed_binding_invalid(self):
+        self.__test_asig("asig_signed_binding_invalid", "netx90_rev1", 
+        strExpectedError = 
+        "The attribute 'signed_binding' in node 'asig' has an illegal value!"
+        )
         
 
 # USIP
 
-#    def test_usip_app_set_pk_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/UpdateSecureInfoPage/usip_app_set_pk.xml',
-#            'secure_boot/UpdateSecureInfoPage/usip_app_set_pk.bin',
-#            'NETX90B',
-#            ['--keyrom' , 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/UpdateSecureInfoPage/keyrom.xml'])
-#
-#    def test_usip_com_set_sbo_NETX90_B(self):
-#        self.__test_with_reference_bin(
-#            'secure_boot/UpdateSecureInfoPage/usip_com_set_sbo.xml',
-#            'secure_boot/UpdateSecureInfoPage/usip_com_set_sbo.bin',
-#            'NETX90B',
-#            ['--keyrom' , 'keyrom.xml',
-#             '--openssl-exe', self.strOpenSSLPath,
-#             '--openssl-rand-off'],
-#            ['secure_boot/UpdateSecureInfoPage/keyrom.xml'])
+    def test_usip_app_set_pk_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/UpdateSecureInfoPage/usip_app_set_pk.xml',
+            'secure_boot/UpdateSecureInfoPage/usip_app_set_pk.bin',
+            'NETX90B',
+            ['--keyrom' , 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/UpdateSecureInfoPage/keyrom.xml'])
+
+    def test_usip_com_set_sbo_NETX90_B(self):
+        self.__test_with_reference_bin(
+            'secure_boot/UpdateSecureInfoPage/usip_com_set_sbo.xml',
+            'secure_boot/UpdateSecureInfoPage/usip_com_set_sbo.bin',
+            'NETX90B',
+            ['--keyrom' , 'keyrom.xml',
+             '--openssl-exe', self.strOpenSSLPath,
+             '--openssl-rand-off'],
+            ['secure_boot/UpdateSecureInfoPage/keyrom.xml'])
 
     # Test unsigned USIPs
     def __test_usip(self, strUsipName):
@@ -1343,53 +1356,53 @@ class TestExpectedBinaries(unittest.TestCase):
              '--openssl-rand-off'],
             ['usip/keyrom.xml'])
 
-#    def test_usip_app_set_anchor(self):
-#        self.__test_usip('usip_app_set_anchor')
-#
-#    def test_usip_app_set_any_data(self):
-#        self.__test_usip('usip_app_set_any_data')
-#
-#    def test_usip_app_set_idx_0(self):
-#        self.__test_usip('usip_app_set_idx_0')
-#        
-#    def test_usip_app_set_idx_10(self):
-#        self.__test_usip('usip_app_set_idx_10')
-#        
-#    def test_usip_app_set_idx_14(self):
-#        self.__test_usip('usip_app_set_idx_14')
-#        
-#    def test_usip_app_set_idx_5(self):
-#        self.__test_usip('usip_app_set_idx_5')
-#        
-#    def test_usip_app_set_keys(self):
-#        self.__test_usip('usip_app_set_keys')
-#        
-#    def test_usip_app_set_other_data(self):
-#        self.__test_usip('usip_app_set_other_data')
-#        
-#    def test_usip_app_set_sec_lvl_1(self):
-#        self.__test_usip('usip_app_set_sec_lvl_1')
-#        
-#    def test_usip_com_set_anchor(self):
-#        self.__test_usip('usip_com_set_anchor')
-#        
-#    def test_usip_com_set_any_data(self):
-#        self.__test_usip('usip_com_set_any_data')
-#        
-#    def test_usip_com_set_idx_9(self):
-#        self.__test_usip('usip_com_set_idx_9')
-#        
-#    def test_usip_com_set_intram_ecc(self):
-#        self.__test_usip('usip_com_set_intram_ecc')
-#        
-#    def test_usip_com_set_keys(self):
-#        self.__test_usip('usip_com_set_keys')
-#        
-#    def test_usip_com_set_other_data(self):
-#        self.__test_usip('usip_com_set_other_data')
-#        
-#    def test_usip_com_set_sec_lvl_2(self):
-#        self.__test_usip('usip_com_set_sec_lvl_2')
+    def test_usip_app_set_anchor(self):
+        self.__test_usip('usip_app_set_anchor')
+
+    def test_usip_app_set_any_data(self):
+        self.__test_usip('usip_app_set_any_data')
+
+    def test_usip_app_set_idx_0(self):
+        self.__test_usip('usip_app_set_idx_0')
+        
+    def test_usip_app_set_idx_10(self):
+        self.__test_usip('usip_app_set_idx_10')
+        
+    def test_usip_app_set_idx_14(self):
+        self.__test_usip('usip_app_set_idx_14')
+        
+    def test_usip_app_set_idx_5(self):
+        self.__test_usip('usip_app_set_idx_5')
+        
+    def test_usip_app_set_keys(self):
+        self.__test_usip('usip_app_set_keys')
+        
+    def test_usip_app_set_other_data(self):
+        self.__test_usip('usip_app_set_other_data')
+        
+    def test_usip_app_set_sec_lvl_1(self):
+        self.__test_usip('usip_app_set_sec_lvl_1')
+        
+    def test_usip_com_set_anchor(self):
+        self.__test_usip('usip_com_set_anchor')
+        
+    def test_usip_com_set_any_data(self):
+        self.__test_usip('usip_com_set_any_data')
+        
+    def test_usip_com_set_idx_9(self):
+        self.__test_usip('usip_com_set_idx_9')
+        
+    def test_usip_com_set_intram_ecc(self):
+        self.__test_usip('usip_com_set_intram_ecc')
+        
+    def test_usip_com_set_keys(self):
+        self.__test_usip('usip_com_set_keys')
+        
+    def test_usip_com_set_other_data(self):
+        self.__test_usip('usip_com_set_other_data')
+        
+    def test_usip_com_set_sec_lvl_2(self):
+        self.__test_usip('usip_com_set_sec_lvl_2')
 
 
     def test_data_hex_public(self):
