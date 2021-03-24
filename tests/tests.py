@@ -31,11 +31,11 @@ class TestExpectedBinaries(unittest.TestCase):
     def setUp(self):
         self.strTestsBaseDir = os.path.realpath(os.path.dirname(__file__))
         self.strOutputBaseDir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'output'))
-        self.strHBootImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler'))
-        self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler', 'netx90_app_image.py'))
+        self.strHBootImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler'))
+        self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'netx90_app_image.py'))
         #self.strOpenSSLPath='C:\\Daten_local_only\\Tools\\openssl\\openssl-1.1.1c-win64-mingw\\openssl.exe'
-        self.strOpenSSLPath='<your openssl path>'
-        self.strOpenSSLPath='c:\\Users\\StephanL\\Desktop\\work\\tools\\openssl-1.1.1c-win64-mingw\\openssl.exe'
+        self.strOpenSSLPath ='openssl'
+        # self.strOpenSSLPath='c:\\Users\\StephanL\\Desktop\\work\\tools\\openssl-1.1.1c-win64-mingw\\openssl.exe'
         
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
@@ -53,7 +53,7 @@ class TestExpectedBinaries(unittest.TestCase):
         # Run the HBOOT image compiler.
         astrCmd = [
             sys.executable,
-            #"C:\\Python37\\python.exe",
+            # "C:\\Python37\\python.exe",
              self.strHBootImageCompiler,
             '--netx-type', strNetx
         ]
@@ -78,6 +78,7 @@ class TestExpectedBinaries(unittest.TestCase):
     def __test_with_reference_bin(self, 
         strInput, strReference, strNetx, atExtraArguments, atCopyFiles,
         strExpectedOutput=None):
+
         strInputBase = os.path.basename(strInput)
         strInputPathFull = os.path.join(self.strTestsBaseDir, strInput)
         strInputDirectoryFull = os.path.dirname(strInputPathFull)
