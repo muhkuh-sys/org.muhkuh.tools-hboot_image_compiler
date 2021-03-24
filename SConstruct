@@ -119,7 +119,7 @@ tElf_netx90_app_blinki_sdram = build_blinki(
 
 # ----------------------------------------------------------------------------
 # 
-# Generate the ersion file.
+# Generate the version file.
 # 
 
 tBuildTime = datetime.now()
@@ -146,11 +146,12 @@ strArtifact = 'hboot_image_compiler'
 
 tArcList = atEnv.DEFAULT.ArchiveList('zip')
 
-tArcList.AddFiles('hboot_image_compiler/hboot_image_compiler/',
+tArcList.AddFiles('hboot_image_compiler/',
     version_py,
     'mbs/site_scons/hboot_image_compiler/__init__.py',
     'mbs/site_scons/hboot_image_compiler/__main__.py',
-    'mbs/site_scons/elf_support.py',
+    'mbs/site_scons/hboot_image_compiler/hbi_settings.py',
+    'mbs/site_scons/hboot_image_compiler/elf_support.py',
     'mbs/site_scons/hboot_image_compiler/hboot_image.py',
     'mbs/site_scons/hboot_image_compiler/netx90_app_iflash_image.py',
     'mbs/site_scons/hboot_image_compiler/netx90_app_image.py',
@@ -159,16 +160,24 @@ tArcList.AddFiles('hboot_image_compiler/hboot_image_compiler/',
     'mbs/site_scons/hboot_image_compiler/snippet_library.py')
 
 tArcList.AddFiles('hboot_image_compiler/',
-    'mbs/site_scons/hboot_netx4000_relaxed_patch_table.xml',
-    'mbs/site_scons/hboot_netx4000_patch_table.xml',
-    'mbs/site_scons/hboot_netx56_patch_table.xml',
-    'mbs/site_scons/hboot_netx90_patch_table.xml',
-    'mbs/site_scons/hboot_netx90b_patch_table.xml',
-    'mbs/site_scons/hboot_netx90c_patch_table.xml',
-    'mbs/site_scons/hboot_netx90_mpw_patch_table.xml',
+    # 'mbs/site_scons/hboot_netx4000_relaxed_patch_table.xml',
+    # 'mbs/site_scons/hboot_netx4000_patch_table.xml',
+    # 'mbs/site_scons/hboot_netx56_patch_table.xml',
+    # 'mbs/site_scons/hboot_netx90_patch_table.xml',
+    # 'mbs/site_scons/hboot_netx90b_patch_table.xml',
+    # 'mbs/site_scons/hboot_netx90c_patch_table.xml',
+    # 'mbs/site_scons/hboot_netx90_mpw_patch_table.xml',
     'CHANGES.txt',
     'LICENSE.txt')
 
+tArcList.AddFiles('hboot_image_compiler/patch_tables',
+    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx4000_relaxed_patch_table.xml',
+    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx4000_patch_table.xml',
+    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx56_patch_table.xml',
+    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx90_patch_table.xml',
+    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx90b_patch_table.xml',
+    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx90c_patch_table.xml',
+    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx90_mpw_patch_table.xml')
 
 strBasePath = os.path.join(strModulePath, '%s-%s' % (strArtifact, PROJECT_VERSION))
 tArtifactZip = atEnv.DEFAULT.Archive('%s.zip' % strBasePath, None, ARCHIVE_CONTENTS = tArcList)
