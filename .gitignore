@@ -9,3 +9,7 @@
 
 # Ignore all compiled python modules.
 *.pyc
+.venv
+build
+dist
+.idea

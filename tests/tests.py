@@ -6,6 +6,8 @@ import shutil
 import subprocess
 import sys
 import traceback
+from test_settings import PROJECT_ROOT, TEST_DIR
+
 
 class TestExpectedBinaries(unittest.TestCase):
     """
@@ -29,10 +31,11 @@ class TestExpectedBinaries(unittest.TestCase):
     """
 
     def setUp(self):
-        self.strTestsBaseDir = os.path.realpath(os.path.dirname(__file__))
+        self.strTestsBaseDir = TEST_DIR
         self.strOutputBaseDir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'output'))
-        self.strHBootImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler'))
-        self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'netx90_app_image.py'))
+        self.strHBootImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'hil_nxt_hboot_image_compiler', 'com'))
+        self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'hil_nxt_hboot_image_compiler', 'app', 'netx90_app_image.py'))
+        # self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'netx90_app_image.py'))
         #self.strOpenSSLPath='C:\\Daten_local_only\\Tools\\openssl\\openssl-1.1.1c-win64-mingw\\openssl.exe'
         self.strOpenSSLPath ='openssl'
         # self.strOpenSSLPath='c:\\Users\\StephanL\\Desktop\\work\\tools\\openssl-1.1.1c-win64-mingw\\openssl.exe'
@@ -58,7 +61,7 @@ class TestExpectedBinaries(unittest.TestCase):
             '--netx-type', strNetx
         ]
         if atExtraArguments is not None:
-            tRe = re.compile('%%([\w]+)%%')
+            tRe = re.compile(r'%%([\w]+)%%')
             # Replace all ENV vars in the extra arguments.
             for strArg in atExtraArguments:
                 astrCmd.append(tRe.sub(self.__get_env_var, strArg))
