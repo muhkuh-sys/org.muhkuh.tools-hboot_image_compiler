@@ -61,7 +61,7 @@ wheel:
 
 exec:
 	$(PYTHON) setup.py build
-	$(PYTHON) -m $(PYINSTALLER) hboot_image_compiler.spec
-	$(PYTHON) -m $(PYINSTALLER) app_image_compiler.spec
+	$(PYTHON) -m $(PYINSTALLER) hboot_image_compiler_com.spec
+	$(PYTHON) -m $(PYINSTALLER) hboot_image_compiler_app.spec
 
 release: docs zip exec
