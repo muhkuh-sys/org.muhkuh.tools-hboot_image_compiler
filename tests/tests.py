@@ -37,7 +37,8 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'hil_nxt_hboot_image_compiler', 'app', 'netx90_app_image.py'))
         # self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'netx90_app_image.py'))
         #self.strOpenSSLPath='C:\\Daten_local_only\\Tools\\openssl\\openssl-1.1.1c-win64-mingw\\openssl.exe'
-        self.strOpenSSLPath ='openssl'
+        # self.strOpenSSLPath ='openssl'
+        self.strOpenSSLPath =r"C:\Users\frederikwoermann\Documents\_netx_tools\hboot_image_sign\hil_nxt_hboot_image\sign_server\resources\openssl\openssl.exe"
         # self.strOpenSSLPath='c:\\Users\\StephanL\\Desktop\\work\\tools\\openssl-1.1.1c-win64-mingw\\openssl.exe'
         
     def __get_env_var(self, tMatch):
@@ -617,11 +618,12 @@ class TestExpectedBinaries(unittest.TestCase):
     # Write a hardware config to Intflash 0 offset 0 and netx90_COM_start_APP.nxi to offset 0x3000.
     
     def __app_image_hwc(self, strHwcName, strNetxType):
+        hwconfig_path = os.path.join(TEST_DIR, "netx90_app_image", "hwc", "%s.xml" % strHwcName)
         self.__test_with_reference_bin(
             'netx90_app_image/hwc/hboot_image_hwc.xml',
             'netx90_app_image/hwc/%s.hwc' % strHwcName, 
             strNetxType, 
-         ['-A', 'hw_config=../../../../../tests/netx90_app_image/hwc/%s.xml' % strHwcName], None)
+         ['-A', 'hw_config=%s' % hwconfig_path], None)
     
     def test_hwc_nxhx90jtag_rev3_sdram_split(self):
         self.__app_image_hwc('next_chunk_hwc_nxhx90-jtag_rev3_hboot', 'NETX90')
@@ -1422,7 +1424,7 @@ class TestExpectedBinaries(unittest.TestCase):
             'netx90',
             ['--netx-type', 'NETX90'],
             None,
-            strExpectedError = "hboot_image_compiler: error: argument -n/--netx-type: not allowed with argument --netx-type-public"
+            strExpectedError = "error: argument -n/--netx-type: not allowed with argument --netx-type-public"
         )
 
     def test_skip_absolute_parameter_public(self):
@@ -1432,7 +1434,7 @@ class TestExpectedBinaries(unittest.TestCase):
             None,
             ['--define', 'skipUntil=0x1000'],
             None,
-            strExpectedError = "hboot_image_compiler: error: one of the arguments -n/--netx-type --netx-type-public is required"
+            strExpectedError = "error: one of the arguments -n/--netx-type --netx-type-public is required"
         )
 		
     def test_text_NETX4000_INTFLASH_public(self):
