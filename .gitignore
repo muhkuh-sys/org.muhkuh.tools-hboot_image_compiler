@@ -13,3 +13,5 @@
 build
 dist
 .idea
+hboot_image_compiler.egg-info
+hboot_image_compiler-*
