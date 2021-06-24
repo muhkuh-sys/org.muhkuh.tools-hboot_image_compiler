@@ -133,55 +133,6 @@ version_py = atEnv.DEFAULT.Filter('#/targets/version/hboot_image_version.py', ve
 # Build the artifact.
 #
 
-strGroup = 'org.muhkuh.tools'
-strModule = 'hboot_image_compiler'
-
-# Split the group by dots.
-aGroup = strGroup.split('.')
-# Build the path for all artifacts.
-strModulePath = 'targets/repository/%s/%s/%s' % ('/'.join(aGroup), strModule, PROJECT_VERSION)
-
-strArtifact = 'hboot_image_compiler'
-
-
-tArcList = atEnv.DEFAULT.ArchiveList('zip')
-
-tArcList.AddFiles('hboot_image_compiler/',
-    version_py,
-    'mbs/site_scons/hboot_image_compiler/__init__.py',
-    'mbs/site_scons/hboot_image_compiler/__main__.py',
-    'mbs/site_scons/hboot_image_compiler/hbi_settings.py',
-    'mbs/site_scons/hboot_image_compiler/elf_support.py',
-    'mbs/site_scons/hboot_image_compiler/hboot_image.py',
-    'mbs/site_scons/hboot_image_compiler/netx90_app_iflash_image.py',
-    'mbs/site_scons/hboot_image_compiler/netx90_app_image.py',
-    'mbs/site_scons/hboot_image_compiler/option_compiler.py',
-    'mbs/site_scons/hboot_image_compiler/patch_definitions.py',
-    'mbs/site_scons/hboot_image_compiler/snippet_library.py')
-
-tArcList.AddFiles('hboot_image_compiler/',
-    # 'mbs/site_scons/hboot_netx4000_relaxed_patch_table.xml',
-    # 'mbs/site_scons/hboot_netx4000_patch_table.xml',
-    # 'mbs/site_scons/hboot_netx56_patch_table.xml',
-    # 'mbs/site_scons/hboot_netx90_patch_table.xml',
-    # 'mbs/site_scons/hboot_netx90b_patch_table.xml',
-    # 'mbs/site_scons/hboot_netx90c_patch_table.xml',
-    # 'mbs/site_scons/hboot_netx90_mpw_patch_table.xml',
-    'CHANGES.txt',
-    'LICENSE.txt')
-
-tArcList.AddFiles('hboot_image_compiler/patch_tables',
-    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx4000_relaxed_patch_table.xml',
-    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx4000_patch_table.xml',
-    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx56_patch_table.xml',
-    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx90_patch_table.xml',
-    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx90b_patch_table.xml',
-    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx90c_patch_table.xml',
-    'mbs/site_scons/hboot_image_compiler/patch_tables/hboot_netx90_mpw_patch_table.xml')
-
-strBasePath = os.path.join(strModulePath, '%s-%s' % (strArtifact, PROJECT_VERSION))
-tArtifactZip = atEnv.DEFAULT.Archive('%s.zip' % strBasePath, None, ARCHIVE_CONTENTS = tArcList)
-tArtifactPom = atEnv.DEFAULT.ArtifactVersion('%s.pom' % strBasePath, 'templates/pom.xml')
 
 
 
@@ -229,9 +180,9 @@ for k in astrWinRequiredEnv:
     if k in os.environ:
         atEnvVars[k] = os.environ[k]
 
-tUnpackStamp = atEnv.DEFAULT.Unpack('targets/tests/.unpack_stamp', tArtifactZip, UNPACK_FOLDER=strHbootDepackPath)
+# tUnpackStamp = atEnv.DEFAULT.Unpack('targets/tests/.unpack_stamp', tArtifactZip, UNPACK_FOLDER=strHbootDepackPath)
 tTestStamp = atEnv.DEFAULT.Tests('targets/tests/.test_stamp', 'tests/tests.py', ENVVARS=atEnvVars)
-atEnv.DEFAULT.Depends(tTestStamp, tUnpackStamp)
+# atEnv.DEFAULT.Depends(tTestStamp, tUnpackStamp)
 atEnv.DEFAULT.Depends(tTestStamp, tElf_netx4000_skip)
 atEnv.DEFAULT.Depends(tTestStamp, tElf_netx4000_skipsect)
 atEnv.DEFAULT.Depends(tTestStamp, tElf_netx90_app_blinki_iflash_sdram)
