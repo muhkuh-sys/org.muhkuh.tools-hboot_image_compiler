@@ -7,6 +7,10 @@ import subprocess
 import sys
 import traceback
 from test_settings import PROJECT_ROOT, TEST_DIR
+from add_test_env_vars import update_os_env
+os.environ
+env_files_path = os.path.join(PROJECT_ROOT, 'tests', 'test_elfs')
+update_os_env(PROJECT_ROOT, env_files_path)
 
 
 class TestExpectedBinaries(unittest.TestCase):
@@ -33,16 +37,10 @@ class TestExpectedBinaries(unittest.TestCase):
     def setUp(self):
         self.strTestsBaseDir = TEST_DIR
         self.strOutputBaseDir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'output'))
-        self.strHBootImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'mbs', 'site_scons', 'hil_nxt_hboot_image_compiler', 'com', '__main__.py'))
-        # self.strHBootImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'hil_nxt_hboot_image_compiler', 'com'))
-        self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'mbs', 'site_scons', 'hil_nxt_hboot_image_compiler', 'app', 'netx90_app_image.py'))
-        # self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'hil_nxt_hboot_image_compiler', 'app', 'netx90_app_image.py'))
-        # self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'netx90_app_image.py'))
-        #self.strOpenSSLPath='C:\\Daten_local_only\\Tools\\openssl\\openssl-1.1.1c-win64-mingw\\openssl.exe'
-        # self.strOpenSSLPath ='openssl'
-        self.strOpenSSLPath =r"C:\Users\frederikwoermann\Documents\_netx_tools\hboot_image_sign\hil_nxt_hboot_image\sign_server\resources\openssl\openssl.exe"
-        # self.strOpenSSLPath='c:\\Users\\StephanL\\Desktop\\work\\tools\\openssl-1.1.1c-win64-mingw\\openssl.exe'
-        
+        self.strHBootImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'hil_nxt_hboot_image_compiler', 'com'))
+        self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'hil_nxt_hboot_image_compiler', 'app', 'netx90_app_image.py'))
+        self.strOpenSSLPath ='openssl'
+
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
         if strEnvKey not in os.environ:
@@ -676,8 +674,8 @@ class TestExpectedBinaries(unittest.TestCase):
         except Exception as e:
             print("Exception:")
             print(e)
-            print("Exception output")
-            print(e.output)
+            # print("Exception output")
+            # print(e.output)
             strExpectedError = "Failed to call external program:"
             if strExpectedError in e.output:
                 fTestPassed = True
