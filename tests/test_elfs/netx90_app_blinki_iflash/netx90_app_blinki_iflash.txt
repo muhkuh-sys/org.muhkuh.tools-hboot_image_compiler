@@ -1,0 +1,718 @@
+
+targets\netx90_app_blinki_iflash\netx90_app_blinki_iflash.elf:     file format elf32-littlearm
+targets\netx90_app_blinki_iflash\netx90_app_blinki_iflash.elf
+architecture: arm, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x00000201
+
+Program Header:
+    LOAD off    0x00008000 vaddr 0x00000000 paddr 0x00000000 align 2**15
+         filesz 0x000003dc memsz 0x000003dc flags r-x
+    LOAD off    0x00010000 vaddr 0x000b0000 paddr 0x000b0000 align 2**15
+         filesz 0x00000000 memsz 0x00008000 flags rw-
+private flags = 5000202: [Version5 EABI] [soft-float ABI] [has entry point]
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn  Flags
+  0 .header       00000200  00000000  00000000  00008000  2**2  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .code         000001dc  00000200  00000200  00008200  2**2  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .stack        00008000  000b0000  000b0000  00010000  2**0  ALLOC
+  3 .comment      00000070  00000000  00000000  000083dc  2**0  CONTENTS, READONLY
+  4 .ARM.attributes 0000002c  00000000  00000000  0000844c  2**0  CONTENTS, READONLY
+  5 .debug_aranges 000000d0  00000000  00000000  00008478  2**3  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00028d8d  00000000  00000000  00008548  2**0  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000715  00000000  00000000  000312d5  2**0  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000073e  00000000  00000000  000319ea  2**0  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000144  00000000  00000000  00032128  2**2  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00212dcf  00000000  00000000  0003226c  2**0  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000045c  00000000  00000000  0024503b  2**0  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_macro  0004d91c  00000000  00000000  00245497  2**0  CONTENTS, READONLY, DEBUGGING
+SYMBOL TABLE:
+00000000 l    d  .header	00000000 .header
+00000200 l    d  .code	00000000 .code
+000b0000 l    d  .stack	00000000 .stack
+00000000 l    d  .comment	00000000 .comment
+00000000 l    d  .ARM.attributes	00000000 .ARM.attributes
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_frame	00000000 .debug_frame
+00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    d  .debug_loc	00000000 .debug_loc
+00000000 l    d  .debug_macro	00000000 .debug_macro
+00000000 l    df *ABS*	00000000 cm4_app_vector_table_iflash.c
+00000000 l    df *ABS*	00000000 app_hboot_header_iflash.c
+00000000 l    df *ABS*	00000000 targets\netx90_app_blinki_iflash\init.o
+0000020c l       .code	00000000 clear_bss
+00000000 l    df *ABS*	00000000 main.c
+00000000 l    df *ABS*	00000000 mmio6.c
+000003d4 l     O .code	00000002 atLEDState
+00000000 l    df *ABS*	00000000 mmio7.c
+000003d8 l     O .code	00000002 atLEDState
+00000000 l    df *ABS*	00000000 systime.c
+00000000 l    df *ABS*	00000000 
+000003bc g     F .code	00000018 systime_handle_is_elapsed
+000002fc g     F .code	00000014 mmio7_init
+00000224 g     F .code	0000004c blinki_main
+00000298 g     F .code	00000050 mmio6_blinki
+000b0000 g       .code	00000000 __bss_start__
+00000000 g     O .header	000001c0 cm4_app_vector_table_iflash
+00000270 g     F .code	00000014 mmio6_setLED
+000002e8 g     F .code	00000014 mmio7_setLED
+000b8000 g       .stack	00000000 __STACK_TOP_APP_CPU__
+000b0000 g       .code	00000000 __bss_end__
+000001c0 g     O .header	00000040 app_cpu_hboot_header
+00000310 g     F .code	00000050 mmio7_blinki
+00000360 g     F .code	00000018 systime_init
+000b8000 g       .stack	00000000 stack_top
+00000284 g     F .code	00000014 mmio6_init
+00000384 g     F .code	00000014 systime_elapsed
+00000378 g     F .code	0000000c systime_get_ms
+00000398 g     F .code	00000014 systime_delay_ms
+000003ac g     F .code	00000010 systime_handle_start_ms
+00000200 g     F .code	00000000 start
+
+
+
+Disassembly of section .code:
+
+00000200 <start>:
+    .func start, start
+    .type start, STT_FUNC
+start:
+    @ b start
+	@ Set own stack position.
+	ldr     r2, =stack_top
+ 200:	4a05      	ldr	r2, [pc, #20]	; (218 <clear_bss+0xc>)
+	mov     sp, r2
+ 202:	4695      	mov	sp, r2
+	strlo   r5, [r3], #4
+	blo     copy_data
+#endif
+
+	@ Clear the .bss section (zero init).
+	mov     r2, #0
+ 204:	f04f 0200 	mov.w	r2, #0
+	ldr     r3, =__bss_start__
+ 208:	4b04      	ldr	r3, [pc, #16]	; (21c <clear_bss+0x10>)
+	ldr     r4, =__bss_end__
+ 20a:	4c05      	ldr	r4, [pc, #20]	; (220 <clear_bss+0x14>)
+
+0000020c <clear_bss>:
+clear_bss:
+	str     r2, [r3], #4
+ 20c:	f843 2b04 	str.w	r2, [r3], #4
+	cmp     r3, r4
+ 210:	42a3      	cmp	r3, r4
+	bmi     clear_bss
+ 212:	d4fb      	bmi.n	20c <clear_bss>
+
+	b       blinki_main
+ 214:	f000 b806 	b.w	224 <blinki_main>
+    .func start, start
+    .type start, STT_FUNC
+start:
+    @ b start
+	@ Set own stack position.
+	ldr     r2, =stack_top
+ 218:	000b8000 	.word	0x000b8000
+	blo     copy_data
+#endif
+
+	@ Clear the .bss section (zero init).
+	mov     r2, #0
+	ldr     r3, =__bss_start__
+ 21c:	000b0000 	.word	0x000b0000
+	ldr     r4, =__bss_end__
+ 220:	000b0000 	.word	0x000b0000
+
+00000224 <blinki_main>:
+ *  - all mmio7functions will be stored in IFLASH Section
+ * if everything went correct MMIO6 and MMIO7 will blink
+ */
+
+void blinki_main(void *pvBootBlock __attribute__((unused)), unsigned long ulBootSource)
+{
+ 224:	b530      	push	{r4, r5, lr}
+  MMIO6_BLINKI_HANDLE_T tMmio6Handle;
+  MMIO7_BLINKI_HANDLE_T tMmio7Handle;
+
+  /* initialize the systemtime */
+  systime_init();
+ 226:	4b0b      	ldr	r3, [pc, #44]	; (254 <blinki_main+0x30>)
+ 228:	4d0b      	ldr	r5, [pc, #44]	; (258 <blinki_main+0x34>)
+ 22a:	4c0c      	ldr	r4, [pc, #48]	; (25c <blinki_main+0x38>)
+ *  - all mmio7functions will be stored in IFLASH Section
+ * if everything went correct MMIO6 and MMIO7 will blink
+ */
+
+void blinki_main(void *pvBootBlock __attribute__((unused)), unsigned long ulBootSource)
+{
+ 22c:	b089      	sub	sp, #36	; 0x24
+  MMIO6_BLINKI_HANDLE_T tMmio6Handle;
+  MMIO7_BLINKI_HANDLE_T tMmio7Handle;
+
+  /* initialize the systemtime */
+  systime_init();
+ 22e:	4798      	blx	r3
+
+  /* Switch all LEDs off. */
+  mmio6_setLED(LED_OFF);
+ 230:	2000      	movs	r0, #0
+ 232:	4b0b      	ldr	r3, [pc, #44]	; (260 <blinki_main+0x3c>)
+ 234:	4798      	blx	r3
+  mmio7_setLED(LED_OFF);
+ 236:	2000      	movs	r0, #0
+ 238:	4b0a      	ldr	r3, [pc, #40]	; (264 <blinki_main+0x40>)
+ 23a:	4798      	blx	r3
+
+  /* initialize all LED Handle's
+   * MMIO6 and MMIO7 Handle's are just Counter to toggle the LED's
+   */
+  mmio6_init(&tMmio6Handle);
+ 23c:	4668      	mov	r0, sp
+ 23e:	4b0a      	ldr	r3, [pc, #40]	; (268 <blinki_main+0x44>)
+ 240:	4798      	blx	r3
+  mmio7_init(&tMmio7Handle);
+ 242:	a804      	add	r0, sp, #16
+ 244:	4b09      	ldr	r3, [pc, #36]	; (26c <blinki_main+0x48>)
+ 246:	4798      	blx	r3
+  /*
+   * Blinki routine
+   */
+  while(1)
+  {
+    mmio6_blinki(&tMmio6Handle);
+ 248:	4668      	mov	r0, sp
+ 24a:	47a8      	blx	r5
+    mmio7_blinki(&tMmio7Handle);
+ 24c:	a804      	add	r0, sp, #16
+ 24e:	47a0      	blx	r4
+  };
+ 250:	e7fa      	b.n	248 <blinki_main+0x24>
+ 252:	bf00      	nop
+ 254:	00000361 	.word	0x00000361
+ 258:	00000299 	.word	0x00000299
+ 25c:	00000311 	.word	0x00000311
+ 260:	00000271 	.word	0x00000271
+ 264:	000002e9 	.word	0x000002e9
+ 268:	00000285 	.word	0x00000285
+ 26c:	000002fd 	.word	0x000002fd
+
+00000270 <mmio6_setLED>:
+
+
+	ulValue = 0;
+
+	/* set uValue in case LED should turned on. */
+	switch(tState)
+ 270:	2801      	cmp	r0, #1
+	case LED_ON:
+		ulValue |= HOSTMSK(mmio6_cfg_pio_oe) | HOSTMSK(mmio6_cfg_pio_out);
+		break;
+	}
+
+	ptMmioCtrlArea->aulMmio_cfg[6] = ulValue;
+ 272:	4b03      	ldr	r3, [pc, #12]	; (280 <mmio6_setLED+0x10>)
+{
+	HOSTDEF(ptMmioCtrlArea);
+	unsigned long ulValue;
+
+
+	ulValue = 0;
+ 274:	bf0c      	ite	eq
+ 276:	f44f 3240 	moveq.w	r2, #196608	; 0x30000
+ 27a:	2200      	movne	r2, #0
+	case LED_ON:
+		ulValue |= HOSTMSK(mmio6_cfg_pio_oe) | HOSTMSK(mmio6_cfg_pio_out);
+		break;
+	}
+
+	ptMmioCtrlArea->aulMmio_cfg[6] = ulValue;
+ 27c:	619a      	str	r2, [r3, #24]
+ 27e:	4770      	bx	lr
+ 280:	ff401300 	.word	0xff401300
+
+00000284 <mmio6_init>:
+	LED_ON			/* 1: on  */
+};
+
+
+void mmio6_init(MMIO6_BLINKI_HANDLE_T *ptHandle)
+{
+ 284:	b510      	push	{r4, lr}
+	ptHandle->uiCnt = 0;
+ 286:	2300      	movs	r3, #0
+ 288:	6043      	str	r3, [r0, #4]
+	ptHandle->ulTimer = systime_get_ms();
+ 28a:	4b02      	ldr	r3, [pc, #8]	; (294 <mmio6_init+0x10>)
+	LED_ON			/* 1: on  */
+};
+
+
+void mmio6_init(MMIO6_BLINKI_HANDLE_T *ptHandle)
+{
+ 28c:	4604      	mov	r4, r0
+	ptHandle->uiCnt = 0;
+	ptHandle->ulTimer = systime_get_ms();
+ 28e:	4798      	blx	r3
+ 290:	6020      	str	r0, [r4, #0]
+ 292:	bd10      	pop	{r4, pc}
+ 294:	00000379 	.word	0x00000379
+
+00000298 <mmio6_blinki>:
+}
+
+
+void mmio6_blinki(MMIO6_BLINKI_HANDLE_T *ptHandle)
+{
+ 298:	b538      	push	{r3, r4, r5, lr}
+	unsigned int uiCnt;
+  int iResult;
+
+  /* wait for 500ms */
+	iResult = systime_elapsed(ptHandle->ulTimer, 500U);
+ 29a:	f44f 71fa 	mov.w	r1, #500	; 0x1f4
+	ptHandle->ulTimer = systime_get_ms();
+}
+
+
+void mmio6_blinki(MMIO6_BLINKI_HANDLE_T *ptHandle)
+{
+ 29e:	4604      	mov	r4, r0
+	unsigned int uiCnt;
+  int iResult;
+
+  /* wait for 500ms */
+	iResult = systime_elapsed(ptHandle->ulTimer, 500U);
+ 2a0:	4d0d      	ldr	r5, [pc, #52]	; (2d8 <mmio6_blinki+0x40>)
+ 2a2:	6800      	ldr	r0, [r0, #0]
+ 2a4:	47a8      	blx	r5
+  while(iResult == 0){
+ 2a6:	b928      	cbnz	r0, 2b4 <mmio6_blinki+0x1c>
+    iResult = systime_elapsed(ptHandle->ulTimer, 500U);
+ 2a8:	6820      	ldr	r0, [r4, #0]
+ 2aa:	f44f 71fa 	mov.w	r1, #500	; 0x1f4
+ 2ae:	47a8      	blx	r5
+	unsigned int uiCnt;
+  int iResult;
+
+  /* wait for 500ms */
+	iResult = systime_elapsed(ptHandle->ulTimer, 500U);
+  while(iResult == 0){
+ 2b0:	2800      	cmp	r0, #0
+ 2b2:	d0f9      	beq.n	2a8 <mmio6_blinki+0x10>
+    iResult = systime_elapsed(ptHandle->ulTimer, 500U);
+  };
+
+  /* get the Counter */
+	uiCnt = ptHandle->uiCnt;
+ 2b4:	6865      	ldr	r5, [r4, #4]
+
+	/* get new systime */
+	ptHandle->ulTimer = systime_get_ms();
+ 2b6:	4b09      	ldr	r3, [pc, #36]	; (2dc <mmio6_blinki+0x44>)
+ 2b8:	4798      	blx	r3
+
+	/* Show the LED state. */
+	mmio6_setLED(atLEDState[uiCnt%2]);
+ 2ba:	4a09      	ldr	r2, [pc, #36]	; (2e0 <mmio6_blinki+0x48>)
+
+  /* get the Counter */
+	uiCnt = ptHandle->uiCnt;
+
+	/* get new systime */
+	ptHandle->ulTimer = systime_get_ms();
+ 2bc:	6020      	str	r0, [r4, #0]
+
+	/* Show the LED state. */
+	mmio6_setLED(atLEDState[uiCnt%2]);
+ 2be:	f005 0301 	and.w	r3, r5, #1
+
+	/* Increment Counter and save in Handle */
+	uiCnt++;
+ 2c2:	3501      	adds	r5, #1
+
+
+	ulValue = 0;
+
+	/* set uValue in case LED should turned on. */
+	switch(tState)
+ 2c4:	5cd3      	ldrb	r3, [r2, r3]
+{
+	HOSTDEF(ptMmioCtrlArea);
+	unsigned long ulValue;
+
+
+	ulValue = 0;
+ 2c6:	2b01      	cmp	r3, #1
+	case LED_ON:
+		ulValue |= HOSTMSK(mmio6_cfg_pio_oe) | HOSTMSK(mmio6_cfg_pio_out);
+		break;
+	}
+
+	ptMmioCtrlArea->aulMmio_cfg[6] = ulValue;
+ 2c8:	4b06      	ldr	r3, [pc, #24]	; (2e4 <mmio6_blinki+0x4c>)
+{
+	HOSTDEF(ptMmioCtrlArea);
+	unsigned long ulValue;
+
+
+	ulValue = 0;
+ 2ca:	bf0c      	ite	eq
+ 2cc:	f44f 3240 	moveq.w	r2, #196608	; 0x30000
+ 2d0:	2200      	movne	r2, #0
+	case LED_ON:
+		ulValue |= HOSTMSK(mmio6_cfg_pio_oe) | HOSTMSK(mmio6_cfg_pio_out);
+		break;
+	}
+
+	ptMmioCtrlArea->aulMmio_cfg[6] = ulValue;
+ 2d2:	619a      	str	r2, [r3, #24]
+	mmio6_setLED(atLEDState[uiCnt%2]);
+
+	/* Increment Counter and save in Handle */
+	uiCnt++;
+
+	ptHandle->uiCnt = uiCnt;
+ 2d4:	6065      	str	r5, [r4, #4]
+ 2d6:	bd38      	pop	{r3, r4, r5, pc}
+ 2d8:	00000385 	.word	0x00000385
+ 2dc:	00000379 	.word	0x00000379
+ 2e0:	000003d4 	.word	0x000003d4
+ 2e4:	ff401300 	.word	0xff401300
+
+000002e8 <mmio7_setLED>:
+
+
+	ulValue = 0;
+
+	/* set uValue in case LED should turned on. */
+	switch(tState)
+ 2e8:	2801      	cmp	r0, #1
+	case LED_ON:
+		ulValue |= HOSTMSK(mmio7_cfg_pio_oe) | HOSTMSK(mmio7_cfg_pio_out);
+		break;
+	}
+
+	ptMmioCtrlArea->aulMmio_cfg[7] = ulValue;
+ 2ea:	4b03      	ldr	r3, [pc, #12]	; (2f8 <mmio7_setLED+0x10>)
+{
+	HOSTDEF(ptMmioCtrlArea);
+	unsigned long ulValue;
+
+
+	ulValue = 0;
+ 2ec:	bf0c      	ite	eq
+ 2ee:	f44f 3240 	moveq.w	r2, #196608	; 0x30000
+ 2f2:	2200      	movne	r2, #0
+	case LED_ON:
+		ulValue |= HOSTMSK(mmio7_cfg_pio_oe) | HOSTMSK(mmio7_cfg_pio_out);
+		break;
+	}
+
+	ptMmioCtrlArea->aulMmio_cfg[7] = ulValue;
+ 2f4:	61da      	str	r2, [r3, #28]
+ 2f6:	4770      	bx	lr
+ 2f8:	ff401300 	.word	0xff401300
+
+000002fc <mmio7_init>:
+	LED_ON			/* 1: on  */
+};
+
+
+void mmio7_init(MMIO7_BLINKI_HANDLE_T *ptHandle)
+{
+ 2fc:	b510      	push	{r4, lr}
+	ptHandle->uiCnt = 0;
+ 2fe:	2300      	movs	r3, #0
+ 300:	6043      	str	r3, [r0, #4]
+	ptHandle->ulTimer = systime_get_ms();
+ 302:	4b02      	ldr	r3, [pc, #8]	; (30c <mmio7_init+0x10>)
+	LED_ON			/* 1: on  */
+};
+
+
+void mmio7_init(MMIO7_BLINKI_HANDLE_T *ptHandle)
+{
+ 304:	4604      	mov	r4, r0
+	ptHandle->uiCnt = 0;
+	ptHandle->ulTimer = systime_get_ms();
+ 306:	4798      	blx	r3
+ 308:	6020      	str	r0, [r4, #0]
+ 30a:	bd10      	pop	{r4, pc}
+ 30c:	00000379 	.word	0x00000379
+
+00000310 <mmio7_blinki>:
+}
+
+
+void mmio7_blinki(MMIO7_BLINKI_HANDLE_T *ptHandle)
+{
+ 310:	b538      	push	{r3, r4, r5, lr}
+	unsigned int uiCnt;
+	int iResult;
+
+	/* wait for 500ms */
+  iResult = systime_elapsed(ptHandle->ulTimer, 500U);
+ 312:	f44f 71fa 	mov.w	r1, #500	; 0x1f4
+	ptHandle->ulTimer = systime_get_ms();
+}
+
+
+void mmio7_blinki(MMIO7_BLINKI_HANDLE_T *ptHandle)
+{
+ 316:	4604      	mov	r4, r0
+	unsigned int uiCnt;
+	int iResult;
+
+	/* wait for 500ms */
+  iResult = systime_elapsed(ptHandle->ulTimer, 500U);
+ 318:	4d0d      	ldr	r5, [pc, #52]	; (350 <mmio7_blinki+0x40>)
+ 31a:	6800      	ldr	r0, [r0, #0]
+ 31c:	47a8      	blx	r5
+  while(iResult == 0){
+ 31e:	b928      	cbnz	r0, 32c <mmio7_blinki+0x1c>
+    iResult = systime_elapsed(ptHandle->ulTimer, 500U);
+ 320:	6820      	ldr	r0, [r4, #0]
+ 322:	f44f 71fa 	mov.w	r1, #500	; 0x1f4
+ 326:	47a8      	blx	r5
+	unsigned int uiCnt;
+	int iResult;
+
+	/* wait for 500ms */
+  iResult = systime_elapsed(ptHandle->ulTimer, 500U);
+  while(iResult == 0){
+ 328:	2800      	cmp	r0, #0
+ 32a:	d0f9      	beq.n	320 <mmio7_blinki+0x10>
+    iResult = systime_elapsed(ptHandle->ulTimer, 500U);
+  };
+
+  /* get the Counter */
+	uiCnt = ptHandle->uiCnt;
+ 32c:	6865      	ldr	r5, [r4, #4]
+
+	/* get new systime */
+	ptHandle->ulTimer = systime_get_ms();
+ 32e:	4b09      	ldr	r3, [pc, #36]	; (354 <mmio7_blinki+0x44>)
+ 330:	4798      	blx	r3
+
+	/* Show the LED state. */
+	mmio7_setLED(atLEDState[uiCnt%2]);
+ 332:	4a09      	ldr	r2, [pc, #36]	; (358 <mmio7_blinki+0x48>)
+
+  /* get the Counter */
+	uiCnt = ptHandle->uiCnt;
+
+	/* get new systime */
+	ptHandle->ulTimer = systime_get_ms();
+ 334:	6020      	str	r0, [r4, #0]
+
+	/* Show the LED state. */
+	mmio7_setLED(atLEDState[uiCnt%2]);
+ 336:	f005 0301 	and.w	r3, r5, #1
+
+	/* Increment Counter and save in Handle */
+	uiCnt++;
+ 33a:	3501      	adds	r5, #1
+
+
+	ulValue = 0;
+
+	/* set uValue in case LED should turned on. */
+	switch(tState)
+ 33c:	5cd3      	ldrb	r3, [r2, r3]
+{
+	HOSTDEF(ptMmioCtrlArea);
+	unsigned long ulValue;
+
+
+	ulValue = 0;
+ 33e:	2b01      	cmp	r3, #1
+	case LED_ON:
+		ulValue |= HOSTMSK(mmio7_cfg_pio_oe) | HOSTMSK(mmio7_cfg_pio_out);
+		break;
+	}
+
+	ptMmioCtrlArea->aulMmio_cfg[7] = ulValue;
+ 340:	4b06      	ldr	r3, [pc, #24]	; (35c <mmio7_blinki+0x4c>)
+{
+	HOSTDEF(ptMmioCtrlArea);
+	unsigned long ulValue;
+
+
+	ulValue = 0;
+ 342:	bf0c      	ite	eq
+ 344:	f44f 3240 	moveq.w	r2, #196608	; 0x30000
+ 348:	2200      	movne	r2, #0
+	case LED_ON:
+		ulValue |= HOSTMSK(mmio7_cfg_pio_oe) | HOSTMSK(mmio7_cfg_pio_out);
+		break;
+	}
+
+	ptMmioCtrlArea->aulMmio_cfg[7] = ulValue;
+ 34a:	61da      	str	r2, [r3, #28]
+	mmio7_setLED(atLEDState[uiCnt%2]);
+
+	/* Increment Counter and save in Handle */
+	uiCnt++;
+
+	ptHandle->uiCnt = uiCnt;
+ 34c:	6065      	str	r5, [r4, #4]
+ 34e:	bd38      	pop	{r3, r4, r5, pc}
+ 350:	00000385 	.word	0x00000385
+ 354:	00000379 	.word	0x00000379
+ 358:	000003d8 	.word	0x000003d8
+ 35c:	ff401300 	.word	0xff401300
+
+00000360 <systime_init>:
+	ptSystimeUcComArea->ulSystime_count_value = 10U<<28U;
+#elif ASIC_TYP==ASIC_TYP_NETX90_MPW_APP || ASIC_TYP==ASIC_TYP_NETX90_APP
+	HOSTDEF(ptSystimeAppArea);
+
+	/* Set the systime border to 1ms. */
+	ptSystimeAppArea->ulSystime_border = (DEV_FREQUENCY/100U)-1U;
+ 360:	4b03      	ldr	r3, [pc, #12]	; (370 <systime_init+0x10>)
+ 362:	4a04      	ldr	r2, [pc, #16]	; (374 <systime_init+0x14>)
+ 364:	609a      	str	r2, [r3, #8]
+	ptSystimeAppArea->ulSystime_count_value = 10U<<28U;
+ 366:	f04f 4220 	mov.w	r2, #2684354560	; 0xa0000000
+ 36a:	60da      	str	r2, [r3, #12]
+ 36c:	4770      	bx	lr
+ 36e:	bf00      	nop
+ 370:	ff8016c0 	.word	0xff8016c0
+ 374:	000f423f 	.word	0x000f423f
+
+00000378 <systime_get_ms>:
+
+	return ptSystimeUcComArea->ulSystime_s;
+#elif ASIC_TYP==ASIC_TYP_NETX90_MPW_APP || ASIC_TYP==ASIC_TYP_NETX90_APP
+	HOSTDEF(ptSystimeAppArea);
+
+	return ptSystimeAppArea->ulSystime_s;
+ 378:	4b01      	ldr	r3, [pc, #4]	; (380 <systime_get_ms+0x8>)
+ 37a:	6818      	ldr	r0, [r3, #0]
+	HOSTDEF(ptSystimeArea)
+
+
+	return ptSystimeArea->ulSystime_s;
+#endif
+}
+ 37c:	4770      	bx	lr
+ 37e:	bf00      	nop
+ 380:	ff8016c0 	.word	0xff8016c0
+
+00000384 <systime_elapsed>:
+
+	unsigned long ulDiff;
+
+
+	/* get the time difference */
+	ulDiff = ptSystimeAppArea->ulSystime_s - ulStart;
+ 384:	4b03      	ldr	r3, [pc, #12]	; (394 <systime_elapsed+0x10>)
+ 386:	681b      	ldr	r3, [r3, #0]
+ 388:	1a18      	subs	r0, r3, r0
+	/* get the time difference */
+	ulDiff = ptSystimeArea->ulSystime_s - ulStart;
+
+	return (ulDiff>=ulDuration);
+#endif
+}
+ 38a:	4288      	cmp	r0, r1
+ 38c:	bf34      	ite	cc
+ 38e:	2000      	movcc	r0, #0
+ 390:	2001      	movcs	r0, #1
+ 392:	4770      	bx	lr
+ 394:	ff8016c0 	.word	0xff8016c0
+
+00000398 <systime_delay_ms>:
+
+	return ptSystimeUcComArea->ulSystime_s;
+#elif ASIC_TYP==ASIC_TYP_NETX90_MPW_APP || ASIC_TYP==ASIC_TYP_NETX90_APP
+	HOSTDEF(ptSystimeAppArea);
+
+	return ptSystimeAppArea->ulSystime_s;
+ 398:	4a03      	ldr	r2, [pc, #12]	; (3a8 <systime_delay_ms+0x10>)
+ 39a:	6811      	ldr	r1, [r2, #0]
+
+	unsigned long ulDiff;
+
+
+	/* get the time difference */
+	ulDiff = ptSystimeAppArea->ulSystime_s - ulStart;
+ 39c:	6813      	ldr	r3, [r2, #0]
+ 39e:	1a5b      	subs	r3, r3, r1
+
+	ulStart = systime_get_ms();
+	do
+	{
+		iElapsed = systime_elapsed(ulStart, ulDuration);
+	} while( iElapsed==0 );
+ 3a0:	4298      	cmp	r0, r3
+ 3a2:	d8fb      	bhi.n	39c <systime_delay_ms+0x4>
+}
+ 3a4:	4770      	bx	lr
+ 3a6:	bf00      	nop
+ 3a8:	ff8016c0 	.word	0xff8016c0
+
+000003ac <systime_handle_start_ms>:
+
+	return ptSystimeUcComArea->ulSystime_s;
+#elif ASIC_TYP==ASIC_TYP_NETX90_MPW_APP || ASIC_TYP==ASIC_TYP_NETX90_APP
+	HOSTDEF(ptSystimeAppArea);
+
+	return ptSystimeAppArea->ulSystime_s;
+ 3ac:	4b02      	ldr	r3, [pc, #8]	; (3b8 <systime_handle_start_ms+0xc>)
+ 3ae:	681b      	ldr	r3, [r3, #0]
+
+
+
+void systime_handle_start_ms(TIMER_HANDLE_T *ptHandle, unsigned long ulDuration)
+{
+	ptHandle->ulStart = systime_get_ms();
+ 3b0:	6003      	str	r3, [r0, #0]
+	ptHandle->ulDuration = ulDuration;
+ 3b2:	6041      	str	r1, [r0, #4]
+ 3b4:	4770      	bx	lr
+ 3b6:	bf00      	nop
+ 3b8:	ff8016c0 	.word	0xff8016c0
+
+000003bc <systime_handle_is_elapsed>:
+
+	unsigned long ulDiff;
+
+
+	/* get the time difference */
+	ulDiff = ptSystimeAppArea->ulSystime_s - ulStart;
+ 3bc:	4b04      	ldr	r3, [pc, #16]	; (3d0 <systime_handle_is_elapsed+0x14>)
+ 3be:	6802      	ldr	r2, [r0, #0]
+ 3c0:	681b      	ldr	r3, [r3, #0]
+
+	return (ulDiff>=ulDuration);
+ 3c2:	6840      	ldr	r0, [r0, #4]
+
+	unsigned long ulDiff;
+
+
+	/* get the time difference */
+	ulDiff = ptSystimeAppArea->ulSystime_s - ulStart;
+ 3c4:	1a9b      	subs	r3, r3, r2
+
+
+int systime_handle_is_elapsed(TIMER_HANDLE_T *ptHandle)
+{
+	return systime_elapsed(ptHandle->ulStart, ptHandle->ulDuration);
+}
+ 3c6:	4298      	cmp	r0, r3
+ 3c8:	bf8c      	ite	hi
+ 3ca:	2000      	movhi	r0, #0
+ 3cc:	2001      	movls	r0, #1
+ 3ce:	4770      	bx	lr
+ 3d0:	ff8016c0 	.word	0xff8016c0
+
+000003d4 <atLEDState>:
+ 3d4:	00000100                                ....
+
+000003d8 <atLEDState>:
+ 3d8:	00000100                                ....

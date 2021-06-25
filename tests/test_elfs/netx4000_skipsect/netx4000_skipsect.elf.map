@@ -1,0 +1,158 @@
+
+Discarded input sections
+
+ .text          0x00000000        0x0 targets\netx4000_skipsect\init.o
+ .data          0x00000000        0x0 targets\netx4000_skipsect\init.o
+ .bss           0x00000000        0x0 targets\netx4000_skipsect\init.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ASSERT_EMPTY     0x00000000         0x00000000         xrw
+CODE             0x04000000         0x00000100         xr
+DATA0            0x04000100         0x00000100         xr
+DATA1            0x04000200         0x00000100         xr
+DATA2            0x04000300         0x00000100         xr
+DATA3            0x04000400         0x00000100         xr
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.assert_empty   0x00000000        0x0
+ *(.data)
+ *(.glue*)
+ .glue_7        0x00000000        0x0 linker stubs
+ .glue_7t       0x00000000        0x0 linker stubs
+ *(.vfp11_veneer)
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+ *(.v4_bx)
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.code           0x04000000        0x4
+ *(.init_code)
+ .init_code     0x04000000        0x4 targets\netx4000_skipsect\init.o
+                0x04000000                start
+ *(.text .rodata .rodata*)
+
+.iplt           0x04000004        0x0
+ .iplt          0x00000000        0x0 targets\netx4000_skipsect\init.o
+
+.igot.plt       0x04000004        0x0
+ .igot.plt      0x00000000        0x0 targets\netx4000_skipsect\init.o
+
+.data0          0x04000100        0x4
+ *(.a)
+ .a             0x04000100        0x4 targets\netx4000_skipsect\init.o
+
+.data1          0x04000200        0x4
+ *(.b)
+ .b             0x04000200        0x4 targets\netx4000_skipsect\init.o
+
+.data2          0x04000300        0x4
+ *(.c)
+ .c             0x04000300        0x4 targets\netx4000_skipsect\init.o
+
+.data3          0x04000400        0x4
+ *(.d)
+ .d             0x04000400        0x4 targets\netx4000_skipsect\init.o
+
+.rel.dyn        0x04000404        0x0
+ .rel.iplt      0x00000000        0x0 targets\netx4000_skipsect\init.o
+
+.bss            0x04000004        0x0
+                0x04000004                PROVIDE (__bss_start__, .)
+ *(.bss COMMON)
+                0x04000004                PROVIDE (__bss_end__, .)
+
+.stack          0x04000004       0xfc
+                0x04000100                . = (ORIGIN (CODE) + 0x100)
+ *fill*         0x04000004       0xfc 
+                0x04000100                PROVIDE (stack_top, .)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment
+ *(.comment)
+
+.ARM.attributes
+                0x00000000       0x1d
+ .ARM.attributes
+                0x00000000       0x1d targets\netx4000_skipsect\init.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000       0x20
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x20 targets\netx4000_skipsect\init.o
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000       0x8a
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000       0x8a targets\netx4000_skipsect\init.o
+
+.debug_abbrev   0x00000000       0x14
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000       0x14 targets\netx4000_skipsect\init.o
+
+.debug_line     0x00000000       0x4c
+ *(.debug_line)
+ .debug_line    0x00000000       0x4c targets\netx4000_skipsect\init.o
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+LOAD targets\netx4000_skipsect\init.o
+LOAD C:\Users\frederikwoermann\.mbs\depack\org.gnu.gcc\gcc-arm-none-eabi\gcc-arm-none-eabi-4.9.3_3\arm-none-eabi\lib\armv7-ar\thumb\libm.a
+LOAD C:\Users\frederikwoermann\.mbs\depack\org.gnu.gcc\gcc-arm-none-eabi\gcc-arm-none-eabi-4.9.3_3\arm-none-eabi\lib\armv7-ar\thumb\libc.a
+LOAD C:\Users\frederikwoermann\.mbs\depack\org.gnu.gcc\gcc-arm-none-eabi\gcc-arm-none-eabi-4.9.3_3\lib\gcc\arm-none-eabi\4.9.3\armv7-ar\thumb\libgcc.a
+OUTPUT(targets\netx4000_skipsect\netx4000_skipsect.elf elf32-littlearm)

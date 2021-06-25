@@ -1,0 +1,61 @@
+
+targets\netx4000_skipsect\netx4000_skipsect.elf:     file format elf32-littlearm
+targets\netx4000_skipsect\netx4000_skipsect.elf
+architecture: arm, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x04000000
+
+Program Header:
+    LOAD off    0x00008000 vaddr 0x04000000 paddr 0x04000000 align 2**15
+         filesz 0x00000004 memsz 0x00000100 flags rwx
+    LOAD off    0x00008100 vaddr 0x04000100 paddr 0x04000100 align 2**15
+         filesz 0x00000004 memsz 0x00000004 flags r--
+    LOAD off    0x00008200 vaddr 0x04000200 paddr 0x04000200 align 2**15
+         filesz 0x00000004 memsz 0x00000004 flags r--
+    LOAD off    0x00008300 vaddr 0x04000300 paddr 0x04000300 align 2**15
+         filesz 0x00000004 memsz 0x00000004 flags r--
+    LOAD off    0x00008400 vaddr 0x04000400 paddr 0x04000400 align 2**15
+         filesz 0x00000004 memsz 0x00000004 flags r--
+private flags = 5000202: [Version5 EABI] [soft-float ABI] [has entry point]
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn  Flags
+  0 .code         00000004  04000000  04000000  00008000  2**2  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data0        00000004  04000100  04000100  00008100  2**0  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .data1        00000004  04000200  04000200  00008200  2**0  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .data2        00000004  04000300  04000300  00008300  2**0  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .data3        00000004  04000400  04000400  00008400  2**0  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .stack        000000fc  04000004  04000004  00008004  2**0  ALLOC
+  6 .ARM.attributes 0000001d  00000000  00000000  00008404  2**0  CONTENTS, READONLY
+  7 .debug_aranges 00000020  00000000  00000000  00008428  2**3  CONTENTS, READONLY, DEBUGGING
+  8 .debug_info   0000008a  00000000  00000000  00008448  2**0  CONTENTS, READONLY, DEBUGGING
+  9 .debug_abbrev 00000014  00000000  00000000  000084d2  2**0  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_line   0000004c  00000000  00000000  000084e6  2**0  CONTENTS, READONLY, DEBUGGING
+SYMBOL TABLE:
+04000000 l    d  .code	00000000 .code
+04000100 l    d  .data0	00000000 .data0
+04000200 l    d  .data1	00000000 .data1
+04000300 l    d  .data2	00000000 .data2
+04000400 l    d  .data3	00000000 .data3
+04000004 l    d  .stack	00000000 .stack
+00000000 l    d  .ARM.attributes	00000000 .ARM.attributes
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    df *ABS*	00000000 targets\netx4000_skipsect\init.o
+00000000 l    df *ABS*	00000000 
+04000000 g     F .code	00000000 start
+
+
+
+Disassembly of section .code:
+
+04000000 <start>:
+
+
+    .func start, start
+    .type start, STT_FUNC
+start:
+	b       start
+ 4000000:	eafffffe 	b	4000000 <start>

@@ -1,0 +1,384 @@
+
+Discarded input sections
+
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .text          0x00000000        0x0 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .data          0x00000000        0x0 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .bss           0x00000000        0x0 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .text          0x00000000        0x0 targets\netx90_app_blinki_sdram\init.o
+ .data          0x00000000        0x0 targets\netx90_app_blinki_sdram\init.o
+ .bss           0x00000000        0x0 targets\netx90_app_blinki_sdram\init.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .text          0x00000000        0x0 targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .data          0x00000000        0x0 targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .bss           0x00000000        0x0 targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .debug_macro   0x00000000      0x874 targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\main.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\main.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\main.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\main.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\main.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\main.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\main.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\main.o
+ .data          0x00000000        0x0 targets\netx90_app_blinki_sdram\main.o
+ .bss           0x00000000        0x0 targets\netx90_app_blinki_sdram\main.o
+ .debug_macro   0x00000000      0x874 targets\netx90_app_blinki_sdram\main.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio6.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio6.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio6.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio6.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio6.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio6.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio6.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio6.o
+ .data          0x00000000        0x0 targets\netx90_app_blinki_sdram\mmio6.o
+ .bss           0x00000000        0x0 targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_macro   0x00000000      0x874 targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_macro   0x00000000       0x4c targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_macro   0x00000000       0x22 targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_macro   0x00000000      0x34e targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_macro   0x00000000    0x4c6c2 targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_macro   0x00000000      0x11e targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_macro   0x00000000      0x2b0 targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_macro   0x00000000       0x34 targets\netx90_app_blinki_sdram\mmio6.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio7.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio7.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio7.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio7.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio7.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio7.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio7.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\mmio7.o
+ .data          0x00000000        0x0 targets\netx90_app_blinki_sdram\mmio7.o
+ .bss           0x00000000        0x0 targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_macro   0x00000000      0x874 targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_macro   0x00000000       0x4c targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_macro   0x00000000       0x22 targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_macro   0x00000000      0x34e targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_macro   0x00000000    0x4c6c2 targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_macro   0x00000000      0x11e targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_macro   0x00000000      0x2b0 targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_macro   0x00000000       0x34 targets\netx90_app_blinki_sdram\mmio7.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\rdy_run.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\rdy_run.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\rdy_run.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\rdy_run.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\rdy_run.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\rdy_run.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\rdy_run.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\rdy_run.o
+ .text          0x00000000       0xe4 targets\netx90_app_blinki_sdram\rdy_run.o
+ .data          0x00000000        0x0 targets\netx90_app_blinki_sdram\rdy_run.o
+ .bss           0x00000000        0x0 targets\netx90_app_blinki_sdram\rdy_run.o
+ .rodata        0x00000000        0x4 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_info    0x00000000    0x14388 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_abbrev  0x00000000      0x1ca targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_loc     0x00000000      0x334 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_aranges
+                0x00000000       0x20 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_ranges  0x00000000       0x20 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_macro   0x00000000       0x7a targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_macro   0x00000000      0x874 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_macro   0x00000000       0x4c targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_macro   0x00000000       0x22 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_macro   0x00000000      0x34e targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_macro   0x00000000    0x4c6c2 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_macro   0x00000000      0x11e targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_macro   0x00000000      0x2b0 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_macro   0x00000000       0x34 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_line    0x00000000      0x1db targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_str     0x00000000   0x212b17 targets\netx90_app_blinki_sdram\rdy_run.o
+ .comment       0x00000000       0x71 targets\netx90_app_blinki_sdram\rdy_run.o
+ .debug_frame   0x00000000       0x58 targets\netx90_app_blinki_sdram\rdy_run.o
+ .ARM.attributes
+                0x00000000       0x2e targets\netx90_app_blinki_sdram\rdy_run.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\systime.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\systime.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\systime.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\systime.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\systime.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\systime.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\systime.o
+ .group         0x00000000        0x8 targets\netx90_app_blinki_sdram\systime.o
+ .data          0x00000000        0x0 targets\netx90_app_blinki_sdram\systime.o
+ .bss           0x00000000        0x0 targets\netx90_app_blinki_sdram\systime.o
+ .debug_macro   0x00000000      0x874 targets\netx90_app_blinki_sdram\systime.o
+ .debug_macro   0x00000000       0x4c targets\netx90_app_blinki_sdram\systime.o
+ .debug_macro   0x00000000       0x22 targets\netx90_app_blinki_sdram\systime.o
+ .debug_macro   0x00000000      0x34e targets\netx90_app_blinki_sdram\systime.o
+ .debug_macro   0x00000000    0x4c6c2 targets\netx90_app_blinki_sdram\systime.o
+ .debug_macro   0x00000000      0x11e targets\netx90_app_blinki_sdram\systime.o
+ .debug_macro   0x00000000      0x2b0 targets\netx90_app_blinki_sdram\systime.o
+ .debug_macro   0x00000000       0x34 targets\netx90_app_blinki_sdram\systime.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ASSERT_EMPTY     0x00000000         0x00000000         xrw
+SDRAM            0x10000000         0x00020000         xrw
+IFLASH           0x00000000         0x00080000         xr
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.assert_empty   0x00000000        0x0
+ *(.data)
+ *(.glue*)
+ .glue_7        0x00000000        0x0 linker stubs
+ .glue_7t       0x00000000        0x0 linker stubs
+ *(.vfp11_veneer)
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+ *(.v4_bx)
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.header         0x00000000      0x200
+ *(.cm4_app_vector_table_iflash)
+ .cm4_app_vector_table_iflash
+                0x00000000      0x1c0 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+                0x00000000                cm4_app_vector_table_iflash
+ *(.app_cpu_hboot_header)
+ .app_cpu_hboot_header
+                0x000001c0       0x40 targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+                0x000001c0                app_cpu_hboot_header
+
+.code_SDRAM1    0x10000200       0x7a
+ *mmio6*(.init_code)
+ *mmio6*(.text*)
+ .text          0x10000200       0x78 targets\netx90_app_blinki_sdram\mmio6.o
+                0x10000200                mmio6_setLED
+                0x10000214                mmio6_init
+                0x10000228                mmio6_blinki
+ *mmio6*(.rodata*)
+ .rodata        0x10000278        0x2 targets\netx90_app_blinki_sdram\mmio6.o
+
+.code_SDRAM2    0x1000027c       0x7c
+ *mmio7*(.init_code)
+ *mmio7*(.text*)
+ .text          0x1000027c       0x78 targets\netx90_app_blinki_sdram\mmio7.o
+                0x1000027c                mmio7_setLED
+                0x10000290                mmio7_init
+                0x100002a4                mmio7_blinki
+ *mmio7*(.rodata*)
+ .rodata        0x100002f4        0x2 targets\netx90_app_blinki_sdram\mmio7.o
+                0x100002f8                . = ALIGN (0x4)
+ *fill*         0x100002f6        0x2 
+
+.bss            0x100002f8        0x0
+                0x100002f8                PROVIDE (__bss_start__, .)
+ *(.bss)
+ *(COMMON)
+                0x100002f8                PROVIDE (__bss_end__, .)
+
+.stack          0x100002f8    0x1fd08
+                0x10020000                . = (ORIGIN (SDRAM) + 0x20000)
+ *fill*         0x100002f8    0x1fd08 
+                0x10020000                PROVIDE (stack_top, .)
+                0x10020000                PROVIDE (__STACK_TOP_APP_CPU__, .)
+
+.code           0x00000200       0xe4
+ *(.header)
+ *(.init_code)
+ .init_code     0x00000200       0x24 targets\netx90_app_blinki_sdram\init.o
+                0x00000200                start
+ *(.text*)
+ .text          0x00000224       0x4c targets\netx90_app_blinki_sdram\main.o
+                0x00000224                blinki_main
+ .text          0x00000270       0x74 targets\netx90_app_blinki_sdram\systime.o
+                0x00000270                systime_init
+                0x00000288                systime_get_ms
+                0x00000294                systime_elapsed
+                0x000002a8                systime_delay_ms
+                0x000002bc                systime_handle_start_ms
+                0x000002cc                systime_handle_is_elapsed
+ *(.rodata*)
+                0x000002e4                . = ALIGN (0x4)
+
+.iplt           0x000002e4        0x0
+ .iplt          0x00000000        0x0 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+
+.igot.plt       0x000002e4        0x0
+ .igot.plt      0x00000000        0x0 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+
+.rel.dyn        0x000002e4        0x0
+ .rel.iplt      0x00000000        0x0 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x00000000       0x70
+ *(.comment)
+ .comment       0x00000000       0x70 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+                                 0x71 (size before relaxing)
+ .comment       0x00000000       0x71 targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .comment       0x00000000       0x71 targets\netx90_app_blinki_sdram\main.o
+ .comment       0x00000000       0x71 targets\netx90_app_blinki_sdram\mmio6.o
+ .comment       0x00000000       0x71 targets\netx90_app_blinki_sdram\mmio7.o
+ .comment       0x00000000       0x71 targets\netx90_app_blinki_sdram\systime.o
+
+.ARM.attributes
+                0x00000000       0x2c
+ .ARM.attributes
+                0x00000000       0x2e targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .ARM.attributes
+                0x0000002e       0x1c targets\netx90_app_blinki_sdram\init.o
+ .ARM.attributes
+                0x0000004a       0x2e targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .ARM.attributes
+                0x00000078       0x2e targets\netx90_app_blinki_sdram\main.o
+ .ARM.attributes
+                0x000000a6       0x2e targets\netx90_app_blinki_sdram\mmio6.o
+ .ARM.attributes
+                0x000000d4       0x2e targets\netx90_app_blinki_sdram\mmio7.o
+ .ARM.attributes
+                0x00000102       0x2e targets\netx90_app_blinki_sdram\systime.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000       0xd0
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x18 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .debug_aranges
+                0x00000018       0x20 targets\netx90_app_blinki_sdram\init.o
+ .debug_aranges
+                0x00000038       0x18 targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .debug_aranges
+                0x00000050       0x20 targets\netx90_app_blinki_sdram\main.o
+ .debug_aranges
+                0x00000070       0x20 targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_aranges
+                0x00000090       0x20 targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_aranges
+                0x000000b0       0x20 targets\netx90_app_blinki_sdram\systime.o
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000    0x28d8d
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000      0x175 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .debug_info    0x00000175       0x8a targets\netx90_app_blinki_sdram\init.o
+ .debug_info    0x000001ff       0xef targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .debug_info    0x000002ee      0x1da targets\netx90_app_blinki_sdram\main.o
+ .debug_info    0x000004c8    0x142af targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_info    0x00014777    0x142af targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_info    0x00028a26      0x367 targets\netx90_app_blinki_sdram\systime.o
+
+.debug_abbrev   0x00000000      0x715
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000       0x99 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .debug_abbrev  0x00000099       0x14 targets\netx90_app_blinki_sdram\init.o
+ .debug_abbrev  0x000000ad       0x73 targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .debug_abbrev  0x00000120       0xd4 targets\netx90_app_blinki_sdram\main.o
+ .debug_abbrev  0x000001f4      0x1cc targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_abbrev  0x000003c0      0x1cc targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_abbrev  0x0000058c      0x189 targets\netx90_app_blinki_sdram\systime.o
+
+.debug_line     0x00000000      0x73e
+ *(.debug_line)
+ .debug_line    0x00000000       0x54 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .debug_line    0x00000054       0x5d targets\netx90_app_blinki_sdram\init.o
+ .debug_line    0x000000b1       0x50 targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .debug_line    0x00000101      0x18a targets\netx90_app_blinki_sdram\main.o
+ .debug_line    0x0000028b      0x18d targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_line    0x00000418      0x198 targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_line    0x000005b0      0x18e targets\netx90_app_blinki_sdram\systime.o
+
+.debug_frame    0x00000000      0x144
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x2c targets\netx90_app_blinki_sdram\main.o
+ .debug_frame   0x0000002c       0x54 targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_frame   0x00000080       0x54 targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_frame   0x000000d4       0x70 targets\netx90_app_blinki_sdram\systime.o
+
+.debug_str      0x00000000   0x212dcf
+ *(.debug_str)
+ .debug_str     0x00000000     0x25c9 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+                               0x25db (size before relaxing)
+ .debug_str     0x000025c9      0x13c targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+                               0x25de (size before relaxing)
+ .debug_str     0x00002705   0x1c1d1e targets\netx90_app_blinki_sdram\main.o
+                             0x1c434c (size before relaxing)
+ .debug_str     0x001c4423    0x4e800 targets\netx90_app_blinki_sdram\mmio6.o
+                             0x212ac3 (size before relaxing)
+ .debug_str     0x00212c23       0x43 targets\netx90_app_blinki_sdram\mmio7.o
+                             0x212ad0 (size before relaxing)
+ .debug_str     0x00212c66      0x169 targets\netx90_app_blinki_sdram\systime.o
+                             0x1c43ef (size before relaxing)
+
+.debug_loc      0x00000000      0x45c
+ *(.debug_loc)
+ .debug_loc     0x00000000       0x6e targets\netx90_app_blinki_sdram\main.o
+ .debug_loc     0x0000006e      0x16a targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_loc     0x000001d8      0x16a targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_loc     0x00000342      0x11a targets\netx90_app_blinki_sdram\systime.o
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+LOAD targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+LOAD targets\netx90_app_blinki_sdram\init.o
+LOAD targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+LOAD targets\netx90_app_blinki_sdram\main.o
+LOAD targets\netx90_app_blinki_sdram\mmio6.o
+LOAD targets\netx90_app_blinki_sdram\mmio7.o
+LOAD targets\netx90_app_blinki_sdram\rdy_run.o
+LOAD targets\netx90_app_blinki_sdram\systime.o
+LOAD C:\Users\frederikwoermann\.mbs\depack\org.gnu.gcc\gcc-arm-none-eabi\gcc-arm-none-eabi-4.9.3_3\arm-none-eabi\lib\armv7-ar\thumb\libm.a
+LOAD C:\Users\frederikwoermann\.mbs\depack\org.gnu.gcc\gcc-arm-none-eabi\gcc-arm-none-eabi-4.9.3_3\arm-none-eabi\lib\armv7-ar\thumb\libc.a
+LOAD C:\Users\frederikwoermann\.mbs\depack\org.gnu.gcc\gcc-arm-none-eabi\gcc-arm-none-eabi-4.9.3_3\lib\gcc\arm-none-eabi\4.9.3\armv7-ar\thumb\libgcc.a
+OUTPUT(targets\netx90_app_blinki_sdram\netx90_app_blinki_sdram.elf elf32-littlearm)
+
+.debug_macro    0x00000000    0x4d91c
+ .debug_macro   0x00000000       0x11 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .debug_macro   0x00000011      0x874 targets\netx90_app_blinki_sdram\cm4_app_vector_table_iflash.o
+ .debug_macro   0x00000885       0x1d targets\netx90_app_blinki_sdram\app_hboot_header_iflash.o
+ .debug_macro   0x000008a2       0x8a targets\netx90_app_blinki_sdram\main.o
+ .debug_macro   0x0000092c       0x4c targets\netx90_app_blinki_sdram\main.o
+ .debug_macro   0x00000978       0x22 targets\netx90_app_blinki_sdram\main.o
+ .debug_macro   0x0000099a      0x34e targets\netx90_app_blinki_sdram\main.o
+ .debug_macro   0x00000ce8    0x4c6c2 targets\netx90_app_blinki_sdram\main.o
+ .debug_macro   0x0004d3aa      0x11e targets\netx90_app_blinki_sdram\main.o
+ .debug_macro   0x0004d4c8      0x2b0 targets\netx90_app_blinki_sdram\main.o
+ .debug_macro   0x0004d778       0x34 targets\netx90_app_blinki_sdram\main.o
+ .debug_macro   0x0004d7ac       0x7a targets\netx90_app_blinki_sdram\mmio6.o
+ .debug_macro   0x0004d826       0x84 targets\netx90_app_blinki_sdram\mmio7.o
+ .debug_macro   0x0004d8aa       0x72 targets\netx90_app_blinki_sdram\systime.o
