@@ -10,7 +10,7 @@ default:
 	@echo "make install - Install on local system"
 	@echo "make test - Run unit tests"
 	@echo "make clean - Clean-up all generated files"
-	@echo "make docs - Generate HTML documentation"
+	# @echo "make docs - Generate HTML documentation"
 	@echo "make dist - Generate all packages"
 	@echo "make source - Generate source package"
 	@echo "make zip - Generate a source zip package"
@@ -23,32 +23,22 @@ install:
 	$(PYTHON) setup.py install
 
 test:
-	$(PYTHON) -m unittest discover -v
+	$(PYTHON) tests/tests.py || (echo "Tests Failed!"; exit 1)
 
 clean:
-	rm -rf hil_nxt_hboot_image_compiler/__pycache__/
-	rm -f $(wildcard hil_nxt_hboot_image_compiler/*.pyc)
-	rm -rf hil_nxt_hboot_image_compiler/com/__pycache__/
-	rm -rf hil_nxt_hboot_image_compiler/app/__pycache__/
-	rm -f $(wildcard hil_nxt_hboot_image_compiler/*.pyc)
-	rm -rf docs/_build/
-	rm -rf docs/__pycache__/
-	rm -f $(wildcard docs/*.pyc)
-	rm -rf __pycache__/
-	rm -f $(wildcard *.pyc)
-	rm -f $(wildcard *.spec)
 	rm -rf build/
 	rm -rf dist/
+	rm -rf targets/
 	rm -rf $(NAME).egg-info/
 	rm -f MANIFEST
 
-docs:
-	$(PYTHON) -m $(SPHINX) -M clean "docs" "docs\_build"
-	$(PYTHON) -m $(SPHINX) -M html "docs" "docs\_build"
+# docs:
+# 	$(PYTHON) -m $(SPHINX) -M clean "docs" "docs\_build"
+#	$(PYTHON) -m $(SPHINX) -M html "docs" "docs\_build"
 
-dist: docs zip tar wheel
+dist: test zip tar wheel exec#docs
 
-source: docs zip tar
+source: zip tar #docs
 
 zip:
 	$(PYTHON) setup.py sdist --formats zip
@@ -64,4 +54,4 @@ exec:
 	$(PYTHON) -m $(PYINSTALLER) hboot_image_compiler_com.spec
 	$(PYTHON) -m $(PYINSTALLER) hboot_image_compiler_app.spec
 
-release: docs zip exec
+release: zip exec #docs
