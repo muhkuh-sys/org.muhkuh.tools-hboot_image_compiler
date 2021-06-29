@@ -1108,19 +1108,17 @@ class TestExpectedBinaries(unittest.TestCase):
     # - builds the image 
     # - parses the image and compares the contents with the values from 
     #   the patch table XML file.
-    def test_netx90c_patch_table_keys(self):
+    def test_netx90d_patch_table_keys(self):
         self.__test_with_reference_bin_public(
-            'netx_types/netx90c_patch_table_values.xml', 
-            'netx_types/netx90c_patch_table_values.bin', 
+            'netx_types/netx90d_patch_table_values.xml',
+            'netx_types/netx90d_patch_table_values.bin',
             'netx90_rev2', None, None
             )
         self.__test_with_reference_bin(
-            'netx_types/netx90c_patch_table_keys.xml', 
-            'netx_types/netx90c_patch_table_values.bin', 
-            'NETX90C', None, None
+            'netx_types/netx90d_patch_table_keys.xml',
+            'netx_types/netx90d_patch_table_values.bin',
+            'NETX90D', None, None
             )
-            
-            
             
     def test_text_NETX90_INTFLASH(self):
         self.__test_with_reference_bin('text/text_NETX90_INTFLASH.xml', 'text/text.bin', 'NETX90', None, None)
