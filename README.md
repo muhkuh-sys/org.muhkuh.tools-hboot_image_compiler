@@ -1,6 +1,9 @@
-How to build the hboot image compiler on Ubuntu 18.04?
-======================================================
+How to build the hboot image compiler
+=====================================
+## Requirements
+- Python 2.7
 
+## Setup
 After cloning this repo to your local machine, 
 update the git submodules.
 ```commandline
@@ -8,42 +11,42 @@ cd org.muhkuh.tools-hboot_image_compiler
 git submodule init
 git submodule update
 ```
-Next, build it with python2, this will take a while, 
-so better get a cup of fresh hot coffee.
-```commandline
-python2 mbs/mbs
+set up a python2 environment inside the project directory
 ```
-N.B. the mbs will download some tgz, zip files etc in your home directory to
-the folder ".mbs" .
-
-After a while the resulting zip file should be located in:
-```commandline
-./targets/repository/org/muhkuh/tools/hboot_image_compiler/CURRENTVERSION/
+python2 -m virtualenv .venv
 ```
-Where the CURRENTVERSION is the something like 0.0.1.2
-
-Run the tests!
-===============
-
-To run the test, just execute:
-```commandline
-python2 tests/tests.py
+activate the environment (afterwards the commandline should show "(.venv)" at the beginning)
+```
+.venv\scripts\activate
+```
+then install the requirements into the environment
+```
+(.venv) python -m pip install -r requirements.txt
 ```
 
-Clean up in case that something goes wrong
-==========================================
+## Build distribution
+to build the distributions and also run tests upfront run command:
+```
+(.venv) make dist
+```
 
+the results show in directory ```dist```
+
+
+## Run the tests
+To only run the tests run command:
+```
+(.venv) make test
+```
+
+## Clean up in case that something goes wrong
 To start from scratch again you could clean with mbs
 ```commandline
-python2 mbs/mbs -c
+make clean
 ```
 
-or just remove the targets folder
-```commandline
-rm -rf ./targets
-```
+or just remove the following folders
+ - build
+ - targets
+ - dist
 
-or throw the ~/.mbs away with
-```commandline
-rm -rf ~/.mbs
-```
