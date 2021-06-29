@@ -6,6 +6,17 @@
     normally occurs automatically when an exec chunk is processed and the 
     attribute is not present, or false.
 
+v0.0.14
+  * Changed the chip type NETX90C to NETX90D since NETX90C became an internal
+    version for the netx90_rev1 with the new PHY.
+
+  * mbs subrepo was removed from the repository --> now the hboot image compiler sources
+    are integrated as a subrepo directly
+
+  * tests can be executed woithout mbs easily since the global environment variables are set automatically
+
+  * now we can build executables and a python package for installation
+
 v0.0.13
 
   * Add the chip type NETX90C/netx90_rev2 and its patch table.
