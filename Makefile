@@ -36,7 +36,7 @@ clean:
 # 	$(PYTHON) -m $(SPHINX) -M clean "docs" "docs\_build"
 #	$(PYTHON) -m $(SPHINX) -M html "docs" "docs\_build"
 
-dist: test zip tar wheel exec#docs
+dist: test zip tar exec #docs wheel
 
 source: zip tar #docs
 
