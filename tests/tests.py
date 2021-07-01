@@ -116,8 +116,9 @@ class TestExpectedBinaries(unittest.TestCase):
 
         strOutput = self.__run_hboot_image_compiler(strCwd, strInputPathFull, strOutputPathFull, strNetx, atExtraArguments)
 
+        strOutput_decoded = strOutput.decode()
         if strExpectedOutput is not None:
-            if strExpectedOutput in strOutput:
+            if strExpectedOutput in strOutput_decoded:
                 print("Found expected message")
             else:
                 print('Did not find expected message: %s' % (strExpectedOutput))
@@ -171,7 +172,8 @@ class TestExpectedBinaries(unittest.TestCase):
             except Exception as e:
                 print("Exception output:")
                 print(e.output)
-                if strExpectedError in e.output:
+                error_string = e.output.decode()
+                if strExpectedError in error_string:
                     print("Found expected error message")
                 else:
                     print('Did not find expected error message')
@@ -291,7 +293,8 @@ class TestExpectedBinaries(unittest.TestCase):
             except Exception as e:
                 print("Exception output:")
                 print(e.output)
-                if strExpectedError in e.output:
+                error_string = e.output.decode()
+                if strExpectedError in error_string:
                     print("Found expected error message")
                 else:
                     print('Did not find expected error message')
@@ -677,7 +680,8 @@ class TestExpectedBinaries(unittest.TestCase):
             # print("Exception output")
             # print(e.output)
             strExpectedError = "Failed to call external program:"
-            if strExpectedError in e.output:
+            error_string = e.output.decode()
+            if strExpectedError in error_string:
                 fTestPassed = True
                 print("Found expected error message")
 
