@@ -1,7 +1,7 @@
 How to build the hboot image compiler
 =====================================
 ## Requirements
-- Python 2.7
+- Python 2.7 or Python 3.7
 
 ## Setup
 After cloning this repo to your local machine, 
