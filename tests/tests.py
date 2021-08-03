@@ -5,12 +5,16 @@ import re
 import shutil
 import subprocess
 import sys
-import traceback
 from test_settings import PROJECT_ROOT, TEST_DIR
 from add_test_env_vars import update_os_env
-os.environ
 env_files_path = os.path.join(PROJECT_ROOT, 'tests', 'test_elfs')
 update_os_env(PROJECT_ROOT, env_files_path)
+
+
+com_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_com.exe')
+app_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_app.exe')
+
+
 
 
 class TestExpectedBinaries(unittest.TestCase):
@@ -34,12 +38,19 @@ class TestExpectedBinaries(unittest.TestCase):
       at the origin place.
     """
 
+
     def setUp(self):
         self.strTestsBaseDir = TEST_DIR
         self.strOutputBaseDir = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'output'))
         self.strHBootImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'hil_nxt_hboot_image_compiler', 'com'))
         self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(PROJECT_ROOT, 'hil_nxt_hboot_image_compiler', 'app', 'netx90_app_image.py'))
         self.strOpenSSLPath ='openssl'
+
+        # change the following the switch the tested hboot image compiler
+        self.com_compiler_to_test = [com_exe_path]
+        # self.com_compiler_to_test = [sys.executable, self.strHBootImageCompiler]
+        self.app_compiler_to_test = [app_exe_path]
+        # self.app_compiler_to_test = [sys.executable, self.strHBootNetx90AppImageCompiler]
 
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
@@ -61,6 +72,9 @@ class TestExpectedBinaries(unittest.TestCase):
              self.strHBootImageCompiler,
             '--netx-type', strNetx
         ]
+        astrCmd = self.com_compiler_to_test
+        astrCmd.extend(['--netx-type', strNetx])
+
         if atExtraArguments is not None:
             tRe = re.compile(r'%%([\w]+)%%')
             # Replace all ENV vars in the extra arguments.
@@ -146,10 +160,7 @@ class TestExpectedBinaries(unittest.TestCase):
         os.chdir(strCwd)
 
         # Run the HBOOT image compiler.
-        astrCmd = [
-            sys.executable,
-            self.strHBootImageCompiler
-        ]
+        astrCmd = self.com_compiler_to_test
         if strNetx:
             astrCmd.extend(['--netx-type-public', strNetx])
         if atExtraArguments is not None:
@@ -268,10 +279,7 @@ class TestExpectedBinaries(unittest.TestCase):
         os.chdir(strCwd)
 
         # Run the HBOOT image compiler.
-        astrCmd = [
-            sys.executable,
-            self.strHBootNetx90AppImageCompiler,
-        ]
+        astrCmd = self.app_compiler_to_test
         if atExtraArguments is not None:
             tRe = re.compile('%%([\w]+)%%')
             # Replace all ENV vars in the extra arguments.
@@ -601,8 +609,9 @@ class TestExpectedBinaries(unittest.TestCase):
         )
         
     def test_app_image_iflash_netx90(self):
-        self.__test_app_image_iflash('netx90', 'netx90_app_image/netx90_app_iflash_chiptype_netx90.nai')
-        
+        # self.__test_app_image_iflash('netx90', 'netx90_app_image/netx90_app_iflash_chiptype_netx90.nai')
+        self.__test_app_image_iflash('netx90', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_rev1.nai')
+
     def test_app_image_iflash_netx90_mpw(self):
         self.__test_app_image_iflash('netx90_mpw', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_mpw.nai')
 
@@ -612,9 +621,9 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_app_image_iflash_netx90_rev1(self):
         self.__test_app_image_iflash('netx90_rev1', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_rev1.nai')
 
-    def test_app_image_iflash_netx90_rev2(self):
-        self.__test_app_image_iflash('netx90_rev2', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_rev2.nai')
-        
+    # def test_app_image_iflash_netx90_rev2(self):
+    #     self.__test_app_image_iflash('netx90_rev2', 'netx90_app_image/netx90_app_iflash_chiptype_netx90_rev2.nai')
+    #
         
     # The following tests (HWC for NXHX90-JTAG Rev. 3+4, start APP CPU) 
     # are used to run the APP boot images.
@@ -1112,17 +1121,17 @@ class TestExpectedBinaries(unittest.TestCase):
     # - builds the image 
     # - parses the image and compares the contents with the values from 
     #   the patch table XML file.
-    def test_netx90d_patch_table_keys(self):
-        self.__test_with_reference_bin_public(
-            'netx_types/netx90d_patch_table_values.xml',
-            'netx_types/netx90d_patch_table_values.bin',
-            'netx90_rev2', None, None
-            )
-        self.__test_with_reference_bin(
-            'netx_types/netx90d_patch_table_keys.xml',
-            'netx_types/netx90d_patch_table_values.bin',
-            'NETX90D', None, None
-            )
+    # def test_netx90d_patch_table_keys(self):
+    #     self.__test_with_reference_bin_public(
+    #         'netx_types/netx90d_patch_table_values.xml',
+    #         'netx_types/netx90d_patch_table_values.bin',
+    #         'netx90_rev2', None, None
+    #         )
+    #     self.__test_with_reference_bin(
+    #         'netx_types/netx90d_patch_table_keys.xml',
+    #         'netx_types/netx90d_patch_table_values.bin',
+    #         'NETX90D', None, None
+    #         )
             
     def test_text_NETX90_INTFLASH(self):
         self.__test_with_reference_bin('text/text_NETX90_INTFLASH.xml', 'text/text.bin', 'NETX90', None, None)
@@ -1318,11 +1327,11 @@ class TestExpectedBinaries(unittest.TestCase):
     def test_asig_NETX90_B(self):
         self.__test_asig("asig", "netx90_rev1")
        
-    def test_asig_NETX90_C_signed_binding_True(self):
-        self.__test_asig("asig_signed_binding_True", "netx90_rev2")
-       
-    def test_asig_NETX90_C_signed_binding_False(self):
-        self.__test_asig("asig_signed_binding_False", "netx90_rev2")
+    # def test_asig_NETX90_C_signed_binding_True(self):
+    #     self.__test_asig("asig_signed_binding_True", "netx90_rev2")
+    #
+    # def test_asig_NETX90_C_signed_binding_False(self):
+    #     self.__test_asig("asig_signed_binding_False", "netx90_rev2")
        
     def test_asig_NETX90_B_signed_binding_invalid(self):
         self.__test_asig("asig_signed_binding_invalid", "netx90_rev1", 
@@ -1414,10 +1423,10 @@ class TestExpectedBinaries(unittest.TestCase):
 
 
     def test_data_hex_public(self):
-        self.__test_with_reference_bin_public('data/data_hex.xml', 'data/data_hex.bin', 'netx90_mpw', None, None)
+        self.__test_with_reference_bin_public('data/data_hex.xml', 'data/data_hex.bin', 'netx90', None, None)
 
     def test_regi_chunk_public(self):
-        self.__test_with_reference_bin_public('regi/regi.xml', 'regi/regi.bin', 'netx90_rev0', None, None)
+        self.__test_with_reference_bin_public('regi/regi.xml', 'regi/regi.bin', 'netx90', None, None)
 
     def test_firewall_chunk_public(self):
         self.__test_with_reference_bin_public(
@@ -1436,24 +1445,24 @@ class TestExpectedBinaries(unittest.TestCase):
             None,
             ['--define', 'skipUntil=0x1000'],
             None,
-            strExpectedError = "error: one of the arguments -n/--netx-type --netx-type-public is required"
+            strExpectedError = "error: one of the arguments --netx-type-public is required"
         )
-		
-    def test_text_NETX4000_INTFLASH_public(self):
-        self.__test_with_reference_bin_public('text/text_NETX4000_4100_SQIROM0.xml', 'text/text.bin', 'NETX4000', None, None)
 
-    def test_text_NETX4100_INTFLASH_public(self):
-        self.__test_with_reference_bin_public('text/text_NETX4000_4100_SQIROM0.xml', 'text/text.bin', 'NETX4100', None, None)
-		
-    def test_xip_hex_NETX4000_RELAXED_SQIROM0_public(self):
-        self.__test_with_reference_bin_public('xip/xip_hex_NETX4000_RELAXED_SQIROM0.xml', 'xip/xip_hex_NETX4000_RELAXED_SQIROM0.bin', 'NETX4000_RELAXED', None, None)
-		
+    # def test_text_NETX4000_INTFLASH_public(self):
+    #     self.__test_with_reference_bin_public('text/text_NETX4000_4100_SQIROM0.xml', 'text/text.bin', 'NETX4000', None, None)
+
+    # def test_text_NETX4100_INTFLASH_public(self):
+    #     self.__test_with_reference_bin_public('text/text_NETX4000_4100_SQIROM0.xml', 'text/text.bin', 'NETX4100', None, None)
+
+    # def test_xip_hex_NETX4000_RELAXED_SQIROM0_public(self):
+    #     self.__test_with_reference_bin_public('xip/xip_hex_NETX4000_RELAXED_SQIROM0.xml', 'xip/xip_hex_NETX4000_RELAXED_SQIROM0.bin', 'NETX4000_RELAXED', None, None)
+
     def test_option_chunks_netx90B_options(self):
         self.__test_with_reference_bin('option_chunks/netx90b_options.xml', 'option_chunks/netx90b_options.bin', 'NETX90B', None, None)
 
     def test_option_chunks_netx90_rev1_options_public(self):
         self.__test_with_reference_bin_public('option_chunks/netx90b_options.xml', 'option_chunks/netx90b_options.bin', 'netx90_rev1', None, None)
-		
+
     def test_option_chunks_netx90_options_public(self):
         self.__test_with_reference_bin_public('option_chunks/netx90b_options.xml', 'option_chunks/netx90b_options.bin', 'netx90', None, None)
 
