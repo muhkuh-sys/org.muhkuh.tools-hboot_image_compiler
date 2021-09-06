@@ -3,10 +3,15 @@
 block_cipher = None
 
 
-a = Analysis(['build/lib/hil_nxt_hboot_image_compiler/app/netx90_app_image.py'],
+a = Analysis(['hil_nxt_hboot_image_compiler\\app\\netx90_app_image.py'],
              pathex=['.venv/Lib/site-packages', 'build/lib/hil_nxt_hboot_image_compiler/app'],
              binaries=[],
-             datas=[('build/lib/hil_nxt_hboot_image_compiler/patch_tables/*', 'hil_nxt_hboot_image_compiler/patch_tables')],
+             datas=[
+             ('build/lib/hil_nxt_hboot_image_compiler/patch_tables/*', 'patch_tables'),
+             ('build/lib/hil_nxt_hboot_image_compiler/elf_compiler/arm-none-eabi-gcc/4.9.3/bin/*',
+              'elf_compiler/arm-none-eabi-gcc/4.9.3/bin'),
+              ('build/lib/hil_nxt_hboot_image_compiler/app/templates/*',
+              'app/templates')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],

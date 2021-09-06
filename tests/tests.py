@@ -12,7 +12,8 @@ update_os_env(PROJECT_ROOT, env_files_path)
 
 
 com_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_com.exe')
-app_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_app.exe')
+# app_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_app.exe')
+app_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_app', 'hboot_image_compiler_app.exe')
 
 
 
@@ -80,10 +81,12 @@ class TestExpectedBinaries(unittest.TestCase):
             # Replace all ENV vars in the extra arguments.
             for strArg in atExtraArguments:
                 astrCmd.append(tRe.sub(self.__get_env_var, strArg))
-        astrCmd.extend([
-            strXml,
-            strOutput
-        ])
+
+        if strXml:
+            astrCmd.extend([
+                strXml,
+                strOutput
+            ])
 
         # print(astrCmd)
         strOutput = subprocess.check_output(astrCmd)
@@ -285,10 +288,10 @@ class TestExpectedBinaries(unittest.TestCase):
             # Replace all ENV vars in the extra arguments.
             for strArg in atExtraArguments:
                 astrCmd.append(tRe.sub(self.__get_env_var, strArg))
-                
-        astrCmd.append(
-            strXml,
-        )
+        if strXml:
+            astrCmd.append(
+                strXml,
+            )
         astrCmd.extend(astrOutput)
 
         if strExpectedError==None:
@@ -311,8 +314,57 @@ class TestExpectedBinaries(unittest.TestCase):
         # Restore the old working directory.
         os.chdir(strOldPath)
 
+    def __test_netx90_appimg_with_template(self, astrOutputPaths, atExtraArguments, atCopyFiles,
+                                                strExpectedError=None):
+
+        strOutputDirectoryFull = os.path.join(self.strOutputBaseDir, "template")
+        if not os.path.exists(strOutputDirectoryFull):
+            os.makedirs(strOutputDirectoryFull)
+
+        # Copy files.
+        if atCopyFiles is not None:
+            for strFile in atCopyFiles:
+                strSrcAbs = os.path.join(self.strTestsBaseDir, strFile)
+                strSrcDirAbs = os.path.dirname(strSrcAbs)
+                strDstAbs = os.path.join(self.strOutputBaseDir, strFile)
+                strDstDirAbs = os.path.dirname(strDstAbs)
+                if os.path.exists(strSrcDirAbs) == False:
+                    os.makedirs(strSrcDirAbs)
+                if os.path.exists(strDstDirAbs) == False:
+                    os.makedirs(strDstDirAbs)
+                print("Copy file: %s -> %s" % (strSrcAbs, strDstAbs))
+                shutil.copy(strSrcAbs, strDstAbs)
+
+        # The working folder is the test path.
+        strCwd = strOutputDirectoryFull
+
+        print("CWD: %s" % strCwd)
+        self.__run_app_hboot_image_compiler(strCwd, None, astrOutputPaths, atExtraArguments,
+                                            strExpectedError=strExpectedError)
+
+        # # If an error is expected, do not try to verify the output files.
+        # if strExpectedError == None:
+        #     for strReference in astrReferences:
+        #         # Skip empty references.
+        #         if strReference != '':
+        #             strRefPath = os.path.join(self.strTestsBaseDir, strReference)
+        #             strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
+        #             print("Comparing: Ref: %s <-> Out: %s" % (strRefPath, strOutputPathFull))
+        #
+        #             # Read the reference binary.
+        #             tFile = open(strRefPath, 'rb')
+        #             strBinReference = tFile.read()
+        #             tFile.close()
+        #
+        #             # Read the output.
+        #             tFile = open(strOutputPathFull, 'rb')
+        #             strBinOutput = tFile.read()
+        #             tFile.close()
+        #
+        #             self.assertEqual(strBinReference, strBinOutput)
+
     def __test_netx90_appimg_with_reference_bin(self, strInput, astrReferences, atExtraArguments, atCopyFiles, strExpectedError = None):
-        strInputBase = os.path.basename(strInput)
+        # strInputBase = os.path.basename(strInput)
         strInputPathFull = os.path.join(self.strTestsBaseDir, strInput)
         strInputDirectoryFull = os.path.dirname(strInputPathFull)
 
@@ -401,7 +453,66 @@ class TestExpectedBinaries(unittest.TestCase):
             ],
             None
         )
-        
+
+    def test_app_image_iflash_no_elf_compiler(self):
+        """ test the hboot image app compiler without passing paths to the elf compilers
+
+        :return:
+        """
+        self.__test_netx90_appimg_with_reference_bin(
+            # XML file
+            #'netx90_app_image/app_image_iflash.xml',
+            'netx90_app_image/app_images_iflash_extflash.xml',
+            [   # output files
+                'netx90_app_image/netx90_app_iflash.nai',
+                #''
+            ],
+            [   # extra args
+                '-n', 'netx90_rev0',
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+                '-A', 'segments_intflash=.header,.code',
+                '--sdram_split_offset', '0x400000',
+            ],
+            None
+        )
+
+    def test_app_image_iflash_template_nai(self):
+        """ test the hboot image app compiler without passing paths to the elf compilers
+
+        :return:
+        """
+        self.__test_netx90_appimg_with_template(
+            # XML file
+            #'netx90_app_image/app_image_iflash.xml',
+            ["netx90_app_iflash.nai"],
+            [   # extra args
+                '-t', 'nai',
+                '-n', 'netx90_rev0',
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+                '-A', 'segments_intflash=.header,.code',
+                '--sdram_split_offset', '0x400000',
+            ],
+            None
+        )
+
+    def test_app_image_iflash_template_nae(self):
+        """ test the hboot image app compiler without passing paths to the elf compilers
+
+        :return:
+        """
+        self.__test_netx90_appimg_with_template(
+            ["netx90.nai", "netx90.nae"],
+            [   # extra args
+                '-t', 'nae',
+                '-n', 'netx90_rev0',
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+                '-A', 'segments_intflash=.header,.code',
+                '-A', 'segments_extflash=.code_SDRAM1,.code_SDRAM2',
+                '-A', 'headeraddress_extflash=0x64300000',
+                '--sdram_split_offset', '0x400000',
+            ],
+            None
+        )
 
     # NXTHBOTIMG-47 test 3
     # a project that results in a  single intflash boot image and specifies no segments. 
