@@ -3,15 +3,13 @@
 block_cipher = None
 
 
-a = Analysis(['hil_nxt_hboot_image_compiler\\app\\netx90_app_image.py'],
-             pathex=['.venv/Lib/site-packages', 'build/lib/hil_nxt_hboot_image_compiler/app'],
+a = Analysis(['hil_nxt_hboot_image_compiler\\com\\__main__.py'],
+             pathex=['.venv/Lib/site-packages', 'build/lib/hil_nxt_hboot_image_compiler/com'],
              binaries=[],
-             datas=[
-             ('build/lib/hil_nxt_hboot_image_compiler/patch_tables/*', 'patch_tables'),
-             ('build/lib/hil_nxt_hboot_image_compiler/elf_compiler/arm-none-eabi-gcc/4.9.3/bin/*',
-              'elf_compiler/arm-none-eabi-gcc/4.9.3/bin'),
-              ('build/lib/hil_nxt_hboot_image_compiler/templates/app/*',
-              'templates/app')],
+             datas=[('build/lib/hil_nxt_hboot_image_compiler/patch_tables/*', 'patch_tables'),
+              ('build/lib/hil_nxt_hboot_image_compiler/templates/com/*', 'templates/com'),
+              ('build/lib/hil_nxt_hboot_image_compiler/elf_compiler/arm-none-eabi-gcc/4.9.3/bin/*',
+              'elf_compiler/arm-none-eabi-gcc/4.9.3/bin')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -26,12 +24,12 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='hboot_image_compiler_app',
+          name='hboot_image_compiler_com',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=True)
+          console=True )
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
@@ -39,4 +37,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='hboot_image_compiler_app')
+               name='hboot_image_compiler_com')

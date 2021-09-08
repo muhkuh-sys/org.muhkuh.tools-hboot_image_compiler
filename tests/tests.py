@@ -48,10 +48,10 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strOpenSSLPath ='openssl'
 
         # change the following the switch the tested hboot image compiler
-        self.com_compiler_to_test = [com_exe_path]
-        # self.com_compiler_to_test = [sys.executable, self.strHBootImageCompiler]
-        self.app_compiler_to_test = [app_exe_path]
-        # self.app_compiler_to_test = [sys.executable, self.strHBootNetx90AppImageCompiler]
+        # self.com_compiler_to_test = [com_exe_path]
+        self.com_compiler_to_test = [sys.executable, self.strHBootImageCompiler]
+        # self.app_compiler_to_test = [app_exe_path]
+        self.app_compiler_to_test = [sys.executable, self.strHBootNetx90AppImageCompiler]
 
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
@@ -84,9 +84,9 @@ class TestExpectedBinaries(unittest.TestCase):
 
         if strXml:
             astrCmd.extend([
-                strXml,
-                strOutput
+                strXml
             ])
+        astrCmd.append(strOutput)
 
         # print(astrCmd)
         strOutput = subprocess.check_output(astrCmd)
@@ -154,6 +154,47 @@ class TestExpectedBinaries(unittest.TestCase):
         tFile.close()
 
         self.assertEqual(strBinReference, strBinOutput)
+
+    def __test_with_template(self, strOutputFile, strNetx, atExtraArguments, atCopyFiles, strReferenceOutput):
+
+        strOutputDirectoryFull = os.path.join(self.strOutputBaseDir, "template")
+        if not os.path.exists(strOutputDirectoryFull):
+            os.makedirs(strOutputDirectoryFull)
+
+        strOutputPathFull = os.path.join(strOutputDirectoryFull, strOutputFile)
+
+        # Copy files.
+        if atCopyFiles is not None:
+            for strFile in atCopyFiles:
+                strSrcAbs = os.path.join(self.strTestsBaseDir, strFile)
+                strSrcDirAbs = os.path.dirname(strSrcAbs)
+                strDstAbs = os.path.join(self.strOutputBaseDir, strFile)
+                strDstDirAbs = os.path.dirname(strDstAbs)
+                if os.path.exists(strSrcDirAbs) == False:
+                    os.makedirs(strSrcDirAbs)
+                if os.path.exists(strDstDirAbs) == False:
+                    os.makedirs(strDstDirAbs)
+                shutil.copy(strSrcAbs, strDstAbs)
+
+        # The working folder is the test path.
+        strCwd = strOutputDirectoryFull
+
+        strOutput = self.__run_hboot_image_compiler(strCwd, None, strOutputPathFull, strNetx,
+                                                    atExtraArguments)
+
+        # Read the reference binary.
+        tFile = open(strReferenceOutput, 'rb')
+        strBinReference = tFile.read()
+        tFile.close()
+
+        # Read the output.
+        tFile = open(strOutputPathFull, 'rb')
+        strBinOutput = tFile.read()
+        tFile.close()
+
+        if strReferenceOutput is not None:
+            self.assertEqual(strBinReference, strBinOutput)
+
 
     def __run_hboot_image_compiler_public(self, strCwd, strXml, strOutput, strNetx, atExtraArguments, strExpectedError = None):
         # Save the current working directory for later.
@@ -1287,10 +1328,10 @@ class TestExpectedBinaries(unittest.TestCase):
         
     def test_NETX90_spi_macro(self):
         self.__test_with_reference_bin(
-            'spi_macro/spi_macro.xml', 
-            'spi_macro/spi_macro.bin', 
+            'spi_macro/spi_macro.xml',
+            'spi_macro/spi_macro.bin',
             'NETX90_MPW', None, None)
-        
+
 
 # Signed COM images
 
@@ -1680,6 +1721,18 @@ class TestExpectedBinaries(unittest.TestCase):
                         fResult = False
     
         self.assertEqual(fResult, True)
+
+    def test_aaa_template_hwc(self):
+        hwconfig_path = os.path.join(TEST_DIR, "hwc", "test_hwc_hboot.xml")
+        reference_bin = os.path.join(TEST_DIR, 'hwc', 'test_hwc.hwc')
+        self.__test_with_template('top_hboot_image_hwc.bin', 'NETX90B',
+                                  ['-t', 'hwc', '-A', 'hw_config=%s' % hwconfig_path], None, reference_bin)
+
+    def test_aaa_template_mwc(self):
+        hwconfig_path = os.path.join(TEST_DIR, "hwc", "test_hwc_hboot.xml")
+        reference_bin = os.path.join(TEST_DIR, 'hwc', 'test_hwc.mwc')
+        self.__test_with_template('top_hboot_image_mwc.bin', 'NETX90B',
+                                  ['-t', 'mwc', '-A', 'hw_config=%s' % hwconfig_path], None, reference_bin)
 
 
 if __name__ == '__main__':
