@@ -11,7 +11,8 @@ env_files_path = os.path.join(PROJECT_ROOT, 'tests', 'test_elfs')
 update_os_env(PROJECT_ROOT, env_files_path)
 
 
-com_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_com.exe')
+# com_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_com.exe')
+com_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_com', 'hboot_image_compiler_com.exe')
 # app_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_app.exe')
 app_exe_path = os.path.join(PROJECT_ROOT, 'dist', 'hboot_image_compiler_app', 'hboot_image_compiler_app.exe')
 
@@ -48,10 +49,10 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strOpenSSLPath ='openssl'
 
         # change the following the switch the tested hboot image compiler
-        # self.com_compiler_to_test = [com_exe_path]
-        self.com_compiler_to_test = [sys.executable, self.strHBootImageCompiler]
-        # self.app_compiler_to_test = [app_exe_path]
-        self.app_compiler_to_test = [sys.executable, self.strHBootNetx90AppImageCompiler]
+        self.com_compiler_to_test = [com_exe_path]
+        # self.com_compiler_to_test = [sys.executable, self.strHBootImageCompiler]
+        self.app_compiler_to_test = [app_exe_path]
+        # self.app_compiler_to_test = [sys.executable, self.strHBootNetx90AppImageCompiler]
 
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
@@ -355,26 +356,12 @@ class TestExpectedBinaries(unittest.TestCase):
         # Restore the old working directory.
         os.chdir(strOldPath)
 
-    def __test_netx90_appimg_with_template(self, astrOutputPaths, atExtraArguments, atCopyFiles,
+    def __test_netx90_appimg_with_template(self, astrOutputPaths, atExtraArguments, astrReferenceFiles,
                                                 strExpectedError=None):
 
         strOutputDirectoryFull = os.path.join(self.strOutputBaseDir, "template")
         if not os.path.exists(strOutputDirectoryFull):
             os.makedirs(strOutputDirectoryFull)
-
-        # Copy files.
-        if atCopyFiles is not None:
-            for strFile in atCopyFiles:
-                strSrcAbs = os.path.join(self.strTestsBaseDir, strFile)
-                strSrcDirAbs = os.path.dirname(strSrcAbs)
-                strDstAbs = os.path.join(self.strOutputBaseDir, strFile)
-                strDstDirAbs = os.path.dirname(strDstAbs)
-                if os.path.exists(strSrcDirAbs) == False:
-                    os.makedirs(strSrcDirAbs)
-                if os.path.exists(strDstDirAbs) == False:
-                    os.makedirs(strDstDirAbs)
-                print("Copy file: %s -> %s" % (strSrcAbs, strDstAbs))
-                shutil.copy(strSrcAbs, strDstAbs)
 
         # The working folder is the test path.
         strCwd = strOutputDirectoryFull
@@ -383,26 +370,24 @@ class TestExpectedBinaries(unittest.TestCase):
         self.__run_app_hboot_image_compiler(strCwd, None, astrOutputPaths, atExtraArguments,
                                             strExpectedError=strExpectedError)
 
-        # # If an error is expected, do not try to verify the output files.
-        # if strExpectedError == None:
-        #     for strReference in astrReferences:
-        #         # Skip empty references.
-        #         if strReference != '':
-        #             strRefPath = os.path.join(self.strTestsBaseDir, strReference)
-        #             strOutputPathFull = os.path.join(self.strOutputBaseDir, strReference)
-        #             print("Comparing: Ref: %s <-> Out: %s" % (strRefPath, strOutputPathFull))
-        #
-        #             # Read the reference binary.
-        #             tFile = open(strRefPath, 'rb')
-        #             strBinReference = tFile.read()
-        #             tFile.close()
-        #
-        #             # Read the output.
-        #             tFile = open(strOutputPathFull, 'rb')
-        #             strBinOutput = tFile.read()
-        #             tFile.close()
-        #
-        #             self.assertEqual(strBinReference, strBinOutput)
+        full_output_paths = [os.path.join(strOutputDirectoryFull, output_path) for output_path in astrOutputPaths]
+
+        for strReference, strOutput in zip(astrReferenceFiles, full_output_paths):
+            # Skip empty references.
+            if strReference != '':
+                print("Comparing: Ref: %s <-> Out: %s" % (strReference, strOutput))
+
+                # Read the reference binary.
+                tFile = open(strReference, 'rb')
+                strBinReference = tFile.read()
+                tFile.close()
+
+                # Read the output.
+                tFile = open(strOutput, 'rb')
+                strBinOutput = tFile.read()
+                tFile.close()
+
+                self.assertEqual(strBinReference, strBinOutput)
 
     def __test_netx90_appimg_with_reference_bin(self, strInput, astrReferences, atExtraArguments, atCopyFiles, strExpectedError = None):
         # strInputBase = os.path.basename(strInput)
@@ -522,10 +507,11 @@ class TestExpectedBinaries(unittest.TestCase):
 
         :return:
         """
+        reference_dir = os.path.join(TEST_DIR, 'netx90_app_image')
         self.__test_netx90_appimg_with_template(
             # XML file
             #'netx90_app_image/app_image_iflash.xml',
-            ["netx90_app_iflash.nai"],
+            ["single_nai_from_template.nai"],
             [   # extra args
                 '-t', 'nai',
                 '-n', 'netx90_rev0',
@@ -533,6 +519,7 @@ class TestExpectedBinaries(unittest.TestCase):
                 '-A', 'segments_intflash=.header,.code',
                 '--sdram_split_offset', '0x400000',
             ],
+            [os.path.join(reference_dir, "single_nai_from_template.nai")],
             None
         )
 
@@ -541,8 +528,9 @@ class TestExpectedBinaries(unittest.TestCase):
 
         :return:
         """
+        reference_dir = os.path.join(TEST_DIR, 'netx90_app_image')
         self.__test_netx90_appimg_with_template(
-            ["netx90.nai", "netx90.nae"],
+            ["nai_nae_from_template.nai", "nai_nae_from_template.nae"],
             [   # extra args
                 '-t', 'nae',
                 '-n', 'netx90_rev0',
@@ -552,6 +540,8 @@ class TestExpectedBinaries(unittest.TestCase):
                 '-A', 'headeraddress_extflash=0x64300000',
                 '--sdram_split_offset', '0x400000',
             ],
+            [os.path.join(reference_dir, "nai_nae_from_template.nai"),
+             os.path.join(reference_dir, "nai_nae_from_template.nae")],
             None
         )
 
