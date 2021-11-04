@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['hil_nxt_hboot_image_compiler\\com\\__main__.py'],
+a = Analysis(['build/lib/hil_nxt_hboot_image_compiler/com/__main__.py'],
              pathex=['.venv/Lib/site-packages', 'build/lib/hil_nxt_hboot_image_compiler/com'],
              binaries=[],
              datas=[('build/lib/hil_nxt_hboot_image_compiler/patch_tables/*', 'patch_tables'),
