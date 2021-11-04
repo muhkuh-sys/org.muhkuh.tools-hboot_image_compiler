@@ -1577,7 +1577,7 @@ class TestExpectedBinaries(unittest.TestCase):
             'netx90',
             ['--netx-type', 'NETX90'],
             None,
-            strExpectedError = "error: argument -n/--netx-type: not allowed with argument --netx-type-public"
+            strExpectedError = "error: argument -n/--netx-type: not allowed with argument -nt/--netx-type-public"
         )
 
     def test_skip_absolute_parameter_public(self):
@@ -1712,13 +1712,13 @@ class TestExpectedBinaries(unittest.TestCase):
     
         self.assertEqual(fResult, True)
 
-    def test_aaa_template_hwc(self):
+    def test_template_hwc(self):
         hwconfig_path = os.path.join(TEST_DIR, "hwc", "test_hwc_hboot.xml")
         reference_bin = os.path.join(TEST_DIR, 'hwc', 'test_hwc.hwc')
         self.__test_with_template('top_hboot_image_hwc.bin', 'NETX90B',
                                   ['-t', 'hwc', '-A', 'hw_config=%s' % hwconfig_path], None, reference_bin)
 
-    def test_aaa_template_mwc(self):
+    def test_template_mwc(self):
         hwconfig_path = os.path.join(TEST_DIR, "hwc", "test_hwc_hboot.xml")
         reference_bin = os.path.join(TEST_DIR, 'hwc', 'test_hwc.mwc')
         self.__test_with_template('top_hboot_image_mwc.bin', 'NETX90B',
