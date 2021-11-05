@@ -5,8 +5,12 @@ import re
 import shutil
 import subprocess
 import sys
-from test_settings import PROJECT_ROOT, TEST_DIR
-from add_test_env_vars import update_os_env
+
+
+ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
+sys.path.insert(0, ROOT_PATH)
+from tests.test_settings import PROJECT_ROOT, TEST_DIR
+from tests.add_test_env_vars import update_os_env
 env_files_path = os.path.join(PROJECT_ROOT, 'tests', 'test_elfs')
 update_os_env(PROJECT_ROOT, env_files_path)
 
@@ -49,10 +53,10 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strOpenSSLPath ='openssl'
 
         # change the following the switch the tested hboot image compiler
-        self.com_compiler_to_test = [com_exe_path]
-        # self.com_compiler_to_test = [sys.executable, self.strHBootImageCompiler]
-        self.app_compiler_to_test = [app_exe_path]
-        # self.app_compiler_to_test = [sys.executable, self.strHBootNetx90AppImageCompiler]
+        # self.com_compiler_to_test = [com_exe_path]
+        self.com_compiler_to_test = [sys.executable, self.strHBootImageCompiler]
+        # self.app_compiler_to_test = [app_exe_path]
+        self.app_compiler_to_test = [sys.executable, self.strHBootNetx90AppImageCompiler]
 
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
@@ -1039,7 +1043,7 @@ class TestExpectedBinaries(unittest.TestCase):
 #        
 #        ----
 #        Modified: mbs
-#        Modified: tests/tests.py
+#        Modified: tests/test.py
 #        
 #        
 #    def test_secure_root_cert(self):
