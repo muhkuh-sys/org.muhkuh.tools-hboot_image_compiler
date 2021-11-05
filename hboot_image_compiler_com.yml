@@ -1,0 +1,6 @@
+CompanyName: Hilscher Gesellschaft für Systemautomation mbH
+FileDescription: A tool used to update the boot headers and file headers of an HBoot image
+InternalName: hboot_image_compiler_com
+LegalCopyright: © Copyright Hilscher Gesellschaft für Systemautomation mbH 2021
+OriginalFilename: hboot_image_update_header.exe
+ProductName: hboot_image_compiler_com
