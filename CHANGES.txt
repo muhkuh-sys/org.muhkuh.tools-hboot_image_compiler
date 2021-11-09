@@ -1,4 +1,53 @@
 
+v0.1.0
+
+  * Use nxt_version.py and maker.py for versioning and distributing.
+  
+  * API changes 
+	Compiler COM:
+	-------------
+    - renamed argument '-nt', '--netx-type-public' (was '--netx-type-public')
+	- the following arguments are now for advanced mode only:
+		- '-n', '--netx-type'
+		- '-d', '--objdump' (now with default value)
+		- '-r', '--readelf' (now with default value)
+		- '-c', '--objcopy' (now with default value)
+		- '-k', '--keyrom'
+		- '-p', '--patch-table'
+		- '--openssl-rand-off'
+		- '-D', '--define'
+		- '-I', '--include'
+		- '-S', '--sniplib'
+		- '--openssl-exe'
+		- '--openssl-options'
+	- renamed '-V', '--verbose' (was '-v', '--verbose')
+	- renamed '-v', '--version' (was '-V', '--version')
+	- added argument '-t', '--template-layout' : privides template layout for HWC and MWC images
+	
+	Compiler APP:
+	-------------
+	- renamed '-V', '--verbose' (was '-v', '--verbose')
+	- renamed '-v', '--version' (was '-V', '--version')
+	- added argument '-nt', '--netx-type-public'
+	- the following arguments are now for advanced mode only:
+		- '-n', '--netx-type'
+		- '-d', '--objdump' (now with default value)
+		- '-r', '--readelf' (now with default value)
+		- '-c', '--objcopy' (now with default value)
+		- '-k', '--keyrom'
+		- '-p', '--patch-table'
+		- '--openssl-rand-off'
+		- '-D', '--define'
+		- '-I', '--include'
+		- '-S', '--sniplib'
+		- '--openssl-exe'
+		- '--openssl-options'
+	- added argument '-t', '--template-layout' : privides template layout for NAI and NEA images
+	- argument '-s', '--sdram_split_offset' now only accepts defautl options.
+	
+  * Added objcopy, objdump and readelf to the distirbutions.
+     
+
   * Add attribute 'do_not_lock_system_cfg' to EXEC chunk. 
 
     If true, the flags are or'ed with 0x00000400.
