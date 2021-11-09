@@ -15,3 +15,7 @@ dist
 .idea
 hboot_image_compiler.egg-info
 hboot_image_compiler-*
+/hboot_image_compiler_app_info.txt
+/hboot_image_compiler_com_info.txt
+/MANIFEST.in
+.tmp

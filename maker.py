@@ -291,17 +291,16 @@ def create_executables(tool_names, version):
 
         if PLATFORM == 'win':
             # create file version info
-
+            version_file = "%s_info.txt" % tool_name
             yaml_file = os.path.join(ROOT_DIR, '%s.yml' % tool_name)
-            command = [PYTHON_EXECUTABLE, '-m', 'pyinstaller_versionfile', yaml_file, '--outfile', FILE_VERSION_INFO,
+            command = [PYTHON_EXECUTABLE, '-m', 'pyinstaller_versionfile', yaml_file, '--outfile', version_file,
                        '--version', short_version]
             call(command)
+            # INFO: version files are integrated in the spec files
 
         # create executable
         command = [PYTHON_EXECUTABLE, '-m', 'PyInstaller', '--clean', script_path]
         command.extend(options)
-        # if PLATFORM == 'win':
-        #     command.extend(['--version-file', FILE_VERSION_INFO])
         call(command)
 
         if not os.path.exists(executable_path):
