@@ -1,6 +1,6 @@
 CompanyName: Hilscher Gesellschaft für Systemautomation mbH
-FileDescription: A tool used to update the boot headers and file headers of an HBoot image
+FileDescription: A tool used to build hboot images for the APP CPU of a netX
 InternalName: hboot_image_compiler_app
 LegalCopyright: © Copyright Hilscher Gesellschaft für Systemautomation mbH 2021
-OriginalFilename: hboot_image_update_header.exe
+OriginalFilename: hboot_image_compiler_app.exe
 ProductName: hboot_image_compiler_app
