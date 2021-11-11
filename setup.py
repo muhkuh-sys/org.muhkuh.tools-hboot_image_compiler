@@ -1,9 +1,11 @@
 from setuptools import setup, find_packages
 
-import versioneer
+from hil_nxt_hboot_image_compiler._version import get_versions
+
+version_dict = get_versions()
 
 setup(name='hboot_image_compiler',
-      version=versioneer.get_version(),
+      version=version_dict.get('version'),
       author='',
       author_email='',
       url='',
@@ -21,9 +23,6 @@ setup(name='hboot_image_compiler',
           'elf_compiler/arm-none-eabi-gcc/4.9.3/bin/arm-none-eabi-objdump.exe',
           'elf_compiler/arm-none-eabi-gcc/4.9.3/bin/arm-none-eabi-objcopy.exe'
       ]},
-
-
-      cmdclass=versioneer.get_cmdclass(),
       zip_safe=False,
       extras_require={
           "build": ["pyinstaller==3.6", "setuptools"]
