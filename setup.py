@@ -1,11 +1,8 @@
 from setuptools import setup, find_packages
-
-from hil_nxt_hboot_image_compiler._version import get_versions
-
-version_dict = get_versions()
+import versioneer
 
 setup(name='hboot_image_compiler',
-      version=version_dict.get('version'),
+      version=versioneer.get_version(),
       author='',
       author_email='',
       url='',
@@ -26,5 +23,6 @@ setup(name='hboot_image_compiler',
       zip_safe=False,
       extras_require={
           "build": ["pyinstaller==3.6", "setuptools"]
-      }
+      },
+      cmdclass=versioneer.get_cmdclass(),
       )
