@@ -20,9 +20,9 @@ setup(name='hboot_image_compiler',
           'elf_compiler/arm-none-eabi-gcc/4.9.3/bin/arm-none-eabi-objdump.exe',
           'elf_compiler/arm-none-eabi-gcc/4.9.3/bin/arm-none-eabi-objcopy.exe'
       ]},
+      cmdclass=versioneer.get_cmdclass(),
       zip_safe=False,
       extras_require={
-          "build": ["pyinstaller==3.6", "setuptools"]
-      },
-      cmdclass=versioneer.get_cmdclass(),
+          "build": ["pyinstaller==3.6", "setuptools", "pyinstaller_versionfile"]
+      }
       )
