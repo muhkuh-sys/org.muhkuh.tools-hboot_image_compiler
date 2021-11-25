@@ -11,7 +11,7 @@ cd org.muhkuh.tools-hboot_image_compiler
 git submodule init
 git submodule update
 ```
-set up a python2 environment inside the project directory
+set up a python 3 or 2 environment inside the project directory (python 3 is recommended)
 ```
 python2 -m virtualenv .venv
 ```
@@ -27,7 +27,11 @@ then install the requirements into the environment
 ## Build distribution
 to build the distributions and also run tests upfront run command:
 ```
-(.venv) make dist
+(.venv) python maker.py dist
+```
+or ad a release version
+```
+(.venv) python maker.py release
 ```
 
 the results show in directory ```dist```
@@ -36,15 +40,14 @@ the results show in directory ```dist```
 ## Run the tests
 To only run the tests run command:
 ```
-(.venv) make test
+(.venv) python testsa/test.py
 ```
 
 ## Clean up in case that something goes wrong
 To start from scratch again you could clean with mbs
-```commandline
-make clean
 ```
-
+(.venv) python maker.py clean
+```
 or just remove the following folders
  - build
  - targets
