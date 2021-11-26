@@ -1,17 +1,17 @@
 
-v0.1.0
+v0.0.14
 
   * Use nxt_version.py and maker.py for versioning and distributing.
   
   * API changes 
 	Compiler COM:
 	-------------
-    - renamed argument '-nt', '--netx-type-public' (was '--netx-type-public')
+    - added argument '-nt' to '--netx-type-public'
 	- the following arguments are now for advanced mode only:
 		- '-n', '--netx-type'
-		- '-d', '--objdump' (now with default value)
-		- '-r', '--readelf' (now with default value)
-		- '-c', '--objcopy' (now with default value)
+		- '-d', '--objdump' (Windows uses included version, Linux uses OS-default version)
+		- '-r', '--readelf' (Windows uses included version, Linux uses OS-default version)
+		- '-c', '--objcopy' (Windows uses included version, Linux uses OS-default version)
 		- '-k', '--keyrom'
 		- '-p', '--patch-table'
 		- '--openssl-rand-off'
@@ -22,7 +22,7 @@ v0.1.0
 		- '--openssl-options'
 	- renamed '-V', '--verbose' (was '-v', '--verbose')
 	- renamed '-v', '--version' (was '-V', '--version')
-	- added argument '-t', '--template-layout' : privides template layout for HWC and MWC images
+	- added argument '-t', '--template-layout' : provides template layout for HWC and MWC images
 	
 	Compiler APP:
 	-------------
@@ -31,9 +31,9 @@ v0.1.0
 	- added argument '-nt', '--netx-type-public'
 	- the following arguments are now for advanced mode only:
 		- '-n', '--netx-type'
-		- '-d', '--objdump' (now with default value)
-		- '-r', '--readelf' (now with default value)
-		- '-c', '--objcopy' (now with default value)
+		- '-d', '--objdump' (Windows uses included version, Linux uses OS-default version)
+		- '-r', '--readelf' (Windows uses included version, Linux uses OS-default version)
+		- '-c', '--objcopy' (Windows uses included version, Linux uses OS-default version)
 		- '-k', '--keyrom'
 		- '-p', '--patch-table'
 		- '--openssl-rand-off'
@@ -42,10 +42,11 @@ v0.1.0
 		- '-S', '--sniplib'
 		- '--openssl-exe'
 		- '--openssl-options'
-	- added argument '-t', '--template-layout' : privides template layout for NAI and NEA images
-	- argument '-s', '--sdram_split_offset' now only accepts defautl options.
+	- added argument '-t', '--template-layout' : provides template layout for NAI and NEA images
+	- argument '-s', '--sdram_split_offset' now only accepts supported options as offset.
 	
-  * Added objcopy, objdump and readelf to the distirbutions.
+  * Added objcopy, objdump and readelf to the windows-distributions.
+      -> Linux-distribution expects the tools to be pre-installed
      
 
   * Add attribute 'do_not_lock_system_cfg' to EXEC chunk. 
@@ -55,7 +56,6 @@ v0.1.0
     normally occurs automatically when an exec chunk is processed and the 
     attribute is not present, or false.
 
-v0.0.14
   * Changed the chip type NETX90C to NETX90D since NETX90C became an internal
     version for the netx90_rev1 with the new PHY.
 

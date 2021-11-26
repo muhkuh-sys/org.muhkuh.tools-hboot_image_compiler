@@ -11,7 +11,10 @@ a = Analysis(['build\\lib\\hil_nxt_hboot_image_compiler\\app\\netx90_app_image.p
              ('build/lib/hil_nxt_hboot_image_compiler/elf_compiler/arm-none-eabi-gcc/4.9.3/bin/*',
               'elf_compiler/arm-none-eabi-gcc/4.9.3/bin'),
               ('build/lib/hil_nxt_hboot_image_compiler/templates/app/*',
-              'templates/app')],
+              'templates/app'),
+              ('readme/app/readme.md', '.'),
+              ('LICENSE.txt', '.')
+              ],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
