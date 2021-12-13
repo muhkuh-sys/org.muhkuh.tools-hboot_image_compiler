@@ -34,10 +34,8 @@ class TestExpectedBinaries(unittest.TestCase):
         self.strHBootImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler'))
         self.strHBootNetx90AppImageCompiler = os.path.realpath(os.path.join(os.path.dirname(__file__), '..', 'targets', 'tests', 'bin', 'hboot_image_compiler', 'hboot_image_compiler', 'netx90_app_image.py'))
         # self.strOpenSSLPath='C:\\Daten_local_only\\Tools\\openssl\\openssl-1.1.1c-win64-mingw\\openssl.exe'
-        # self.strOpenSSLPath='c:\\Users\\StephanL\\Desktop\\work\\tools\\openssl-1.1.1c-win64-mingw\\openssl.exe'
-        self.strOpenSSLPath='<your openssl path>'
         self.strOpenSSLPath='c:\\Users\\slesch\\Desktop\\tools\\openssl-1.1.1c-win64-mingw\\openssl.exe'
-        #self.strOpenSSLPath='openssl.exe'
+        self.strOpenSSLPath='<your openssl path>'
         
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
