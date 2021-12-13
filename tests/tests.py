@@ -36,6 +36,8 @@ class TestExpectedBinaries(unittest.TestCase):
         # self.strOpenSSLPath='C:\\Daten_local_only\\Tools\\openssl\\openssl-1.1.1c-win64-mingw\\openssl.exe'
         # self.strOpenSSLPath='c:\\Users\\StephanL\\Desktop\\work\\tools\\openssl-1.1.1c-win64-mingw\\openssl.exe'
         self.strOpenSSLPath='<your openssl path>'
+        self.strOpenSSLPath='c:\\Users\\slesch\\Desktop\\tools\\openssl-1.1.1c-win64-mingw\\openssl.exe'
+        #self.strOpenSSLPath='openssl.exe'
         
     def __get_env_var(self, tMatch):
         strEnvKey = tMatch.group(1)
@@ -636,6 +638,31 @@ class TestExpectedBinaries(unittest.TestCase):
 
     def test_data_file_alias(self):
         self.__test_with_reference_bin('data/data_file_alias.xml', 'data/data_file_alias.bin', 'NETX90', ['--alias', 'FillData=fill_data.bin'], ['data/fill_data.bin'])
+
+    # Error when data chunk has no data
+    def test_data_file_empty_bin(self):
+        self.__test_with_reference_bin_public(
+            'data/data_file_bin_empty.xml', 
+            'data/empty.bin', # dummy 
+            'netx90', 
+            None, 
+            ['data/empty.bin'], 
+            strExpectedError = "Empty data chunk!")
+
+    # Warning when specific segments to extract from an ELF were specified and empty
+    def test_data_file_empty_elf(self):
+        self.__test_with_reference_bin_public(
+            'data/data_segment_empty.xml', 
+            'data/data_segment_empty.elf', # dummy 
+            'netx90', 
+            [   # extra args
+                '-c', '%%NETX90_OBJCOPY%%', 
+                '-d', '%%NETX90_OBJDUMP%%', 
+                '-r', '%%NETX90_READELF%%',
+            ],
+            ['data/data_segment_empty.elf'], 
+            strExpectedError = # "The data extracted from ELF file " 
+                "data_segment_empty.elf, segments .data, is empty!")
 
     def test_data_hex(self):
         self.__test_with_reference_bin('data/data_hex.xml', 'data/data_hex.bin', 'NETX90_MPW', None, None)
