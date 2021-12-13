@@ -1,3 +1,7 @@
+  * Prevent generation of empty data chunks. 
+    Exit with an error when the content of a data chunk is empty.
+    Print a message when the segments extracted from an ELF file 
+    for a data chunk are empty.
 
   * Add attribute 'do_not_lock_system_cfg' to EXEC chunk. 
 
