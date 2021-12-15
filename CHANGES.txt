@@ -1,6 +1,11 @@
 
 v0.0.14
 
+  * Prevent generation of empty data chunks.
+    Exit with an error when the content of a data chunk is empty.
+    Print a message when the segments extracted from an ELF file
+    for a data chunk are empty.
+
   * Use nxt_version.py and maker.py for versioning and distributing.
   
   * API changes 
