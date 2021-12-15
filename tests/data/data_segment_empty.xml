@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<HBootImage type="REGULAR" >
+    <Chunks>
+        <Data>
+            <File name="data_segment_empty.elf" segments=".data"/>
+        </Data>
+    </Chunks>
+</HBootImage>
+
