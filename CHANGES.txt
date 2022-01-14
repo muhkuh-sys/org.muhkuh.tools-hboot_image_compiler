@@ -1,6 +1,11 @@
 
 v0.0.14
 
+  * Added the option -a/--append-file to append the contents of an arbirary file 
+    (e.g. Bootwsitch) at the end of the image.
+
+  * Add Bootswitch v1.0.2 binary.
+
   * Prevent generation of empty data chunks.
     Exit with an error when the content of a data chunk is empty.
     Print a message when the segments extracted from an ELF file
