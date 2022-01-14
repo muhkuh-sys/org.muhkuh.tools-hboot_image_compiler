@@ -1754,5 +1754,22 @@ class TestExpectedBinaries(unittest.TestCase):
                                   ['-t', 'mwc', '-A', 'hw_config=%s' % hwconfig_path], None, reference_bin)
 
 
+    def test_template_hwc_a_bootswitch(self):
+        hwconfig_path = os.path.join(TEST_DIR, "hwc", "test_hwc_hboot.xml")
+        bootswitch_path = os.path.join(TEST_DIR, "hwc", "BootSwitch_intflash_netXStudio_v1.0.2.bin")
+        reference_bin = os.path.join(TEST_DIR, 'hwc', 'test_hwc_bootswitch.bin')
+        self.__test_with_template('top_hboot_image_hwc_bootswitch.bin', 'NETX90B',
+                                  ['-t', 'hwc', '-A', 'hw_config=%s' % hwconfig_path,
+                                  '-a', bootswitch_path], None, reference_bin)
+
+    def test_template_mwc_append_file_bootswitch(self):
+        hwconfig_path = os.path.join(TEST_DIR, "hwc", "test_hwc_hboot.xml")
+        bootswitch_path = os.path.join(TEST_DIR, "hwc", "BootSwitch_intflash_netXStudio_v1.0.2.bin")
+        reference_bin = os.path.join(TEST_DIR, 'hwc', 'test_mwc_bootswitch.bin')
+        self.__test_with_template('top_hboot_image_mwc_bootswitch.bin', 'NETX90B',
+                                  ['-t', 'mwc', '-A', 'hw_config=%s' % hwconfig_path,
+                                  '--append-file', bootswitch_path], None, reference_bin)
+
+
 if __name__ == '__main__':
     unittest.main()
