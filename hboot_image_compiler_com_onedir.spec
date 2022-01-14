@@ -10,6 +10,7 @@ a = Analysis(['build/lib/hil_nxt_hboot_image_compiler/com/__main__.py'],
               ('build/lib/hil_nxt_hboot_image_compiler/templates/com/*', 'templates/com'),
               ('build/lib/hil_nxt_hboot_image_compiler/elf_compiler/arm-none-eabi-gcc/4.9.3/bin/*',
               'elf_compiler/arm-none-eabi-gcc/4.9.3/bin'),
+              ('bootswitch/*', 'bootswitch'),
               ('readme/com/readme.md', '.'),
               ('LICENSE.txt', '.')
               ],
