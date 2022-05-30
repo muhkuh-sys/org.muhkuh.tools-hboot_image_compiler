@@ -549,6 +549,29 @@ class TestExpectedBinaries(unittest.TestCase):
             None
         )
 
+    # NXTHBOTIMG-110
+    # test after setting default value for alias headeraddress_extflash
+    def test_app_image_iflash_no_headeraddress(self):
+        """ test the hboot image app compiler without passing paths to the elf compilers
+
+        :return:
+        """
+        reference_dir = os.path.join(TEST_DIR, 'netx90_app_image')
+        self.__test_netx90_appimg_with_template(
+            ["nai_nae_from_template.nai", "nai_nae_from_template.nae"],
+            [   # extra args
+                '-t', 'nae',
+                '-n', 'netx90_rev0',
+                '-A', 'tElf=%%ELF_NETX90_APP_BLINKI_IFLASH%%',
+                '-A', 'segments_intflash=.header,.code',
+                '-A', 'segments_extflash=.code_SDRAM1,.code_SDRAM2',
+                '--sdram_split_offset', '0x400000',
+            ],
+            [os.path.join(reference_dir, "nai_nae_from_template.nai"),
+             os.path.join(reference_dir, "nai_nae_from_template.nae")],
+            None
+        )
+
     # NXTHBOTIMG-47 test 3
     # a project that results in a  single intflash boot image and specifies no segments. 
     # The boot image tool should use segments with the progbits flag set inside the elf file.
