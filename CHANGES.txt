@@ -1,3 +1,5 @@
+v.0.1.0
+  * Add default value for alias "headeraddress_extflash"
 
 v0.0.14
 
